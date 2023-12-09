@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\my-app",
+    "\\my-app\\public",
+    "\\my-app\\src",
+    "\\my-app\\src\\components",
+    "\\my-app\\src\\components\\notfound",
+    "\\my-app\\src\\components\\skillbar",
+    "\\my-app\\src\\pages",
+    "\\my-app\\src\\pages\\home",
+    "\\my-app\\src\\pages\\skills"
+  ],
+  "SelectedNode": "\\my-app\\src\\components\\header\\header.css",
+  "PreviewInSolutionExplorer": false
+}

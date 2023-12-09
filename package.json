@@ -1,9 +1,7 @@
 {
-<<<<<<< HEAD
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "",
   "homepage": "https://kobeSmallman.github.io/KobeSmallmanPortfolioSite/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -43,10 +41,5 @@
   },
   "devDependencies": {
     "gh-pages": "^6.1.0"
-=======
-  "dependencies": {
-    "react-slick": "^0.29.0",
-    "slick-carousel": "^1.8.1"
->>>>>>> origin/main
   }
 }

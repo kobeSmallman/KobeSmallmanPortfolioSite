@@ -1,0 +1,72 @@
+[33mcommit f73d955e9414bf9725d507be93bf5fe23f0ff6a9[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Kobe Smallman <kobe4smallman@gmail.com>
+Date:   Sat Dec 9 01:05:52 2023 -0700
+
+    l
+
+[33mcommit beeb6bc1cfab733dc429b29cbaaefda88dd98507[m
+Author: Kobe Smallman <kobe4smallman@gmail.com>
+Date:   Sat Dec 9 00:40:12 2023 -0700
+
+    please work
+
+[33mcommit 429d80acb479ec7101bdbbb18048d7506762e7b7[m
+Author: Kobe Smallman <kobe4smallman@gmail.com>
+Date:   Sat Dec 9 00:40:05 2023 -0700
+
+    please work
+
+[33mcommit 7c63639e59d46955af43b467eb05949ad3566e9e[m
+Author: Kobe Smallman <kobe4smallman@gmail.com>
+Date:   Sat Dec 9 00:26:40 2023 -0700
+
+    trying to get this to work
+
+[33mcommit db0566ea54695d394a588bb94d928922b4f3c144[m
+Author: Kobe Smallman <kobe4smallman@gmail.com>
+Date:   Sat Dec 9 00:17:46 2023 -0700
+
+    f
+
+[33mcommit 096abe0ec51305f8880d84b7987a11639cc1ca38[m
+Author: Kobe Smallman <kobe4smallman@gmail.com>
+Date:   Fri Dec 8 22:59:06 2023 -0700
+
+    trying to deploy
+
+[33mcommit bc5bb0eeddc689920dab533e5798b5bc0ec173b1[m
+Merge: 5ef07c4 015272c
+Author: Kobe Smallman <kobe4smallman@gmail.com>
+Date:   Fri Dec 8 22:52:53 2023 -0700
+
+    Merge branch 'main' of https://github.com/kobeSmallman/PortfolioSiteSchool
+
+[33mcommit 5ef07c4b331eeac51ea21821605ef3d3e89fa597[m
+Author: Kobe Smallman <kobe4smallman@gmail.com>
+Date:   Fri Dec 8 22:51:08 2023 -0700
+
+    trying to deploy
+
+[33mcommit 015272c69ff8b51327be87d8731347fab6842c50[m
+Author: kobeSmallman <69617390+kobeSmallman@users.noreply.github.com>
+Date:   Fri Dec 8 22:25:42 2023 -0700
+
+    Delete CNAME
+
+[33mcommit 56d5962e794396fd2b44d2cafd23edbe2a7ae095[m
+Author: kobeSmallman <69617390+kobeSmallman@users.noreply.github.com>
+Date:   Fri Dec 8 22:23:34 2023 -0700
+
+    Create CNAME
+
+[33mcommit 37e8bb43c0bd3c1db24ee9c3c4942767fc09fa74[m
+Author: Kobe Smallman <kobe4smallman@gmail.com>
+Date:   Fri Dec 8 22:16:59 2023 -0700
+
+    Here is my actual portfolio project coded from scratch with react.
+
+[33mcommit f191f7505f946f0b934e9a48114f184c2427b5a7[m
+Author: kobeSmallman <69617390+kobeSmallman@users.noreply.github.com>
+Date:   Wed Dec 6 12:54:26 2023 -0700
+
+    Initial commit

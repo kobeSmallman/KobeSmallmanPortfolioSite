@@ -1,0 +1,107 @@
+.project-rectangle {
+    background-color: #a3b4c8; /* Specified background color */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    color:black;
+}
+
+    .project-rectangle:hover {
+        transform: scale(1.02); /* Slightly increase size on hover */
+    }
+.projects-container{
+    color:white;
+}
+.project-image {
+    max-width: 60%; /* Ensure images are responsive */
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.project-bubble {
+    background-color: #a3b4c8;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+    position: relative;
+    padding: 20px;
+    width: 80%;
+    margin: 10px auto;
+}
+
+    .project-bubble:hover {
+        transform: scale(1.05);
+    }
+
+.project-images-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.project-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+.project-info {
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+    button:hover {
+        background-color: darken(buttonStyle.backgroundColor, 10%);
+    }
+
+.github-link {
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 20px;
+    /* Style similar to button */
+}
+
+.project-link {
+    background-color: #004d40; /* Button background color */
+    padding: 10px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    color: white; /* Text color */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block; /* To apply padding and margin correctly */
+    text-align: center;
+}
+
+    .project-link:hover {
+        background-color: #00382e; /* Slightly darker shade for hover effect */
+        text-decoration: none;
+    }
+
+

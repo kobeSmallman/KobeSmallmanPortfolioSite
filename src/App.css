@@ -1,38 +1,92 @@
-.App {
-  text-align: center;
+/* App.css or the appropriate CSS file where you define these styles */
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjust the gap as needed */
+    margin-bottom: 5px; /* Adjust the spacing between each contact info item */
+    font-size:1.2em;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    .contact-info i {
+        font-size: 3em; /* Adjust the size of the icons */
+    }
+
+.contact-sidebar {
+    background-color:#c8b7a3;
+    padding: 20px;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    width: 400px;
+    overflow: auto;
+    transform: translateX(0);
+    transition: transform 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* Spread out the contact details */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .contact-button:hover {
+        background-color: #ff6390; /* Slightly darker on hover */
+    }
+
+.contact-toggle {
+    background: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
+    width: 20px;
+    height: 40px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.contact-button {
+    background-color: #ff7eb3;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 20px; /* Space above the button */
+}
+.contact-toggle:hover {
+    width: 60px; /* Expand the width on hover to 60px */
+    background: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
 }
 
-.App-link {
-  color: #61dafb;
+/* Hidden state for the sidebar */
+.contact-sidebar.hidden {
+    transform: translateX(-100%); /* Hide the sidebar */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Adjust page container when sidebar is hidden */
+.page-container.sidebar-hidden {
+    padding-left: 0; /* No padding when sidebar is hidden */
+    margin-left: 60px; /* Space for the expanded contact-toggle button */
 }
+.download-resume-link {
+    background-color: #004d40;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: block; /* To take the full width */
+    text-align: center; /* Center the text inside */
+    margin-top: 20px;
+}
+/* Rest of the styles... */
+
+/* Make sure to include the icon font library or use image tags if you're using images for icons */

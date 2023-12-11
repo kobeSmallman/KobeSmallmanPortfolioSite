@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/KobeSmallmanPortfolioSite/static/css/main.778f28dd.css",
+    "main.css": "/KobeSmallmanPortfolioSite/static/css/main.b327f445.css",
     "main.js": "/KobeSmallmanPortfolioSite/static/js/main.f01c67e8.js",
     "static/js/787.d4aba7ab.chunk.js": "/KobeSmallmanPortfolioSite/static/js/787.d4aba7ab.chunk.js",
     "static/media/aboutme.jpg": "/KobeSmallmanPortfolioSite/static/media/aboutme.158c098ab1e7467e80aa.jpg",
@@ -20,17 +20,17 @@
     "static/media/oneoftablemadephp.png": "/KobeSmallmanPortfolioSite/static/media/oneoftablemadephp.f4b3dcb32c67a1990002.png",
     "static/media/brandon.png": "/KobeSmallmanPortfolioSite/static/media/brandon.a44c95c2452cf1b5bbe9.png",
     "static/media/briggs.png": "/KobeSmallmanPortfolioSite/static/media/briggs.05873b21d0f5c9289506.png",
-    "static/media/slick.svg": "/KobeSmallmanPortfolioSite/static/media/slick.7ba97953187dc2907930.svg",
+    "static/media/slick.svg": "/KobeSmallmanPortfolioSite/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/KobeSmallmanPortfolioSite/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/KobeSmallmanPortfolioSite/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/KobeSmallmanPortfolioSite/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/KobeSmallmanPortfolioSite/index.html",
-    "main.778f28dd.css.map": "/KobeSmallmanPortfolioSite/static/css/main.778f28dd.css.map",
+    "main.b327f445.css.map": "/KobeSmallmanPortfolioSite/static/css/main.b327f445.css.map",
     "main.f01c67e8.js.map": "/KobeSmallmanPortfolioSite/static/js/main.f01c67e8.js.map",
     "787.d4aba7ab.chunk.js.map": "/KobeSmallmanPortfolioSite/static/js/787.d4aba7ab.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.778f28dd.css",
+    "static/css/main.b327f445.css",
     "static/js/main.f01c67e8.js"
   ]
 }

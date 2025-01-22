@@ -1,71 +1,142 @@
-# Getting Started with Create React App
+# Kobe Smallman Portfolio Site
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the portfolio site of **Kobe Smallman**, showcasing skills, projects, and experiences. Built using **React**, the site provides a responsive, visually appealing design and is deployed on **Vercel** for seamless performance.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Tech Stack](#tech-stack)
+4. [Getting Started](#getting-started)
+5. [Folder Structure](#folder-structure)
+6. [Deployment](#deployment)
+7. [Contributing](#contributing)
+8. [License](#license)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Overview
 
-### `npm test`
+This portfolio serves as a digital resume, showcasing completed projects, ongoing projects, skills, work experience, volunteer work, and certifications. It is designed to highlight personal achievements while ensuring easy navigation and accessibility.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Responsive Design**: Fully functional on desktop, tablet, and mobile devices.
+- **Dynamic Content**: Projects and skills are loaded dynamically, providing a seamless user experience.
+- **Interactive Skill Bars**: Highlight skills with percentages and descriptions.
+- **Projects Section**: Separate tabs for completed and ongoing projects.
+- **Work Experience & Certifications**: Comprehensive overview of professional milestones and qualifications.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Tech Stack
 
-### `npm run eject`
+- **Frontend**: React
+- **CSS Frameworks**: Custom CSS
+- **Hosting**: Vercel
+- **Version Control**: GitHub
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Getting Started
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Follow these steps to set up the project locally:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Prerequisites
 
-## Learn More
+- [Node.js](https://nodejs.org/) installed on your machine.
+- A text editor like [VS Code](https://code.visualstudio.com/).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/kobeSmallman/KobeSmallmanPortfolioSite.git
+   ```
 
-### Code Splitting
+2. Navigate to the project directory:
+   ```bash
+   cd KobeSmallmanPortfolioSite
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-### Analyzing the Bundle Size
+4. Run the development server:
+   ```bash
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+5. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Folder Structure
 
-### Advanced Configuration
+```
+KobeSmallmanPortfolioSite/
+├── public/                # Static files
+├── src/                   # Source code
+│   ├── assets/            # Images and media
+│   ├── components/        # Reusable React components
+│   ├── pages/             # Main pages (About, Projects, etc.)
+│   ├── App.js             # Root component
+│   ├── index.js           # Entry point
+│   └── ...
+├── package.json           # Project metadata and dependencies
+└── README.md              # Project documentation
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The site is deployed on [Vercel](https://vercel.com/). Each push to the `main` branch triggers an automatic redeployment. To deploy:
 
-### `npm run build` fails to minify
+1. Connect the repository to your Vercel account.
+2. Ensure the `main` branch is set for automatic deployment.
+3. Push changes to `main`:
+   ```bash
+   git add .
+   git commit -m "Update portfolio"
+   git push origin main
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# PortfolioSiteSchool
+The updated site will be live at: [https://kobe-smallman-portfolio-site-rcpj.vercel.app/](https://kobe-smallman-portfolio-site-rcpj.vercel.app/)
+
+---
+
+## Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository.
+2. Create a new branch for your feature or fix:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+Feel free to explore the repository, and don't hesitate to reach out with any questions or suggestions!

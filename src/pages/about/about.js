@@ -1,11 +1,9 @@
-// src/pages/about/about.js
 import React, { useState } from 'react';
 import './about.css';
 import '../../components/skillbar/skillbar.css'; // Ensure the skill bar CSS is properly imported
 import aboutme from '../../assets/images/aboutme.jpg'; // Ensure the path is correct
 import frenchdiploma from '../../assets/images/frenchdiploma.jpg';
 import hsdiploma from '../../assets/images/hsdiploma.jpg';
-
 
 const skillsData = [
     { name: 'HTML', percentage: 85, description: 'Experienced with HTML5 and semantic markup, creating well-structured pages.' },
@@ -23,15 +21,14 @@ const skillsData = [
     { name: 'Laravel', percentage: 35, description: 'Minimal experience with Laravel; still learning the ropes.' },
     { name: 'Hardware', percentage: 80, description: 'Confident in most hardware configurations; not quite an expert but knowledgeable.' },
     { name: 'Networking', percentage: 40, description: 'Still a beginner, but steadily increasing my networking knowledge.' },
-    { name: 'Github', percentage: 85, description: 'I understand how to integrate and work with others on github. Still need some work with version control.' },
+    { name: 'GitHub', percentage: 85, description: 'I understand how to integrate and work with others on GitHub. Still need some work with version control.' },
     { name: 'Selling Technology', percentage: 95, description: 'Selling technology is one of my strengths; highly skilled in this area.' },
 ];
-
-
 
 function getGradient(percentage) {
     return 'transparent';
 }
+
 const About = () => {
     const [activeSkill, setActiveSkill] = useState(null);
 
@@ -40,8 +37,8 @@ const About = () => {
             <div className="profile-section">
                 <img src={aboutme} alt="Kobe Douglas Smallman" className="profile-picture" />
                 <div className="description">
-                    <p>Hello! I'm Kobe Smallman, a dedicated and passionate Full Stack Developer with a strong background in both front-end and back-end technologies. I am keen on starting my career in a dynamic environment where I can contribute and grow as a professional. My goal is to become a smart contractor developer, working on innovative projects in front-end, back-end, or full-stack roles.</p>
-                    <p>With a solid foundation in modern web technologies and a commitment to continuous learning, I am eager to get my foot in the door and embark on a journey that allows me to make a meaningful impact through my work.</p>
+                    <p>Hello! I'm Kobe Smallman, a dedicated and passionate Full Stack Developer with a solid foundation in both front-end and back-end technologies. I graduated in May 2024 with a Computer Information Technology Diploma from Lethbridge College, earning a 3.8 GPA and contributing to a capstone project focused on supply chain management.</p>
+                    <p>My goal is to start a career in a dynamic environment where I can leverage my skills in PHP, Laravel, MySQL, and React to contribute meaningfully while continuing to grow professionally. I'm eager to work on innovative projects, whether in front-end, back-end, or full-stack roles, and to make a lasting impact in the tech industry.</p>
                 </div>
             </div>
 
@@ -64,41 +61,51 @@ const About = () => {
                     </div>
                 ))}
             </div>
-           
 
             <div className="work-experience-section section">
                 <h2>Work Experience</h2>
                 <div>
-                    <h3>Staples-Bell, Lethbridge</h3>
-                    <p>June 2023 - Present</p>
+                    <h3>Technical Support Specialist</h3>
+                    <p>City Hall, Lethbridge | May 2024 - Sept 2024 (Seasonal)</p>
                     <ul>
-                        <li>Keeping up to date with the latest phones and plan pricing</li>
-                        <li>Providing managers with updates on current sales approach and goals</li>
-                        <li>Setting up phones and migrating phones & phone numbers</li>
+                        <li>Performed data migrations and resolved technical issues, enhancing system reliability.</li>
+                        <li>Managed hardware swaps and inventory for seamless operational continuity.</li>
+                        <li>Communicated technical solutions effectively to non-technical clients.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Staples-Bell, Lethbridge</h3>
+                    <p>June 2023 - May 2024</p>
+                    <ul>
+                        <li>Kept up to date with the latest phones and plan pricing.</li>
+                        <li>Provided managers with updates on current sales approach and goals.</li>
+                        <li>Set up phones and migrated phones & phone numbers.</li>
                     </ul>
                 </div>
                 <div>
                     <h3>Staples, Lethbridge</h3>
                     <p>Nov. 2020 - June 2023</p>
                     <ul>
-                        <li>Electronics sales associate</li>
-                        <li>Assisted customers with products, services and promotions</li>
-                        <li>Discuss, and sell service plans, warranty plans, and accessories</li>
+                        <li>Electronics sales associate.</li>
+                        <li>Assisted customers with products, services, and promotions.</li>
+                        <li>Discussed and sold service plans, warranty plans, and accessories.</li>
                     </ul>
                 </div>
             </div>
+
             <div className="volunteer-section section">
                 <h2>Volunteer Experience</h2>
                 <div>
                     <h3>Millenium Foundation, Sri Lanka</h3>
-                    <p>July.2018</p>
+                    <p>July 2018</p>
                     <ul>
-                        <li>Taught English to teens and monks in classroom settings</li>
-                        <li>Assisted in an orphanage for children up to 8 years old; childcare, play activities</li>
-                        <li>Cared for elephants by cleaning, feeding, bathing, and exercising them</li>
+                        <li>Taught English to teens and monks in classroom settings.</li>
+                        <li>Assisted in an orphanage for children up to 8 years old; childcare, play activities.</li>
+                        <li>Cared for elephants by cleaning, feeding, bathing, and exercising them.</li>
                     </ul>
                 </div>
             </div>
+
             <div className="certificates-section section">
                 <h2>Certificates</h2>
                 <div className="certificate">

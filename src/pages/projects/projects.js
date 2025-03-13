@@ -41,7 +41,7 @@ const Projects = () => {
             description: (
                 <div>
                     <p>
-                        A collaborative development of a full-fledged CRM system using ASP.NET, MySQL, and modern front-end technologies.
+                        A collaborative development of a full-fledged CRM system using Laravel, MySQL, and modern front-end technologies.
                         The project focused on features like user and vendor management, data security, and scalability. This experience 
                         enhanced skills in database design, secure coding practices, and creating a user-friendly interface. It was a key team project 
                         involving six developers working in an agile environment.

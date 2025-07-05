@@ -22,13 +22,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check for required environment variables
-    if (!process.env.SENDGRID_FROM_EMAIL || !process.env.TWILIO_PHONE_NUMBER) {
-      return NextResponse.json(
-        { error: 'Server configuration error' },
-        { status: 500 }
-      );
-    }
+    // Log environment variables for debugging (remove in production)
+    console.log('Environment check:', {
+      SENDGRID_FROM_EMAIL: process.env.SENDGRID_FROM_EMAIL ? 'SET' : 'MISSING',
+      TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER ? 'SET' : 'MISSING',
+      SENDGRID_API_KEY: process.env.SENDGRID_API_KEY ? 'SET' : 'MISSING',
+      TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID ? 'SET' : 'MISSING',
+      TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN ? 'SET' : 'MISSING'
+    });
 
     if (contactMethod === 'email') {
       if (!email) {

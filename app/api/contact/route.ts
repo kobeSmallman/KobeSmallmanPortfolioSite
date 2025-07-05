@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import twilio from 'twilio';
-import sgMail from '@sendgrid/mail';
+import nodemailer from 'nodemailer';
 
 // Initialize Twilio
 const twilioClient = twilio(
@@ -8,8 +8,16 @@ const twilioClient = twilio(
   process.env.TWILIO_AUTH_TOKEN
 );
 
-// Initialize SendGrid
-sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+// Initialize Gmail SMTP
+const transporter = nodemailer.createTransporter({
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,17 +50,26 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Send email
-      const msg = {
-        to: process.env.SENDGRID_FROM_EMAIL as string,
-        from: process.env.SENDGRID_FROM_EMAIL as string,
+      // Send admin notification email
+      const adminEmail = {
+        from: process.env.SMTP_USER,
+        to: process.env.ADMIN_EMAIL || 'kobe4smallman@gmail.com',
         subject: `Portfolio Contact from ${name}`,
-        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
         html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong> ${message}</p>`,
         replyTo: email,
       };
 
-      await sgMail.send(msg);
+      await transporter.sendMail(adminEmail);
+
+      // Send customer confirmation email
+      const customerEmail = {
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: 'Thank you for contacting me!',
+        html: `<p>Hi ${name},</p><p>Thank you for reaching out! I've received your message and will get back to you soon.</p><p>Best regards,<br>Kobe</p>`,
+      };
+
+      await transporter.sendMail(customerEmail);
 
       return NextResponse.json({ 
         success: true, 
@@ -67,18 +84,31 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Send SMS
-      const smsMessage = `Portfolio Contact - Name: ${name}, Email: ${email || 'N/A'}, Message: ${message}`;
+      // Send SMS to customer
+      const cleanedPhone = userPhone.replace(/\D/g, '');
+      const formattedPhone = cleanedPhone.startsWith('1') ? `+${cleanedPhone}` : `+1${cleanedPhone}`;
       
-      const result = await twilioClient.messages.create({
-        body: smsMessage,
+      const customerSMS = `Hi ${name}, thanks for reaching out! I've received your message and will get back to you soon. - Kobe`;
+      
+      await twilioClient.messages.create({
+        body: customerSMS,
         from: process.env.TWILIO_PHONE_NUMBER as string,
-        to: process.env.TWILIO_PHONE_NUMBER as string, // Send to yourself
+        to: formattedPhone,
       });
+
+      // Send admin notification email
+      const adminEmail = {
+        from: process.env.SMTP_USER,
+        to: process.env.ADMIN_EMAIL || 'kobe4smallman@gmail.com',
+        subject: `SMS Contact from ${name}`,
+        html: `<p><strong>Name:</strong> ${name}</p><p><strong>Phone:</strong> ${userPhone}</p><p><strong>Email:</strong> ${email || 'N/A'}</p><p><strong>Message:</strong> ${message}</p>`,
+      };
+
+      await transporter.sendMail(adminEmail);
 
       return NextResponse.json({ 
         success: true, 
-        messageSid: result.sid 
+        message: 'SMS sent successfully' 
       });
 
     } else {

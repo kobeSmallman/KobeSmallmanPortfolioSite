@@ -3,6 +3,7 @@
 import React from 'react';
 
 // Force dynamic rendering to avoid SSR issues
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 import HeroKinetic from '../components/organisms/HeroKinetic';
 import ProjectsIsometric from '../components/organisms/ProjectsIsometric';

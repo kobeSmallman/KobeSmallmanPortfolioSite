@@ -5,9 +5,6 @@ import Header from '../components/organisms/Header';
 import BackToTopButton from '../components/atoms/BackToTop';
 import { Suspense } from "react";
 
-// Force dynamic rendering to avoid SSR issues
-export const dynamic = 'force-dynamic';
-
 export const metadata: Metadata = {
   title: "Kobe Smallman | Full-Stack Developer",
   description: "Full-stack developer crafting modern web experiences with clean code, thoughtful design, and innovative solutions. Specializing in React, Next.js, TypeScript, and Laravel.",

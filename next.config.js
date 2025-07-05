@@ -11,10 +11,9 @@ const nextConfig = {
   },
   // Disable static optimization to prevent SSR issues
   experimental: {
-    isrMemoryCacheSize: 0,
+    appDir: true,
+    serverComponentsExternalPackages: [],
   },
-  // Force all pages to be server-side rendered
-  staticPageGenerationTimeout: 0,
   reactStrictMode: true,
   swcMinify: true
 }

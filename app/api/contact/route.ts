@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import twilio from 'twilio';
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail';
 
 // Initialize Twilio
 const twilioClient = twilio(
@@ -8,16 +8,8 @@ const twilioClient = twilio(
   process.env.TWILIO_AUTH_TOKEN
 );
 
-// Initialize Gmail SMTP
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+// Initialize SendGrid
+sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 export async function POST(request: NextRequest) {
   try {
@@ -52,24 +44,24 @@ export async function POST(request: NextRequest) {
 
       // Send admin notification email
       const adminEmail = {
-        from: process.env.SMTP_USER,
-        to: process.env.ADMIN_EMAIL || 'kobe4smallman@gmail.com',
+        from: process.env.SENDGRID_FROM_EMAIL as string,
+        to: process.env.SENDGRID_FROM_EMAIL as string,
         subject: `Portfolio Contact from ${name}`,
         html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong> ${message}</p>`,
         replyTo: email,
       };
 
-      await transporter.sendMail(adminEmail);
+      await sgMail.send(adminEmail);
 
       // Send customer confirmation email
       const customerEmail = {
-        from: process.env.SMTP_USER,
+        from: process.env.SENDGRID_FROM_EMAIL as string,
         to: email,
         subject: 'Thank you for contacting me!',
         html: `<p>Hi ${name},</p><p>Thank you for reaching out! I've received your message and will get back to you soon.</p><p>Best regards,<br>Kobe</p>`,
       };
 
-      await transporter.sendMail(customerEmail);
+      await sgMail.send(customerEmail);
 
       return NextResponse.json({ 
         success: true, 
@@ -98,13 +90,13 @@ export async function POST(request: NextRequest) {
 
       // Send admin notification email
       const adminEmail = {
-        from: process.env.SMTP_USER,
-        to: process.env.ADMIN_EMAIL || 'kobe4smallman@gmail.com',
+        from: process.env.SENDGRID_FROM_EMAIL as string,
+        to: process.env.SENDGRID_FROM_EMAIL as string,
         subject: `SMS Contact from ${name}`,
         html: `<p><strong>Name:</strong> ${name}</p><p><strong>Phone:</strong> ${userPhone}</p><p><strong>Email:</strong> ${email || 'N/A'}</p><p><strong>Message:</strong> ${message}</p>`,
       };
 
-      await transporter.sendMail(adminEmail);
+      await sgMail.send(adminEmail);
 
       return NextResponse.json({ 
         success: true, 

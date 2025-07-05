@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
-import HeroKinetic from '../components/organisms/HeroKinetic';
-import ProjectsIsometric from '../components/organisms/ProjectsIsometric';
-import ContactKinetic from '../components/organisms/ContactKinetic';
-import BackToTop from '../components/atoms/BackToTop';
+import dynamic from 'next/dynamic';
+
+const HeroKinetic = dynamic(() => import('../components/organisms/HeroKinetic'), { ssr: false });
+const ProjectsIsometric = dynamic(() => import('../components/organisms/ProjectsIsometric'), { ssr: false });
+const ContactKinetic = dynamic(() => import('../components/organisms/ContactKinetic'), { ssr: false });
+const BackToTop = dynamic(() => import('../components/atoms/BackToTop'), { ssr: false });
 
 export default function HomePage() {
   return (

@@ -13,7 +13,10 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, message, contactMethod, phoneNumber } = await request.json();
+    const { name, email, message, contactMethod, phoneNumber, phone } = await request.json();
+    
+    // Handle both phoneNumber and phone field names
+    const userPhone = phoneNumber || phone;
 
     if (!name || !message || !contactMethod) {
       return NextResponse.json(
@@ -57,7 +60,7 @@ export async function POST(request: NextRequest) {
       });
 
     } else if (contactMethod === 'sms') {
-      if (!phoneNumber) {
+      if (!userPhone) {
         return NextResponse.json(
           { error: 'Phone number is required for SMS contact' },
           { status: 400 }

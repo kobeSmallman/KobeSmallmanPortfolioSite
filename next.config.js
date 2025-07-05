@@ -9,7 +9,9 @@ const nextConfig = {
       'kobe.dev'
     ],
   },
-
+  experimental: {
+    serverComponentsExternalPackages: ['framer-motion'],
+  },
   reactStrictMode: true,
   swcMinify: true
 }

@@ -9,6 +9,7 @@ const nextConfig = {
       'kobe.dev'
     ],
   },
+
   reactStrictMode: true,
   swcMinify: true
 }

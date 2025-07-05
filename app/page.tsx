@@ -1,14 +1,14 @@
-'use client';
-
 import React from 'react';
+import dynamicImport from 'next/dynamic';
 
 // Force dynamic rendering to avoid SSR issues
-export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
-import HeroKinetic from '../components/organisms/HeroKinetic';
-import ProjectsIsometric from '../components/organisms/ProjectsIsometric';
-import ContactKinetic from '../components/organisms/ContactKinetic';
-import BackToTop from '../components/atoms/BackToTop';
+
+// Dynamic imports to prevent SSR issues with useRouter
+const HeroKinetic = dynamicImport(() => import('../components/organisms/HeroKinetic'), { ssr: false });
+const ProjectsIsometric = dynamicImport(() => import('../components/organisms/ProjectsIsometric'), { ssr: false });
+const ContactKinetic = dynamicImport(() => import('../components/organisms/ContactKinetic'), { ssr: false });
+const BackToTop = dynamicImport(() => import('../components/atoms/BackToTop'), { ssr: false });
 
 export default function HomePage() {
   return (

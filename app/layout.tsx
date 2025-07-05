@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Footer from "../components/organisms/Footer";
-import Header from '../components/organisms/Header';
-import BackToTopButton from '../components/atoms/BackToTop';
+import dynamicImport from 'next/dynamic';
 import { Suspense } from "react";
+
+// Dynamic imports to prevent SSR issues with useRouter
+const Header = dynamicImport(() => import('../components/organisms/Header'), { ssr: false });
+const Footer = dynamicImport(() => import('../components/organisms/Footer'), { ssr: false });
+const BackToTopButton = dynamicImport(() => import('../components/atoms/BackToTop'), { ssr: false });
 
 export const metadata: Metadata = {
   title: "Kobe Smallman | Full-Stack Developer",

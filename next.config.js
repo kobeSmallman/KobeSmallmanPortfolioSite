@@ -9,11 +9,7 @@ const nextConfig = {
       'kobe.dev'
     ],
   },
-  // Disable static optimization to prevent SSR issues
-  experimental: {
-    appDir: true,
-    serverComponentsExternalPackages: [],
-  },
+
   reactStrictMode: true,
   swcMinify: true
 }

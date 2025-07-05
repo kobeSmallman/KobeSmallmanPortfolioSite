@@ -1,0 +1,1162 @@
+#include "GameManager.h"
+#include <algorithm>
+#include <iostream>
+#include <set>
+#include <sstream>
+
+#include <map>    // for std::map
+#include <string> // for std::string
+#include <vector> // for std::vector
+
+/*
+ * Author: Kobe
+ * Description: Constructor initializes the game state variables.
+ */
+GameManager::GameManager()
+    : player(nullptr), currentRoomIndex(0), gameOver(false), playerWon(false) {}
+
+/*
+ * Author: Kobe
+ * Description: Destructor cleans up allocated memory.
+ */
+GameManager::~GameManager() {
+  // Delete player
+  delete player;
+
+  // Delete rooms - BUT FIRST, clean up puzzles since Room doesn't handle it
+  for (auto room : rooms) {
+    // Only delete puzzle if it exists
+    if (room->getPuzzle()) {
+      delete room->getPuzzle(); // Clean up the puzzle for each room
+    }
+    delete room; // Then delete the room
+  }
+
+  // Delete items
+  for (auto &roomItemPair : roomItems) {
+    for (auto item : roomItemPair.second) {
+      delete item;
+    }
+  }
+
+  // Delete NPCs
+  for (auto &roomNPCPair : roomNPCs) {
+    for (auto npc : roomNPCPair.second) {
+      delete npc;
+    }
+  }
+
+  // Clear all containers to avoid potential use-after-free issues
+  rooms.clear();
+  roomItems.clear();
+  roomNPCs.clear();
+  roomExits.clear();
+}
+
+/*
+ * Author: Kobe
+ * Description: Starts the game by initializing player and rooms.
+ */
+void GameManager::startGame() {
+  initializePlayer();
+  initializeRooms();
+
+// Clear terminal
+#ifdef _WIN32
+  system("cls");
+#else
+  system("clear");
+#endif
+
+  std::cout << "=================================\n";
+  std::cout << "    WELCOME TO DUNGEON ESCAPE    \n";
+  std::cout << "=================================\n\n";
+  std::cout << "You wake up in a dungeon. Your goal is to escape!\n";
+  std::cout << "Type 'help' for commands.\n\n";
+
+  displayRoom(); // This will show health status
+}
+
+/*
+ * Author: Kobe
+ * Description: Creates the player character.
+ */
+void GameManager::initializePlayer() {
+  player = new Player(); // Player constructor takes no parameters
+}
+
+/*
+ * Author: Kobe
+ * Description: Creates all rooms, items, NPCs, and connections.
+ */
+void GameManager::initializeRooms() {
+  // Create a set to track unique room names
+  std::set<std::string> roomNames;
+
+  // Create rooms and check for duplicates
+  Room *cell = new Room("Prison Cell", "A damp cell with stone walls.");
+  roomNames.insert("Prison Cell");
+
+  Room *hallway = new Room("Hallway", "A dimly lit corridor.");
+  roomNames.insert("Hallway");
+
+  Room *guardRoom = new Room("Guard Room", "A small room with a table.");
+  roomNames.insert("Guard Room");
+
+  Room *armory = new Room("Armory", "Weapon racks line the walls.");
+  roomNames.insert("Armory");
+
+  Room *kitchen =
+      new Room("Kitchen", "A castle kitchen with a large fireplace.");
+  roomNames.insert("Kitchen");
+
+  Room *diningHall = new Room("Dining Hall", "A grand hall with long tables.");
+  roomNames.insert("Dining Hall");
+
+  Room *library = new Room("Library", "Shelves of dusty books line the walls.");
+  roomNames.insert("Library");
+
+  Room *treasuryRoom =
+      new Room("Treasury", "Gold and treasures fill this room.");
+  roomNames.insert("Treasury");
+
+  Room *entranceHall = new Room(
+      "Entrance Hall",
+      "A grand foyer with high ceilings and a massive door leading outside.");
+  roomNames.insert("Entrance Hall");
+
+  Room *exitPath =
+      new Room("Freedom", "A sunlit path leading away from the dungeon into a "
+                          "lush forest. Freedom at last!");
+  roomNames.insert("Freedom");
+
+  // Verify unique number of room names
+  // if (roomNames.size() != 10) {
+  //   std::cerr << "ERROR: Duplicate room names detected!\n";
+  // }
+
+  // Add MORE puzzles to appropriate rooms - we need 5 total puzzles ✅
+  // 1. Library puzzle (already exists)
+  library->setPuzzle(
+      new Puzzle("What has keys but no locks, space but no room?", "keyboard"));
+
+  // 2. Cell puzzle (new)
+  // cell->setPuzzle(new Puzzle("I'm alive, but without breath; I'm as cold as
+  // death; I'm never thirsty but always drinking. What am I?", "fish"));
+
+  // 3. Kitchen puzzle (new)
+  kitchen->setPuzzle(new Puzzle(
+      "The more you take, the more you leave behind. What am I?", "footsteps"));
+
+  // 4. Armory puzzle (new)
+  armory->setPuzzle(
+      new Puzzle("What kind of coat can only be put on when wet?", "paint"));
+
+  // 5. Treasury puzzle (new)
+  treasuryRoom->setPuzzle(
+      new Puzzle("What has a head, a tail, but no body?", "coin"));
+
+  // Add a 6th puzzle to the Entrance Hall
+  entranceHall->setPuzzle(
+      new Puzzle("I have cities, but no houses. I have mountains, but no "
+                 "trees. I have water, but no fish. What am I?",
+                 "map"));
+
+  // Add puzzle to Dining Hall instead
+  diningHall->setPuzzle(
+      new Puzzle("I'm alive, but without breath; I'm as cold as death; I'm "
+                 "never thirsty but always drinking. What am I?",
+                 "fish"));
+
+  // Add rooms to the game
+  rooms.push_back(cell);         // Index 0
+  rooms.push_back(hallway);      // Index 1
+  rooms.push_back(guardRoom);    // Index 2
+  rooms.push_back(armory);       // Index 3
+  rooms.push_back(kitchen);      // Index 4
+  rooms.push_back(diningHall);   // Index 5
+  rooms.push_back(library);      // Index 6
+  rooms.push_back(treasuryRoom); // Index 7
+  rooms.push_back(entranceHall); // Index 8
+  rooms.push_back(exitPath);     // Index 9 - the final exit
+
+  // Add items to rooms using the proper Item constructor
+  addItemToRoom(0,
+                new Item("Cell Key",
+                         "A rusty key that might open a locked door nearby."));
+  addItemToRoom(3, new Item("Sword", "A sharp iron sword."));
+  addItemToRoom(
+      4,
+      new Item("Knife",
+               "A sharp kitchen knife that could cut through ropes or cloth."));
+  addItemToRoom(
+      7, new Item("Gold Coin",
+                  "A valuable gold coin that might be useful for trading."));
+
+  // Add a CURSED item for the third way to lose the game ✅
+  addItemToRoom(7, new Item("Dark Amulet",
+                            "A mysterious black amulet emanating an "
+                            "ominous aura. It feels cold to the touch."));
+
+  // Add NPCs using the proper NPC constructor
+  addNPCToRoom(1, new NPC("Guard", true));
+  addNPCToRoom(5, new NPC("Servant", false));
+
+  // Add a new NPC and cursed item
+  addNPCToRoom(5, new NPC("Troll", true));
+  addItemToRoom(
+      5,
+      new Item(
+          "Shadow Stone",
+          "A dark, pulsating stone that feels unnaturally cold to the touch."));
+
+  // Set exits between rooms
+  setRoomExit(0, "north", 1); // Cell -> Hallway
+  setRoomExit(1, "south", 0); // Hallway -> Cell
+  setRoomExit(1, "east", 2);  // Hallway -> Guard Room
+  setRoomExit(1, "west", 3);  // Hallway -> Armory
+  setRoomExit(1, "north", 4); // Hallway -> Kitchen
+  setRoomExit(2, "west", 1);  // Guard Room -> Hallway
+  setRoomExit(2, "north", 5); // Guard Room -> Dining Hall
+  setRoomExit(3, "east", 1);  // Armory -> Hallway
+  setRoomExit(4, "south", 1); // Kitchen -> Hallway
+  setRoomExit(4, "east", 5);  // Kitchen -> Dining Hall
+  setRoomExit(5, "west", 4);  // Dining Hall -> Kitchen
+  setRoomExit(5, "east", 6);  // Dining Hall -> Library
+  setRoomExit(6, "west", 5);  // Library -> Dining Hall
+  setRoomExit(6, "north", 7); // Library -> Treasury
+  setRoomExit(7, "south", 6); // Treasury -> Library
+  setRoomExit(7, "east", 8);  // Treasury -> Entrance Hall
+  setRoomExit(8, "north", 9); // Entrance Hall -> Final Exit
+}
+
+/*
+ * Author: Kobe
+ * Description: Displays the current room, including its description, items,
+ * NPCs, and exits.
+ */
+void GameManager::displayRoom() {
+// Clear the terminal first
+#ifdef _WIN32
+  system("cls"); // For Windows
+#else
+  system("clear"); // For Unix/Linux/MacOS
+#endif
+
+  Room *currentRoom = getCurrentRoom();
+  if (!currentRoom)
+    return;
+
+  // Display player status first
+  std::cout << "===== STATUS =====\n";
+  std::cout << "Health: " << player->getHealth() << "/100\n";
+  std::cout << "=================\n\n";
+
+  // Display room name and description
+  currentRoom->showObjects(); // Use the Room's own display method
+
+  // Show items in the room
+  const std::vector<Item *> &items = getItemsInRoom(currentRoomIndex);
+  if (!items.empty()) {
+    std::cout << "Items: ";
+    for (size_t i = 0; i < items.size(); i++) {
+      std::cout << items[i]->getName();
+      if (i < items.size() - 1)
+        std::cout << ", ";
+    }
+    std::cout << "\n";
+  }
+
+  // Show NPCs in the room
+  const std::vector<NPC *> &npcs = getNPCsInRoom(currentRoomIndex);
+  if (!npcs.empty()) {
+    std::cout << "Characters here: ";
+    int count = 0;
+    for (auto npc : npcs) {
+      std::cout << npc->getName(); // Now using getName()
+      if (++count < npcs.size())
+        std::cout << ", ";
+    }
+    std::cout << "\n";
+  }
+
+  // Show available exits
+  std::cout << "Exits: ";
+  const std::map<std::string, int> &exits = getRoomExits(currentRoomIndex);
+  if (exits.empty()) {
+    std::cout << "none";
+  } else {
+    int count = 0;
+    for (const auto &exit : exits) {
+      // Only show valid direction exits, not our special markers
+      if (exit.first != "guard" && exit.first != "servant") {
+        std::cout << exit.first;
+        if (++count < exits.size())
+          std::cout << ", ";
+      }
+    }
+  }
+  std::cout << "\n";
+
+  // If there's a puzzle in the room, show it
+  Puzzle *puzzle = currentRoom->getPuzzle();
+  if (puzzle && !puzzle->isSolved()) {
+    std::cout << "There's a puzzle here. All exits are magically sealed until "
+                 "it's solved.\n";
+    std::cout << "WARNING: Wrong answers will curse you, causing 10 damage!\n";
+  }
+}
+
+/*
+ * Author: Kobe
+ * Description: Processes player commands and executes appropriate actions.
+ */
+bool GameManager::processCommand(const std::string &commandStr) {
+  // Convert command to lowercase for easier matching
+  std::string lowerCommand = commandStr;
+  std::transform(lowerCommand.begin(), lowerCommand.end(), lowerCommand.begin(),
+                 ::tolower);
+
+  std::vector<std::string> words = parseCommand(lowerCommand);
+  if (words.empty()) {
+    return false;
+  }
+
+  std::string action = words[0];
+
+  // SPECIAL CASE FOR DARK AMULET - Must handle first!
+  if (action == "use" && words.size() > 1) {
+    std::string itemName = words[1];
+
+    if (itemName == "dark" || itemName == "amulet" ||
+        itemName == "dark amulet") {
+      // Check if player has the Dark Amulet in inventory
+      for (const auto &item : player->getInventory()) {
+        if (item.getName() == "Dark Amulet") {
+          // INSTANT DEATH SEQUENCE
+          std::cout << "\n🔥🔥🔥 FATAL ERROR - CURSED ITEM ACTIVATED 🔥🔥🔥\n";
+          std::cout << "As you put on the Dark Amulet, it violently constricts "
+                       "around your neck!\n";
+          std::cout << "You feel your soul being ripped from your body!\n";
+          std::cout << "Your vision fades to black as death claims you...\n\n";
+
+          // Force death - No chance of survival
+          player->takeDamage(9999);
+
+          // End game with explicit loss condition
+          gameOver = true;
+          playerWon = false;
+          std::cout << "YOU HAVE DIED - THE DARK AMULET CLAIMED YOUR SOUL\n";
+          return true; // Game is over
+        }
+      }
+    }
+  }
+
+  if (action == "help") {
+    std::cout << "===== AVAILABLE COMMANDS =====\n";
+    std::cout << "help       - Display this help information\n";
+    std::cout << "info       - Show your status and surroundings\n";
+    std::cout << "look       - Same as 'info'\n"; // Keep "look" for backward
+                                                  // compatibility
+    std::cout
+        << "move DIR   - Move in a direction (north, south, east, west)\n";
+    std::cout << "take ITEM  - Pick up an item and add it to your inventory\n";
+    std::cout << "drop ITEM  - Remove an item from your inventory\n";
+    std::cout << "use ITEM   - Use an item from your inventory\n";
+    std::cout << "give ITEM to NPC - Give an item to a character\n";
+    std::cout << "inventory  - List items you are carrying\n";
+    std::cout << "talk NPC   - Speak with a character in the room\n";
+    std::cout << "attack NPC - Attack a character in the room\n";
+    std::cout << "solve ANS  - Attempt to solve a puzzle with your answer\n";
+    std::cout << "quit       - Exit the game\n";
+    std::cout
+        << "reveal     - Get the answer to a puzzle at the cost of 40 health\n";
+    std::cout << "debug      - Show debug information about the player\n";
+    std::cout << "============================\n";
+  } else if (action == "quit") {
+    return true;
+  } else if (action == "look" || action == "info") {
+    displayRoom();
+  } else if (action == "inventory") {
+    player->displayInventory();
+  } else if (action == "move" && words.size() > 1) {
+    return handleMovement(words[1]);
+  } else if (action == "take" && words.size() > 1) {
+    takeItem(words[1]);
+  } else if (action == "use" && words.size() > 1) {
+    std::string itemName = words[1];
+
+    if (itemName == "Shadow" || itemName == "Stone" ||
+        itemName == "Shadow Stone") {
+      if (player->hasItem("Shadow Stone")) {
+        std::cout << "*** USING SHADOW STONE ***\n";
+        std::cout << "As you touch the Shadow Stone, dark tendrils of energy "
+                     "wrap around your arm!\n";
+        std::cout << "The stone fuses with your skin, becoming part of you.\n";
+        std::cout << "You feel a constant drain on your life force...\n";
+        player->takeDamage(15);
+
+        // Make sure we're setting the flag and removing the item from inventory
+        player->setCursed(true);
+        player->removeItem(
+            "Shadow Stone"); // Remove since it's now "part of you"
+
+        std::cout << "You are now CURSED. Movement will drain your health.\n";
+
+        if (checkLossCondition()) {
+          return true;
+        }
+      } else {
+        std::cout << "You don't have that item.\n";
+      }
+    } else if (itemName == "Cell" || itemName == "Key" ||
+               itemName == "Cell Key") {
+      if (currentRoomIndex == 0) {
+        std::cout << "You use the Cell Key on the rusty lock of your prison "
+                     "cell door.\n";
+        std::cout << "With a satisfying click, the lock opens! You're now free "
+                     "to leave.\n";
+        std::cout << "This key seems too small for the main exit. You'll need "
+                     "to find another way out.\n";
+      } else {
+        std::cout << "There's no suitable lock for this key here.\n";
+      }
+    } else if (itemName == "Knife") {
+      if (currentRoomIndex == 5) { // Dining Hall
+        std::cout << "You use the knife to cut through some moldy tapestries "
+                     "covering the east wall.\n";
+        std::cout << "Behind them, you discover ancient inscriptions that hint "
+                     "at solving the dining hall puzzle.\n";
+        std::cout
+            << "The inscription says: \"Look to the waters for the answer.\"\n";
+      } else {
+        std::cout
+            << "You wave the knife around, but there's nothing to cut here.\n";
+      }
+    } else if (itemName == "Gold" || itemName == "Coin" ||
+               itemName == "Gold Coin") {
+      if (currentRoomIndex == 5 &&
+          roomExits.find(currentRoomIndex) != roomExits.end() &&
+          roomExits[currentRoomIndex].find("servant") !=
+              roomExits[currentRoomIndex].end()) {
+        std::cout << "You flip the Gold Coin and it catches the light. "
+                     "Something doesn't seem right...\n";
+        std::cout << "The servant's body suddenly twitches. It seems the coin "
+                     "has some sort of power!\n";
+        std::cout << "However, nothing else happens. Perhaps the coin would "
+                     "work on someone still alive.\n";
+      } else if (currentRoomIndex == 5) { // If servant is alive
+        const auto &npcs = getNPCsInRoom(currentRoomIndex);
+        for (auto npc : npcs) {
+          if (npc->getName() == "Servant") {
+            std::cout << "You show the Gold Coin to the Servant, whose eyes "
+                         "widen in surprise.\n";
+            std::cout << "\"Oh my! That's a royal treasury coin! Where did you "
+                         "find that?\"\n";
+            std::cout
+                << "The Servant whispers: \"The secret to the entrance hall "
+                   "puzzle is 'map'. Don't tell anyone I told you!\"\n";
+            player->removeItem("Gold Coin"); // Spend the coin
+            return false;
+          }
+        }
+        std::cout
+            << "There's no one here who would be interested in this coin.\n";
+      } else {
+        std::cout << "You admire the shiny coin, but it has no special effect "
+                     "here.\n";
+      }
+    } else if (itemName == "Sword") {
+      std::cout << "You brandish the sword, feeling its perfect balance. This "
+                   "is a fine weapon!\n";
+      if (currentRoomIndex == 7) { // Treasury
+        std::cout << "The sword glows slightly in the treasury, as if it's "
+                     "attuned to the magical barriers.\n";
+      }
+    } else {
+      // Normal item usage
+      player->useItem(itemName);
+    }
+  } else if (action == "solve" && words.size() > 1) {
+    return handlePuzzleInteraction(words[1]);
+  } else if (action == "talk" && words.size() > 1) {
+    std::string targetName = words[1];
+    // Convert to lowercase for comparison
+    std::string lowerTargetName = targetName;
+    std::transform(lowerTargetName.begin(), lowerTargetName.end(),
+                   lowerTargetName.begin(), ::tolower);
+
+    // Check if we're looking for the guard or servant specifically
+    bool lookingForGuard = (lowerTargetName == "guard");
+    bool lookingForServant = (lowerTargetName == "servant");
+
+    NPC *npc = getNPCInRoom(currentRoomIndex, targetName);
+    if (npc) {
+      // Show dialogue options
+      npc->talk();
+      npc->setTalkedTo(true); // Mark that this NPC has been talked to
+    } else {
+      // More specific messages based on who the player is looking for
+      if (lookingForGuard &&
+          roomExits.find(currentRoomIndex) != roomExits.end() &&
+          roomExits[currentRoomIndex].find("guard") !=
+              roomExits[currentRoomIndex].end()) {
+        std::cout << "The guard's body lies motionless on the ground. The "
+                     "stench is still unbearable.\n";
+      } else if (lookingForServant &&
+                 roomExits.find(currentRoomIndex) != roomExits.end() &&
+                 roomExits[currentRoomIndex].find("servant") !=
+                     roomExits[currentRoomIndex].end()) {
+        std::cout << "The servant's corpse is sprawled across the floor where "
+                     "you killed them.\n";
+      } else {
+        std::cout << "There's no one by that name here. Perhaps they're in "
+                     "another room... or dead.\n";
+      }
+    }
+  } else if (action == "attack" && words.size() > 1) {
+    std::string targetName = words[1];
+    NPC *npc = getNPCInRoom(currentRoomIndex, targetName);
+
+    if (npc) {
+      if (npc->hasBeenTalkedTo()) {
+        // If player talked to NPC first, the NPC dies messily
+        std::cout << "You attack " << npc->getName()
+                  << " who was just talking to you!\n";
+        std::cout << npc->getName() << " is fatally wounded and collapses.\n";
+        std::cout << "Unfortunately, in their death throes, they lose control "
+                     "of their bowels.\n";
+        std::cout << "The room now has a terrible stench that makes you gag.\n";
+
+        // Remember that we killed this NPC in this room
+        if (npc->getName() == "Guard") {
+          roomExits[currentRoomIndex]["guard"] =
+              -999; // Use -999 as a marker for "killed"
+        } else if (npc->getName() == "Servant") {
+          roomExits[currentRoomIndex]["servant"] = -999;
+        }
+
+        // Remove NPC from the room
+        for (auto it = roomNPCs[currentRoomIndex].begin();
+             it != roomNPCs[currentRoomIndex].end(); ++it) {
+          if (*it == npc) {
+            delete *it;
+            roomNPCs[currentRoomIndex].erase(it);
+            break;
+          }
+        }
+      } else {
+        // If player attacks without talking first
+        std::cout << "You attack " << npc->getName() << " without warning!\n";
+        std::cout << "They dodge your attack and glare at you angrily.\n";
+        std::cout << "\"How dare you attack without even talking first! No "
+                     "hints for you!\"\n";
+
+        // Now NPC attacks back
+        npc->attack(*player);
+        if (checkLossCondition()) {
+          return true;
+        }
+      }
+    } else {
+      // More specific messages if they're trying to attack someone they already
+      // killed
+      std::string lowerTargetName = targetName;
+      std::transform(lowerTargetName.begin(), lowerTargetName.end(),
+                     lowerTargetName.begin(), ::tolower);
+
+      if (lowerTargetName == "guard" &&
+          roomExits.find(currentRoomIndex) != roomExits.end() &&
+          roomExits[currentRoomIndex].find("guard") !=
+              roomExits[currentRoomIndex].end()) {
+        std::cout << "The guard is already dead. There's no need to attack a "
+                     "corpse.\n";
+      } else if (lowerTargetName == "servant" &&
+                 roomExits.find(currentRoomIndex) != roomExits.end() &&
+                 roomExits[currentRoomIndex].find("servant") !=
+                     roomExits[currentRoomIndex].end()) {
+        std::cout << "You've already killed the servant. Their body lies still "
+                     "on the floor.\n";
+      } else {
+        std::cout << "There's no one by that name here to attack.\n";
+      }
+    }
+  } else if ((action == "give" || action == "use") && words.size() >= 4) {
+    // Find the position of "to" in the command
+    int toPosition = -1;
+    for (size_t i = 2; i < words.size(); i++) {
+      if (words[i] == "to") {
+        toPosition = static_cast<int>(i);
+        break;
+      }
+    }
+
+    // If "to" wasn't found or is the last word, display error
+    if (toPosition == -1 ||
+        static_cast<size_t>(toPosition) == words.size() - 1) {
+      std::cout << "I don't understand that command. Try 'give [item] to "
+                   "[character]'.\n";
+      return false;
+    }
+
+    // Combine all words before "to" as the item name (except the first word
+    // which is "give")
+    std::string itemName = "";
+    for (int i = 1; i < toPosition; i++) {
+      itemName += words[i];
+      if (i < toPosition - 1)
+        itemName += " ";
+    }
+
+    // Combine all words after "to" as the NPC name
+    std::string npcName = "";
+    for (size_t i = toPosition + 1; i < words.size(); i++) {
+      npcName += words[i];
+      if (i < words.size() - 1)
+        npcName += " ";
+    }
+
+    // Get the NPC
+    NPC *npc = getNPCInRoom(currentRoomIndex, npcName);
+    if (!npc) {
+      std::cout << "There's no " << npcName << " here.\n";
+      return false;
+    }
+
+    // Check if player has the item
+    bool hasItem = false;
+    const auto &inventory = player->getInventory();
+    for (const auto &item : inventory) {
+      std::string lowerItemName = itemName;
+      std::string lowerInventoryName = item.getName();
+      std::transform(lowerItemName.begin(), lowerItemName.end(),
+                     lowerItemName.begin(), ::tolower);
+      std::transform(lowerInventoryName.begin(), lowerInventoryName.end(),
+                     lowerInventoryName.begin(), ::tolower);
+
+      // Check for exact match or if item name contains the specified name
+      if (lowerInventoryName == lowerItemName ||
+          lowerInventoryName.find(lowerItemName) != std::string::npos ||
+          lowerItemName.find(lowerInventoryName) != std::string::npos) {
+        hasItem = true;
+        itemName = item.getName(); // Use the actual item name for removal
+        break;
+      }
+    }
+
+    if (!hasItem) {
+      std::cout << "You don't have a " << itemName << " to give.\n";
+      return false;
+    }
+
+    // Handle giving the key to the guard - use partial matching
+    std::string lowerNpcName = npcName;
+    std::transform(lowerNpcName.begin(), lowerNpcName.end(),
+                   lowerNpcName.begin(), ::tolower);
+
+    if (lowerNpcName == "guard" &&
+        (itemName.find("Key") != std::string::npos ||
+         itemName.find("key") != std::string::npos)) {
+      std::cout << "You give the Cell Key to the Guard.\n";
+      std::cout << "The Guard examines it and his eyes light up. \"That's it! "
+                   "My missing key!\"\n";
+      std::cout << "He pockets the key and nods to you. \"As promised, you're "
+                   "free to go.\"\n";
+      std::cout << "\"The exit is through the north door in my room. I'll make "
+                   "sure no one stops you.\"\n";
+
+      // Remove the key from player's inventory and mark guard as non-hostile
+      player->removeItem("Cell Key");
+
+      // Update the guard to be non-hostile
+      for (auto &npc : roomNPCs[currentRoomIndex]) {
+        if (npc->getName() == "Guard") {
+          npc->setHostile(false);
+        }
+      }
+
+      return false;
+    } else {
+      std::cout << npcName << " doesn't seem interested in that item.\n";
+      return false;
+    }
+  } else if (action == "reveal" || action == "hint") {
+    Room *currentRoom = getCurrentRoom();
+    Puzzle *puzzle = currentRoom ? currentRoom->getPuzzle() : nullptr;
+
+    if (!puzzle) {
+      std::cout << "There's no puzzle here to reveal.\n";
+      return false;
+    }
+
+    if (puzzle->isSolved()) {
+      std::cout << "You already solved this puzzle.\n";
+      return false;
+    }
+
+    std::cout
+        << "A mysterious voice whispers: \"Knowledge comes at a price...\"\n";
+    std::cout << "You feel magical energy draining your life force!\n";
+    std::cout << "You take 40 damage as the answer is revealed to you.\n";
+    player->takeDamage(40);
+
+    // Check if player died from the damage
+    if (checkLossCondition()) {
+      return true;
+    }
+
+    // Reveal the answer
+    std::cout << "Through the pain, you hear the whisper: \"The answer is... "
+              << puzzle->getAnswer() << "\"\n";
+    return false;
+  } else if (action == "debug") {
+    std::cout << "=== DEBUG INFO ===\n";
+    std::cout << "Player health: " << player->getHealth() << "\n";
+    std::cout << "Player cursed status: " << (player->isCursed() ? "YES" : "NO")
+              << "\n";
+    std::cout << "Current room: " << currentRoomIndex << "\n";
+    std::cout << "=================\n";
+  } else {
+    std::cout << "I don't understand that command.\n";
+  }
+
+  return false;
+}
+
+/*
+ * Author: Kobe
+ * Description: Parses user input into words for command processing.
+ */
+std::vector<std::string> GameManager::parseCommand(const std::string &command) {
+  std::vector<std::string> words;
+  std::stringstream ss(command);
+  std::string word;
+
+  while (ss >> word) {
+    words.push_back(word);
+  }
+
+  return words;
+}
+
+/*
+ * Author: Kobe
+ * Description: Handles player movement between rooms based on direction.
+ */
+bool GameManager::handleMovement(const std::string &direction) {
+  // Get current room exits
+  std::map<std::string, int> exits = getRoomExits(currentRoomIndex);
+
+  // Check if the direction is valid
+  auto it = exits.find(direction);
+  if (it == exits.end()) {
+    std::cout << "You can't go that way.\n";
+    return false;
+  }
+
+  int newRoomIndex = it->second;
+
+  // BLOCK EXIT UNTIL ALL PUZZLES SOLVED
+  if (newRoomIndex == 9) { // If trying to enter Freedom room
+    // Check if all puzzles are solved
+    bool allPuzzlesSolved = true;
+    std::vector<std::string> unsolvedRooms;
+
+    for (size_t i = 0; i < rooms.size() - 1;
+         i++) { // Skip checking the Freedom room
+      if (rooms[i]->getPuzzle() && !rooms[i]->getPuzzle()->isSolved()) {
+        allPuzzlesSolved = false;
+        // Use getDescription() or similar method to identify the room
+        unsolvedRooms.push_back(rooms[i]->getDescription());
+        // If Description isn't appropriate, another option:
+        // unsolvedRooms.push_back("Room #" + std::to_string(i+1));
+      }
+    }
+
+    if (!allPuzzlesSolved) {
+      std::cout
+          << "🔒 THE PATH TO FREEDOM IS BLOCKED BY MAGICAL BARRIERS! 🔒\n";
+      std::cout
+          << "You must solve ALL puzzles in the dungeon before escaping.\n";
+      std::cout << "Unsolved puzzles remain in these rooms:\n";
+
+      for (const auto &roomDesc : unsolvedRooms) {
+        std::cout << "  - " << roomDesc << "\n";
+      }
+
+      return false;
+    }
+  }
+
+  // Check for puzzle in current room
+  Room *currentRoom = getCurrentRoom();
+  if (currentRoom && currentRoom->getPuzzle() &&
+      !currentRoom->getPuzzle()->isSolved()) {
+    std::cout
+        << "A magical barrier blocks your path! Solve the puzzle first.\n";
+    return false;
+  }
+
+  // Move to the new room
+  currentRoomIndex = newRoomIndex;
+
+  // SHADOW STONE CURSE DAMAGE - Applied BEFORE showing the room
+  if (player->isCursed()) {
+    // Apply damage with dramatic effect
+    std::cout << "💀💀💀 CURSE DAMAGE APPLIED: -5 HEALTH 💀💀💀\n";
+    std::cout
+        << "The Shadow Stone embedded in your arm BURNS with dark energy!\n";
+    std::cout << "You scream in pain as it drains your life force!\n";
+
+    // Apply curse damage
+    player->takeDamage(5);
+
+    // Show current health after damage
+    std::cout << "Your health drops to: " << player->getHealth() << "/100\n\n";
+
+    // Check if player died from curse
+    if (player->getHealth() <= 0) {
+      std::cout << "The Shadow Stone's curse has claimed your life!\n";
+      gameOver = true;
+      playerWon = false;
+      return true;
+    }
+  }
+
+  displayRoom();
+
+  // Check win condition
+  return checkWinCondition();
+}
+
+/*
+ * Author: Kobe
+ * Description: Handles player's attempt to solve a puzzle.
+ */
+bool GameManager::handlePuzzleInteraction(const std::string &answer) {
+  Room *currentRoom = getCurrentRoom();
+  Puzzle *puzzle = currentRoom->getPuzzle();
+
+  if (!puzzle) {
+    std::cout << "There's no puzzle here.\n";
+    return false;
+  }
+
+  if (puzzle->isSolved()) {
+    std::cout << "You already solved this puzzle.\n";
+    return false;
+  }
+
+  std::cout << "The puzzle asks: " << puzzle->getQuestion() << "\n";
+  std::cout << "Your answer: " << answer << "\n";
+
+  // Check if the answer is correct for ANY puzzle room
+  if (puzzle->checkAnswer(answer)) {
+    std::cout << "Correct! The puzzle is solved.\n";
+
+    // Special handling for Entrance Hall
+    if (currentRoomIndex == 8) {
+      std::cout << "As you say the word 'map', the massive door creaks open, "
+                   "revealing a path to freedom!\n";
+      std::cout << "You can now go north to escape the dungeon.\n";
+    } else {
+      std::cout << "The magical barrier dissipates, allowing passage through "
+                   "all exits.\n";
+    }
+
+    puzzle->setSolved(true);
+  } else {
+    std::cout << "That's not right. Try again.\n";
+    std::cout << "A magical curse zaps you, dealing 10 damage!\n";
+    player->takeDamage(10);
+
+    // Check if the player died from puzzle damage
+    if (checkLossCondition()) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/*
+ * Author: Kobe
+ * Description: Checks if the player has reached the winning condition.
+ */
+bool GameManager::checkWinCondition() {
+  if (currentRoomIndex == 9) { // Now check for the final exit room
+    std::cout << "As you step onto the path, warm sunlight bathes your face.\n";
+    std::cout << "After all the dangers and puzzles, you have finally escaped "
+                 "the dungeon!\n";
+    std::cout << "The path ahead leads to freedom and a new beginning.\n";
+    endGame(true);
+    return true;
+  }
+  return false;
+}
+
+/*
+ * Author: Kobe
+ * Description: Checks if the player has reached a losing condition.
+ */
+bool GameManager::checkLossCondition() {
+  if (player->getHealth() <= 0) {
+    std::cout << "You have been defeated.\n";
+
+    // Determine cause of death based on context
+    if (currentRoomIndex == 7 && player->hasItem("Dark Amulet")) {
+      std::cout << "The cursed amulet consumed your life force, turning your "
+                   "body to dust.\n";
+    } else if (rooms[currentRoomIndex]->getPuzzle() &&
+               !rooms[currentRoomIndex]->getPuzzle()->isSolved()) {
+      std::cout << "The magical puzzle curse proved too powerful for your "
+                   "mortal form.\n";
+    } else {
+      std::cout << "Your wounds were too severe to continue.\n";
+    }
+
+    endGame(false);
+    return true;
+  }
+  return false;
+}
+
+/*
+ * Author: Kobe
+ * Description: Ends the game and sets the game outcome.
+ */
+void GameManager::endGame(bool playerWins) {
+  gameOver = true;
+  playerWon = playerWins;
+
+  if (playerWins) {
+    // Different messages based on health
+    if (player->getHealth() == 100) {
+      std::cout
+          << "Congratulations! You escaped the dungeon completely unscathed!\n";
+      std::cout << "Your flawless performance will be legendary among dungeon "
+                   "escapees.\n";
+    } else if (player->getHealth() > 50) {
+      std::cout << "Congratulations! You've won and escaped the dungeon!\n";
+      std::cout << "You have some wounds, but you'll live to tell the tale.\n";
+    } else {
+      std::cout << "You've won... but barely.\n";
+      std::cout << "Staggering out of the dungeon with severe injuries, you "
+                   "collapse outside.\n";
+      std::cout << "It will take time to recover, but at least you're free.\n";
+    }
+  } else {
+    std::cout << "Game over. Your adventure ends here.\n";
+    std::cout << "Better luck next time!\n";
+  }
+}
+
+/*
+ * Author: Kobe
+ * Description: Returns the current room the player is in.
+ */
+Room *GameManager::getCurrentRoom() const {
+  if (currentRoomIndex >= 0 &&
+      currentRoomIndex < static_cast<int>(rooms.size())) {
+    return rooms[currentRoomIndex];
+  }
+  return nullptr;
+}
+
+/*
+ * Author: Kobe
+ * Description: Adds an item to a specific room.
+ */
+void GameManager::addItemToRoom(int roomIndex, Item *item) {
+  roomItems[roomIndex].push_back(item);
+}
+
+/*
+ * Author: Kobe
+ * Description: Removes an item from a room by name and returns it.
+ */
+Item *GameManager::removeItemFromRoom(int roomIndex,
+                                      const std::string &itemName) {
+  auto &items = roomItems[roomIndex];
+  for (auto it = items.begin(); it != items.end(); ++it) {
+    if ((*it)->getName() == itemName) {
+      Item *item = *it;
+      items.erase(it);
+      return item;
+    }
+  }
+  return nullptr;
+}
+
+/*
+ * Author: Kobe
+ * Description: Returns all items in a specific room.
+ */
+std::vector<Item *> GameManager::getItemsInRoom(int roomIndex) const {
+  auto it = roomItems.find(roomIndex);
+  if (it != roomItems.end()) {
+    return it->second;
+  }
+  return {};
+}
+
+/*
+ * Author: Kobe
+ * Description: Adds an NPC to a specific room.
+ */
+void GameManager::addNPCToRoom(int roomIndex, NPC *npc) {
+  roomNPCs[roomIndex].push_back(npc);
+}
+
+/*
+ * Author: Kobe
+ * Description: Gets an NPC in a room by name.
+ */
+NPC *GameManager::getNPCInRoom(int roomIndex, const std::string &npcName) {
+  auto &npcs = roomNPCs[roomIndex];
+  if (!npcs.empty()) {
+    return npcs[0]; // Just return the first NPC since we can't check names
+  }
+  return nullptr;
+}
+
+/*
+ * Author: Kobe
+ * Description: Returns all NPCs in a specific room.
+ */
+std::vector<NPC *> GameManager::getNPCsInRoom(int roomIndex) const {
+  auto it = roomNPCs.find(roomIndex);
+  if (it != roomNPCs.end()) {
+    return it->second;
+  }
+  return {};
+}
+
+/*
+ * Author: Kobe
+ * Description: Sets an exit from one room to another.
+ */
+void GameManager::setRoomExit(int roomIndex, const std::string &direction,
+                              int destinationIndex) {
+  roomExits[roomIndex][direction] = destinationIndex;
+}
+
+/*
+ * Author: Kobe
+ * Description: Gets all exits from a specific room.
+ */
+std::map<std::string, int> GameManager::getRoomExits(int roomIndex) const {
+  auto it = roomExits.find(roomIndex);
+  if (it != roomExits.end()) {
+    return it->second;
+  }
+  return {};
+}
+
+/*
+ * Author: Kobe
+ * Description: Takes an item from the current room and adds it to player
+ * inventory.
+ */
+void GameManager::takeItem(const std::string &itemName) {
+  // Get items in the current room
+  const std::vector<Item *> &roomItemsList = getItemsInRoom(currentRoomIndex);
+
+  // Normalize input (convert to lowercase for case-insensitive comparison)
+  std::string lowerItemName = itemName;
+  std::transform(lowerItemName.begin(), lowerItemName.end(),
+                 lowerItemName.begin(), ::tolower);
+
+  // Try to find a matching item
+  Item *foundItem = nullptr;
+  std::string actualItemName;
+
+  for (Item *item : roomItemsList) {
+    std::string fullName = item->getName();
+    std::string lowerFullName = fullName;
+    std::transform(lowerFullName.begin(), lowerFullName.end(),
+                   lowerFullName.begin(), ::tolower);
+
+    // Check for exact match or partial match (item name contains the user
+    // input)
+    if (lowerFullName == lowerItemName ||
+        lowerFullName.find(lowerItemName) != std::string::npos ||
+        lowerItemName.find(lowerFullName) != std::string::npos) {
+      foundItem = item;
+      actualItemName = fullName;
+      break;
+    }
+
+    // Also check individual words in multi-word item names
+    std::istringstream iss(lowerFullName);
+    std::string word;
+    while (iss >> word) {
+      if (word == lowerItemName) {
+        foundItem = item;
+        actualItemName = fullName;
+        break;
+      }
+    }
+
+    if (foundItem)
+      break;
+  }
+
+  if (foundItem) {
+    std::cout << "You take the " << actualItemName << ".\n";
+    player->addItem(*foundItem);
+    removeItemFromRoom(currentRoomIndex, actualItemName);
+  } else {
+    std::cout << "There's no " << itemName << " here.\n";
+  }
+}
+
+// Improve cleanupTestRooms to properly handle all test cases
+void GameManager::cleanupTestRooms() {
+  // Delete the player first
+  if (player) {
+    delete player;
+    player = nullptr;
+  }
+
+  // Clean up all rooms and their puzzles
+  for (auto room : rooms) {
+    if (room) {
+      if (room->getPuzzle()) {
+        delete room->getPuzzle();
+      }
+      delete room;
+    }
+  }
+
+  // Clean up all items
+  for (auto &roomItemPair : roomItems) {
+    for (auto item : roomItemPair.second) {
+      if (item) {
+        delete item;
+      }
+    }
+  }
+
+  // Clean up all NPCs
+  for (auto &roomNPCPair : roomNPCs) {
+    for (auto npc : roomNPCPair.second) {
+      if (npc) {
+        delete npc;
+      }
+    }
+  }
+
+  // Clear all containers
+  rooms.clear();
+  roomItems.clear();
+  roomNPCs.clear();
+  roomExits.clear();
+
+  // Reset state variables
+  player = nullptr;
+  currentRoomIndex = 0;
+  gameOver = false;
+  playerWon = false;
+}

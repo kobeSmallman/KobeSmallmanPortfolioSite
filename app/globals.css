@@ -1,0 +1,253 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Font Loading - Inter Variable + Playfair Display */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+/* CSS Variables for Design System */
+:root {
+  --bg-primary: #A9B8C4;
+  --surface-panel: #F4F1EA;
+  --text-body: #15202B;
+  --text-inverse: #FFFFFF;
+  --accent: #D75F4E;
+  --accent-hover: #B24A3D;
+  --divider: #CDD4DD;
+  
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  
+  --transition-smooth: all 0.25s ease-out;
+  --transition-medium: all 0.4s ease-out;
+  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-focus: 0 0 0 2px var(--accent);
+}
+
+/* Base Styles */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+  
+  body {
+    font-family: var(--font-sans);
+    color: var(--text-body);
+    background-color: var(--bg-primary);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: var(--text-body);
+  }
+  
+  /* Skip to content link for accessibility */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--accent);
+    color: var(--text-inverse);
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 100;
+    transition: var(--transition-smooth);
+  }
+  
+  .skip-link:focus {
+    top: 6px;
+  }
+  
+  /* Focus styles for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  
+  /* Selection styles */
+  ::selection {
+    background-color: var(--accent);
+    color: var(--text-inverse);
+  }
+  
+  /* Smooth scrolling for reduced motion users */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Component Styles */
+@layer components {
+  /* Navigation styles */
+  .nav-link {
+    @apply relative text-text-body transition-colors duration-300;
+    text-decoration: none;
+  }
+  
+  .nav-link:hover {
+    @apply text-accent;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent);
+    transition: width 0.3s ease-out;
+  }
+  
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+  
+  /* Button styles */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-text-inverse bg-accent rounded-lg font-medium transition-all duration-300;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .btn-primary:hover {
+    @apply bg-accent-hover transform scale-[0.98];
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-accent border-2 border-accent rounded-lg font-medium transition-all duration-300;
+  }
+  
+  .btn-secondary:hover {
+    @apply bg-accent text-text-inverse transform scale-[0.98];
+  }
+  
+  /* Panel styles */
+  .panel {
+    @apply bg-surface-panel rounded-xl p-8;
+    box-shadow: var(--shadow-soft);
+  }
+  
+  /* Section styles */
+  .section {
+    @apply py-16 px-4;
+  }
+  
+  .section-container {
+    @apply max-w-content mx-auto;
+  }
+  
+  /* Divider styles */
+  .divider {
+    @apply h-px bg-divider;
+  }
+  
+  /* Grid styles */
+  .grid-portfolio {
+    @apply grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-4;
+  }
+}
+
+/* Utility Classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  
+  /* Fluid gap utility */
+  .gap-fluid {
+    gap: clamp(1rem, 4vw, 3rem);
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Noise texture for backgrounds */
+  .noise-texture::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
+    background-size: 20px 20px;
+    pointer-events: none;
+    opacity: 0.06;
+  }
+  
+  /* Animation utilities */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: var(--transition-medium);
+  }
+  
+  .animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Will-change performance optimization */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-auto {
+    will-change: auto;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .panel {
+    background: white !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc;
+  }
+}

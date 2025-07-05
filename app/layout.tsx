@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "../components/organisms/Footer";
-import dynamic from "next/dynamic";
+import Header from '../components/organisms/Header';
+import BackToTopButton from '../components/atoms/BackToTop';
 import { Suspense } from "react";
-
-const Header = dynamic(() => import("../components/organisms/Header"), { ssr: false });
-const BackToTopButton = dynamic(() => import("../components/molecules/BackToTopButton"), { ssr: false });
 
 export const metadata: Metadata = {
   title: "Kobe Smallman | Full-Stack Developer",

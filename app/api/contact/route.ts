@@ -3,7 +3,8 @@ import { Twilio } from 'twilio';
 import sgMail from '@sendgrid/mail';
 
 // Initialize Twilio client
-const accountSid = process.env.TWILIO_SID || process.env.TWILIO_ACCOUNT_SID;
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const apiKey = process.env.TWILIO_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioPhone = process.env.TWILIO_FROM;
 const adminPhone = process.env.ADMIN_PHONE;
@@ -22,19 +23,25 @@ let twilioClient: Twilio | null = null;
 function initializeTwilio() {
   console.log('🔧 Twilio initialization attempt:', {
     hasAccountSid: !!accountSid,
+    hasApiKey: !!apiKey,
     hasAuthToken: !!authToken,
     accountSidLength: accountSid?.length,
+    apiKeyLength: apiKey?.length,
     authTokenLength: authToken?.length
   });
 
   try {
-    if (accountSid && authToken) {
-      console.log('🔧 Creating Twilio client...');
-      twilioClient = new Twilio(accountSid, authToken);
+    if (accountSid && apiKey && authToken) {
+      console.log('🔧 Creating Twilio client with API Key...');
+      twilioClient = new Twilio(apiKey, authToken, { accountSid });
       console.log('✅ Twilio client created successfully');
       return true;
     } else {
-      console.log('❌ Missing accountSid or authToken for Twilio');
+      console.log('❌ Missing Twilio credentials:', {
+        hasAccountSid: !!accountSid,
+        hasApiKey: !!apiKey,
+        hasAuthToken: !!authToken
+      });
       return false;
     }
   } catch (error) {
@@ -93,11 +100,12 @@ export async function POST(request: NextRequest) {
         initializeTwilio();
       }
       
-      if (!twilioClient || !twilioPhone || !accountSid || !authToken) {
+      if (!twilioClient || !twilioPhone || !accountSid || !apiKey || !authToken) {
         console.error('❌ Missing Twilio configuration:', {
           hasClient: !!twilioClient,
           hasPhone: !!twilioPhone,
-          hasSid: !!accountSid,
+          hasAccountSid: !!accountSid,
+          hasApiKey: !!apiKey,
           hasToken: !!authToken
         });
         return NextResponse.json(

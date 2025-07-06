@@ -15,8 +15,9 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
-  // Remove static export settings for Vercel
   trailingSlash: false,
+  // Force serverless mode for Vercel
+  target: undefined, // Remove any legacy target settings
 }
 
 module.exports = nextConfig;

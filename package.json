@@ -2,7 +2,6 @@
   "name": "kobe-smallman-portfolio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://kobe-smallman-portfolio-site-rcpj.vercel.app/",
   "dependencies": {
     "@sendgrid/mail": "^8.1.5",
     "@types/node": "^20.0.0",

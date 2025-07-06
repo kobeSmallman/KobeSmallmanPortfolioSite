@@ -1,11 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import twilio from 'twilio';
+import sgMail from '@sendgrid/mail';
 
 // Initialize Twilio client
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioPhone = process.env.TWILIO_FROM;
 const adminPhone = process.env.ADMIN_PHONE;
+
+// Initialize SendGrid
+const sendGridApiKey = process.env.SENDGRID_API_KEY;
+const adminEmail = process.env.ADMIN_EMAIL;
+const fromEmail = process.env.FROM_EMAIL;
+
+if (sendGridApiKey) {
+  sgMail.setApiKey(sendGridApiKey);
+}
 
 let twilioClient: twilio.Twilio | null = null;
 
@@ -58,9 +68,11 @@ export async function POST(request: NextRequest) {
 
     // Send SMS if contact method is SMS
     if (contactMethod === 'sms' && twilioClient && twilioPhone) {
+      // Format phone number for SMS
+      const formattedPhone = phone.startsWith('+1') ? phone : `+1${phone.replace(/\D/g, '')}`;
+      
       try {
-        // Format phone number for SMS
-        const formattedPhone = phone.startsWith('+1') ? phone : `+1${phone.replace(/\D/g, '')}`;
+        console.log('📱 Sending SMS to:', formattedPhone);
         
         // Send confirmation SMS to user
         await twilioClient.messages.create({
@@ -77,17 +89,67 @@ export async function POST(request: NextRequest) {
             to: adminPhone
           });
         }
+        
+        console.log('✅ SMS sent successfully!');
       } catch (smsError) {
-        console.error('SMS sending error:', smsError);
+        console.error('📱 SMS sending error:', smsError);
+        console.error('📱 Twilio config:', {
+          hasAccountSid: !!accountSid,
+          hasAuthToken: !!authToken,
+          hasFrom: !!twilioPhone,
+          hasAdmin: !!adminPhone,
+          originalPhone: phone,
+          formattedPhone
+        });
         return NextResponse.json(
-          { error: 'Failed to send SMS' },
+          { error: `Failed to send SMS: ${smsError instanceof Error ? smsError.message : 'Unknown error'}` },
           { status: 500 }
         );
       }
     }
 
-    // For email contacts, you would integrate with SendGrid here
-    // For now, we'll just return success
+    // Send Email if contact method is email
+    if (contactMethod === 'email' && sendGridApiKey && adminEmail && fromEmail) {
+      try {
+        console.log('📧 Attempting to send email...');
+        
+        // Send confirmation email to user
+        await sgMail.send({
+          to: email,
+          from: fromEmail,
+          subject: 'Thank you for your message!',
+          html: `
+            <h2>Hi ${name},</h2>
+            <p>Thank you for reaching out! I've received your message and will get back to you via email soon.</p>
+            <p><strong>Your message:</strong></p>
+            <p>${message}</p>
+            <p>Best regards,<br>Kobe</p>
+          `
+        });
+        
+        // Send notification email to admin
+        await sgMail.send({
+          to: adminEmail,
+          from: fromEmail,
+          subject: `New Contact Form Message from ${name}`,
+          html: `
+            <h2>New Contact Form Submission</h2>
+            <p><strong>From:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Message:</strong></p>
+            <p>${message}</p>
+          `
+        });
+        
+        console.log('✅ Email sent successfully!');
+      } catch (emailError) {
+        console.error('📧 Email sending error:', emailError);
+        return NextResponse.json(
+          { error: `Failed to send email: ${emailError instanceof Error ? emailError.message : 'Unknown error'}` },
+          { status: 500 }
+        );
+      }
+    }
     
     return NextResponse.json(
       { 

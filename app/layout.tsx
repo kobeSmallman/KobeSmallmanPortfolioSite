@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import dynamicImport from 'next/dynamic';
+import Header from "../components/organisms/Header";
+import Footer from "../components/organisms/Footer";
+import BackToTopButton from "../components/molecules/BackToTopButton";
 import { Suspense } from "react";
-
-// Dynamic imports to prevent SSR issues with useRouter
-const Header = dynamicImport(() => import('../components/organisms/Header'), { ssr: false });
-const Footer = dynamicImport(() => import('../components/organisms/Footer'), { ssr: false });
-const BackToTopButton = dynamicImport(() => import('../components/atoms/BackToTop'), { ssr: false });
 
 export const metadata: Metadata = {
   title: "Kobe Smallman | Full-Stack Developer",
@@ -50,6 +47,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="canonical" href="https://kobesmallman.dev" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#A9B8C4" />
+      </head>
       <body className="font-sans text-text-body bg-bg-primary">
         <Suspense fallback={null}>
           <Header />

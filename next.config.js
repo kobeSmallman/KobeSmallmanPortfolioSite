@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
-// Fixed Vercel deployment issues by removing static export config
 const nextConfig = {
   images: {
+    unoptimized: true,
     domains: [
       'images.unsplash.com',
       'avatars.githubusercontent.com',
@@ -9,9 +9,9 @@ const nextConfig = {
       'kobe.dev'
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['framer-motion'],
-  },
+  output: 'export',
+  distDir: 'out',
+  trailingSlash: true,
   reactStrictMode: true,
   swcMinify: true
 }

@@ -1,9 +1,5 @@
 'use client';
 
-// Force dynamic rendering to avoid SSR issues
-export const dynamic = 'force-dynamic';
-export const runtime = 'edge';
-
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';

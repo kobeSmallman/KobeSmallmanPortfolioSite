@@ -3,7 +3,7 @@ import twilio from 'twilio';
 import sgMail from '@sendgrid/mail';
 
 // Initialize Twilio client
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const accountSid = process.env.TWILIO_SID || process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const twilioPhone = process.env.TWILIO_FROM;
 const adminPhone = process.env.ADMIN_PHONE;
@@ -34,7 +34,10 @@ export async function POST(request: NextRequest) {
       hasTwilioSid: !!accountSid,
       hasTwilioToken: !!authToken,
       hasTwilioPhone: !!twilioPhone,
-      hasAdminPhone: !!adminPhone
+      hasAdminPhone: !!adminPhone,
+      hasSendGrid: !!sendGridApiKey,
+      hasFromEmail: !!fromEmail,
+      hasAdminEmail: !!adminEmail
     });
     
     const body = await request.json();
@@ -67,7 +70,19 @@ export async function POST(request: NextRequest) {
     }
 
     // Send SMS if contact method is SMS
-    if (contactMethod === 'sms' && twilioClient && twilioPhone) {
+    if (contactMethod === 'sms') {
+      if (!twilioClient || !twilioPhone || !accountSid || !authToken) {
+        console.error('❌ Missing Twilio configuration:', {
+          hasClient: !!twilioClient,
+          hasPhone: !!twilioPhone,
+          hasSid: !!accountSid,
+          hasToken: !!authToken
+        });
+        return NextResponse.json(
+          { error: 'SMS service not configured properly' },
+          { status: 500 }
+        );
+      }
       // Format phone number for SMS
       const formattedPhone = phone.startsWith('+1') ? phone : `+1${phone.replace(/\D/g, '')}`;
       
@@ -109,7 +124,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Send Email if contact method is email
-    if (contactMethod === 'email' && sendGridApiKey && adminEmail && fromEmail) {
+    if (contactMethod === 'email') {
+      if (!sendGridApiKey || !adminEmail || !fromEmail) {
+        console.error('❌ Missing SendGrid configuration:', {
+          hasApiKey: !!sendGridApiKey,
+          hasAdminEmail: !!adminEmail,
+          hasFromEmail: !!fromEmail
+        });
+        return NextResponse.json(
+          { error: 'Email service not configured properly' },
+          { status: 500 }
+        );
+      }
       try {
         console.log('📧 Attempting to send email...');
         

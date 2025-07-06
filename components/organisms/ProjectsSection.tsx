@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { projects } from '../../data/projects';
@@ -8,17 +8,28 @@ import { projects } from '../../data/projects';
 const ProjectsSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"]
   });
+  
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 640); // 640px is Tailwind's sm breakpoint
+    };
+    
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
-  return (
-    <>
-      {/* Mobile Projects Section */}
-      <section className="sm:hidden block py-20 px-4 bg-surface-panel" style={{ background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)' }}>
-        {/* Test div to confirm mobile section works */}
-        <div className="text-center py-4 bg-red-500 text-white font-bold sm:hidden">MOBILE SECTION ACTIVE</div>
+  if (isMobile) {
+    // Mobile Layout
+    return (
+      <section className="py-20 px-4 bg-surface-panel" style={{ background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)' }}>
         <div className="max-w-lg mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-display italic text-text-body leading-tight">
@@ -114,9 +125,12 @@ const ProjectsSection: React.FC = () => {
           </div>
         </div>
       </section>
-      
-      {/* Desktop Projects Section */}
-      <section 
+    );
+  }
+  
+  // Desktop Layout
+  return (
+    <section 
         ref={containerRef} 
         className="hidden sm:block relative min-h-[300vh] bg-surface-panel"
         style={{
@@ -444,8 +458,7 @@ const ProjectsSection: React.FC = () => {
           </motion.div>
         </div>
       </div>
-      </section>
-    </>
+    </section>
   );
 };
 

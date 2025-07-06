@@ -19,12 +19,23 @@ if (sendGridApiKey) {
 
 let twilioClient: twilio.Twilio | null = null;
 
+console.log('🔧 Twilio initialization attempt:', {
+  hasAccountSid: !!accountSid,
+  hasAuthToken: !!authToken,
+  accountSidLength: accountSid?.length,
+  authTokenLength: authToken?.length
+});
+
 try {
   if (accountSid && authToken) {
+    console.log('🔧 Creating Twilio client...');
     twilioClient = twilio(accountSid, authToken);
+    console.log('✅ Twilio client created successfully');
+  } else {
+    console.log('❌ Missing accountSid or authToken for Twilio');
   }
 } catch (error) {
-  console.error('Twilio initialization error:', error);
+  console.error('❌ Twilio initialization error:', error);
 }
 
 export async function POST(request: NextRequest) {

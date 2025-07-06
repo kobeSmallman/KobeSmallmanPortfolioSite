@@ -167,7 +167,7 @@ export default function ProjectsSection() {
                   style={{
                     y: useTransform(
                       scrollYProgress,
-                      [0.2 + index * 0.08, 0.4 + index * 0.08, 0.6 + index * 0.08, 0.8],
+                      [0.2 + index * 0.08, 0.4 + index * 0.08, 0.6 + index * 0.08, 0.9 + index * 0.02],
                       [600, stackOffset, stackOffset, -400]
                     ),
                     rotateX: useTransform(

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import twilio from 'twilio';
+import { Twilio } from 'twilio';
 import sgMail from '@sendgrid/mail';
 
 // Initialize Twilio client
@@ -17,25 +17,30 @@ if (sendGridApiKey) {
   sgMail.setApiKey(sendGridApiKey);
 }
 
-let twilioClient: twilio.Twilio | null = null;
+let twilioClient: Twilio | null = null;
 
-console.log('🔧 Twilio initialization attempt:', {
-  hasAccountSid: !!accountSid,
-  hasAuthToken: !!authToken,
-  accountSidLength: accountSid?.length,
-  authTokenLength: authToken?.length
-});
+function initializeTwilio() {
+  console.log('🔧 Twilio initialization attempt:', {
+    hasAccountSid: !!accountSid,
+    hasAuthToken: !!authToken,
+    accountSidLength: accountSid?.length,
+    authTokenLength: authToken?.length
+  });
 
-try {
-  if (accountSid && authToken) {
-    console.log('🔧 Creating Twilio client...');
-    twilioClient = twilio(accountSid, authToken);
-    console.log('✅ Twilio client created successfully');
-  } else {
-    console.log('❌ Missing accountSid or authToken for Twilio');
+  try {
+    if (accountSid && authToken) {
+      console.log('🔧 Creating Twilio client...');
+      twilioClient = new Twilio(accountSid, authToken);
+      console.log('✅ Twilio client created successfully');
+      return true;
+    } else {
+      console.log('❌ Missing accountSid or authToken for Twilio');
+      return false;
+    }
+  } catch (error) {
+    console.error('❌ Twilio initialization error:', error);
+    return false;
   }
-} catch (error) {
-  console.error('❌ Twilio initialization error:', error);
 }
 
 export async function POST(request: NextRequest) {
@@ -82,6 +87,12 @@ export async function POST(request: NextRequest) {
 
     // Send SMS if contact method is SMS
     if (contactMethod === 'sms') {
+      // Try to initialize Twilio client if not already done
+      if (!twilioClient) {
+        console.log('🔧 Twilio client not initialized, attempting to initialize...');
+        initializeTwilio();
+      }
+      
       if (!twilioClient || !twilioPhone || !accountSid || !authToken) {
         console.error('❌ Missing Twilio configuration:', {
           hasClient: !!twilioClient,

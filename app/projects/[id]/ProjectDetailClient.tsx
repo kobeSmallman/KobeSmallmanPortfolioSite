@@ -12,6 +12,7 @@ interface ProjectDetailClientProps {
 
 export default function ProjectDetailClient({ project, projectId }: ProjectDetailClientProps) {
   const [activeSection, setActiveSection] = useState('overview');
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   // Rich project data with XML content
   const projectDetails: { [key: string]: any } = {
@@ -412,24 +413,84 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
 
         {/* Tab Navigation */}
         <div className="mb-8">
-          <div className="flex flex-wrap gap-2 p-3 rounded-xl border" style={{
-            backgroundColor: 'rgba(244, 241, 234, 0.1)',
-            borderColor: 'rgba(169, 184, 196, 0.2)'
-          }}>
-            {tabs.map((tab) => (
+          {/* Mobile Navigation */}
+          <div className="block sm:hidden">
+            {/* Mobile Header with Hamburger */}
+            <div className="flex items-center justify-between p-4 rounded-xl border mb-4" style={{
+              backgroundColor: 'rgba(244, 241, 234, 0.1)',
+              borderColor: 'rgba(169, 184, 196, 0.2)'
+            }}>
+              <span className="font-medium" style={{ color: '#F4F1EA' }}>
+                {tabs.find(tab => tab.id === activeSection)?.label}
+              </span>
               <button
-                key={tab.id}
-                onClick={() => setActiveSection(tab.id)}
-                className={`px-6 py-3 font-medium transition-all duration-300 rounded-lg`}
+                onClick={() => setMobileNavOpen(!mobileNavOpen)}
+                className="p-2 rounded-lg transition-colors"
                 style={{
-                  backgroundColor: activeSection === tab.id ? '#D75F4E' : 'transparent',
-                  color: activeSection === tab.id ? '#F4F1EA' : '#A9B8C4',
-                  boxShadow: activeSection === tab.id ? '0 4px 20px rgba(215, 95, 78, 0.3)' : 'none'
+                  backgroundColor: mobileNavOpen ? '#D75F4E' : 'rgba(169, 184, 196, 0.2)',
+                  color: mobileNavOpen ? '#F4F1EA' : '#A9B8C4'
                 }}
               >
-                {tab.label}
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
               </button>
-            ))}
+            </div>
+            
+            {/* Mobile Dropdown Menu */}
+            {mobileNavOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="grid grid-cols-2 gap-2 p-3 rounded-xl border mb-4"
+                style={{
+                  backgroundColor: 'rgba(244, 241, 234, 0.1)',
+                  borderColor: 'rgba(169, 184, 196, 0.2)'
+                }}
+              >
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setActiveSection(tab.id);
+                      setMobileNavOpen(false);
+                    }}
+                    className={`px-3 py-2 text-sm font-medium transition-all duration-300 rounded-lg`}
+                    style={{
+                      backgroundColor: activeSection === tab.id ? '#D75F4E' : 'transparent',
+                      color: activeSection === tab.id ? '#F4F1EA' : '#A9B8C4',
+                      boxShadow: activeSection === tab.id ? '0 2px 8px rgba(215, 95, 78, 0.3)' : 'none'
+                    }}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </div>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden sm:block">
+            <div className="flex flex-wrap gap-2 p-3 rounded-xl border" style={{
+              backgroundColor: 'rgba(244, 241, 234, 0.1)',
+              borderColor: 'rgba(169, 184, 196, 0.2)'
+            }}>
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveSection(tab.id)}
+                  className={`px-6 py-3 font-medium transition-all duration-300 rounded-lg`}
+                  style={{
+                    backgroundColor: activeSection === tab.id ? '#D75F4E' : 'transparent',
+                    color: activeSection === tab.id ? '#F4F1EA' : '#A9B8C4',
+                    boxShadow: activeSection === tab.id ? '0 4px 20px rgba(215, 95, 78, 0.3)' : 'none'
+                  }}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

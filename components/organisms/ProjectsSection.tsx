@@ -1,152 +1,35 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { projects } from '../../data/projects';
 
-const ProjectsSection: React.FC = () => {
+export default function ProjectsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-  const [isMobile, setIsMobile] = useState(false);
-  
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end center"]
+    offset: ['start end', 'end start']
   });
-  
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 640); // 640px is Tailwind's sm breakpoint
-    };
-    
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
+  const router = useRouter();
 
-  if (isMobile) {
-    // Mobile Layout
-    return (
-      <section className="py-20 px-4 bg-surface-panel" style={{ background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)' }}>
-        <div className="max-w-lg mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-display italic text-text-body leading-tight">
-              Featured{' '}
-              <span className="relative">
-                <span style={{ color: '#D75F4E' }}>Work</span>
-                <div className="absolute -bottom-2 left-0 h-1 w-full bg-accent" style={{ backgroundColor: '#D75F4E' }} />
-              </span>
-            </h2>
-            <p className="text-text-body/70 mt-4 text-lg leading-relaxed">
-              Selected projects showcasing my development expertise
-            </p>
-          </div>
-          
-          <div className="space-y-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div
-                      className="px-3 py-1 text-xs font-medium uppercase tracking-wide rounded"
-                      style={{ backgroundColor: '#D75F4E', color: '#F4F1EA' }}
-                    >
-                      {project.category}
-                    </div>
-                    <span className="text-text-body/60 text-sm font-mono">
-                      {project.year}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-text-body mb-3 leading-tight">
-                    {project.name}
-                  </h3>
-                  
-                  <p className="text-text-body/70 text-sm leading-relaxed mb-4">
-                    {project.overview}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.stack.slice(0, 3).map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 py-1 text-xs font-mono rounded"
-                        style={{ backgroundColor: '#A9B8C4', color: '#F4F1EA' }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex gap-3">
-                    <button
-                      onClick={() => {
-                        if (project.id === 'dungeon-escape') {
-                          window.open('/projects/dungeon-escape/code', '_blank');
-                        } else if (project.links.github) {
-                          window.open(project.links.github, '_blank');
-                        }
-                      }}
-                      className="flex-1 px-4 py-2 text-sm font-medium rounded-lg border border-text-body/20 hover:bg-text-body/5 transition-colors"
-                      style={{ backgroundColor: 'transparent', color: '#15202B' }}
-                    >
-                      {project.id === 'dungeon-escape' ? 'View Code' : 'GitHub'}
-                    </button>
-                    
-                    {project.id === 'lacombe-gutters' && (
-                      <button
-                        onClick={() => window.open(project.links.live, '_blank')}
-                        className="flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-colors"
-                        style={{ backgroundColor: '#D75F4E', color: '#F4F1EA' }}
-                      >
-                        Live Demo
-                      </button>
-                    )}
-                    
-                    <button
-                      onClick={() => router.push(`/projects/${project.id}`)}
-                      className="flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-colors"
-                      style={{ backgroundColor: '#A9B8C4', color: '#F4F1EA' }}
-                    >
-                      Learn More
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-  
-  // Desktop Layout
   return (
     <section 
-        ref={containerRef} 
-        className="hidden sm:block relative min-h-[300vh] bg-surface-panel"
-        style={{
-          background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)'
-        }}
-      >
+      ref={containerRef} 
+      className="relative min-h-[300vh] bg-surface-panel"
+      style={{
+        background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)'
+      }}
+    >
       {/* Subtle blue-grey texture overlay at 20% opacity */}
       <div className="absolute inset-0 opacity-20">
         <div className="w-full h-full" style={{ backgroundColor: '#A9B8C4' }} />
         <div className="absolute inset-0 bg-noise opacity-30" />
       </div>
 
-      {/* Sticky viewport for isometric stack */}
+      {/* Sticky viewport for responsive isometric stack */}
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-8">
-          
           {/* Section header with proper typography */}
           <motion.div 
             className="text-center mb-12 sm:mb-20"
@@ -172,111 +55,107 @@ const ProjectsSection: React.FC = () => {
               Six projects spanning web, mobile, enterprise, and blockchain development
             </p>
           </motion.div>
-
-          {/* Mobile: Simple card stack, Desktop: Isometric stack */}
-          <div className="relative">
-            {/* Mobile Layout */}
-            <div className="block sm:hidden space-y-6">
-              {projects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  className="bg-white rounded-lg shadow-lg overflow-hidden"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  {/* Mobile Card Content */}
-                  <div className="p-4">
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-3">
-                      <div
-                        className="px-2 py-1 text-xs font-medium uppercase tracking-wide rounded"
-                        style={{
-                          backgroundColor: '#D75F4E',
-                          color: '#F4F1EA'
-                        }}
-                      >
-                        {project.category}
-                      </div>
-                      <span className="text-text-body/60 text-sm font-mono">
-                        {project.year}
-                      </span>
+          {/* Mobile: Simple card stack */}
+          <div className="block sm:hidden space-y-6">
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                className="bg-white rounded-lg shadow-lg overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <div className="p-4">
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-3">
+                    <div
+                      className="px-2 py-1 text-xs font-medium uppercase tracking-wide rounded"
+                      style={{
+                        backgroundColor: '#D75F4E',
+                        color: '#F4F1EA'
+                      }}
+                    >
+                      {project.category}
                     </div>
-                    
-                    <h3 className="text-xl font-bold text-text-body mb-2 leading-tight">
-                      {project.name}
-                    </h3>
-                    
-                    <p className="text-text-body/70 text-sm leading-relaxed mb-3">
-                      {project.overview}
-                    </p>
-                    
-                    {/* Tech stack */}
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {project.stack.slice(0, 3).map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-2 py-1 text-xs font-mono rounded"
-                          style={{
-                            backgroundColor: '#A9B8C4',
-                            color: '#F4F1EA'
-                          }}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    {/* Action buttons */}
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => {
-                          if (project.id === 'dungeon-escape') {
-                            window.open('/projects/dungeon-escape/code', '_blank');
-                          } else if (project.links.github) {
-                            window.open(project.links.github, '_blank');
-                          }
-                        }}
-                        className="flex-1 px-3 py-2 text-sm font-medium rounded border border-text-body/20 hover:bg-text-body/5 transition-colors"
-                        style={{
-                          backgroundColor: 'transparent',
-                          color: '#15202B'
-                        }}
-                      >
-                        {project.id === 'dungeon-escape' ? 'View Code' : 'GitHub'}
-                      </button>
-                      
-                      {project.id === 'lacombe-gutters' && (
-                        <button
-                          onClick={() => window.open(project.links.live, '_blank')}
-                          className="flex-1 px-3 py-2 text-sm font-medium rounded transition-colors"
-                          style={{
-                            backgroundColor: '#D75F4E',
-                            color: '#F4F1EA'
-                          }}
-                        >
-                          Live Demo
-                        </button>
-                      )}
-                      
-                      <button
-                        onClick={() => router.push(`/projects/${project.id}`)}
-                        className="flex-1 px-3 py-2 text-sm font-medium rounded transition-colors"
+                    <span className="text-text-body/60 text-sm font-mono">
+                      {project.year}
+                    </span>
+                  </div>
+                  
+                  <h3 className="text-lg font-bold text-text-body mb-2 leading-tight">
+                    {project.name}
+                  </h3>
+                  
+                  <p className="text-text-body/70 text-sm leading-relaxed mb-3">
+                    {project.overview}
+                  </p>
+                  
+                  {/* Tech stack */}
+                  <div className="flex flex-wrap gap-1 mb-4">
+                    {project.stack.slice(0, 3).map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className="px-2 py-1 text-xs font-mono rounded"
                         style={{
                           backgroundColor: '#A9B8C4',
                           color: '#F4F1EA'
                         }}
                       >
-                        Learn More
-                      </button>
-                    </div>
+                        {tech}
+                      </span>
+                    ))}
                   </div>
-                </motion.div>
-              ))}
-            </div>
-            
-            {/* Desktop Layout - Isometric */}
-            <div className="hidden sm:block relative perspective-1500 h-96">
+                  
+                  {/* Action buttons */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        if (project.id === 'dungeon-escape') {
+                          window.open('/projects/dungeon-escape/code', '_blank');
+                        } else if (project.links.github) {
+                          window.open(project.links.github, '_blank');
+                        }
+                      }}
+                      className="flex-1 px-3 py-2 text-sm font-medium rounded border border-text-body/20 hover:bg-text-body/5 transition-colors"
+                      style={{
+                        backgroundColor: 'transparent',
+                        color: '#15202B'
+                      }}
+                    >
+                      {project.id === 'dungeon-escape' ? 'Code' : 'GitHub'}
+                    </button>
+                    
+                    {project.id === 'lacombe-gutters' && (
+                      <button
+                        onClick={() => window.open(project.links.live, '_blank')}
+                        className="flex-1 px-3 py-2 text-sm font-medium rounded transition-colors"
+                        style={{
+                          backgroundColor: '#D75F4E',
+                          color: '#F4F1EA'
+                        }}
+                      >
+                        Live
+                      </button>
+                    )}
+                    
+                    <button
+                      onClick={() => router.push(`/projects/${project.id}`)}
+                      className="flex-1 px-3 py-2 text-sm font-medium rounded transition-colors"
+                      style={{
+                        backgroundColor: '#A9B8C4',
+                        color: '#F4F1EA'
+                      }}
+                    >
+                      Details
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Desktop: 3D Isometric stack */}
+          <div className="hidden sm:block relative perspective-1500 h-96">
             {projects.map((project, index) => {
               const stackOffset = index * 15;
               const depth = index * -20;
@@ -284,7 +163,7 @@ const ProjectsSection: React.FC = () => {
               return (
                 <motion.div
                   key={project.id}
-                  className="absolute inset-0 preserve-3d cursor-pointer group"
+                  className="absolute inset-0 rounded-lg overflow-hidden shadow-lg"
                   style={{
                     y: useTransform(
                       scrollYProgress,
@@ -310,14 +189,14 @@ const ProjectsSection: React.FC = () => {
                     transformStyle: 'preserve-3d'
                   }}
                   whileHover={{
-                    scale: 1.02,
-                    rotateY: 2,
-                    transition: { duration: 0.2 }
+                    opacity: 0.9,
+                    transition: { duration: 0.1 }
                   }}
+                  className="cursor-pointer"
                 >
-                  {/* Flat card design - no shadows */}
+                  {/* Desktop card design */}
                   <div 
-                    className="relative w-full h-[400px] sm:h-[400px] transition-all duration-300"
+                    className="relative w-full h-[400px] transition-all duration-300"
                     style={{
                       backgroundColor: '#F4F1EA',
                       border: '1px solid #E5E5E5',
@@ -325,12 +204,12 @@ const ProjectsSection: React.FC = () => {
                     }}
                   >
                     {/* Content */}
-                    <div className="p-4 sm:p-6 h-full flex flex-col justify-between">
+                    <div className="p-6 h-full flex flex-col justify-between">
                       {/* Header */}
                       <div>
                         <div className="flex items-start justify-between mb-4">
                           <div
-                            className="px-3 py-1 text-xs font-medium uppercase tracking-wide"
+                            className="px-3 py-1 text-xs font-medium uppercase tracking-wide rounded"
                             style={{
                               backgroundColor: '#D75F4E',
                               color: '#F4F1EA'
@@ -343,22 +222,22 @@ const ProjectsSection: React.FC = () => {
                           </span>
                         </div>
                         
-                        <h3 className="text-lg sm:text-2xl font-bold text-text-body mb-2 sm:mb-3 leading-tight">
+                        <h3 className="text-2xl font-bold text-text-body mb-3 leading-tight">
                           {project.name}
                         </h3>
                         
-                        <p className="text-text-body/70 text-xs sm:text-sm leading-relaxed line-clamp-2">
+                        <p className="text-text-body/70 text-sm leading-relaxed line-clamp-2">
                           {project.overview}
                         </p>
                       </div>
 
                       {/* Tech stack */}
-                      <div className="space-y-2 sm:space-y-3">
+                      <div className="space-y-3">
                         <div className="flex flex-wrap gap-1">
                           {project.stack.slice(0, 3).map((tech, techIndex) => (
                             <span
                               key={techIndex}
-                              className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-mono"
+                              className="px-2 py-1 text-xs font-mono rounded"
                               style={{
                                 backgroundColor: '#A9B8C4',
                                 color: '#F4F1EA'
@@ -370,8 +249,7 @@ const ProjectsSection: React.FC = () => {
                         </div>
                         
                         {/* Action buttons */}
-                        <div className="flex gap-1 sm:gap-2 pt-2 sm:pt-3">
-                          {/* GitHub/Code button */}
+                        <div className="flex gap-3">
                           <button
                             onClick={() => {
                               if (project.id === 'dungeon-escape') {
@@ -380,39 +258,39 @@ const ProjectsSection: React.FC = () => {
                                 window.open(project.links.github, '_blank');
                               }
                             }}
-                            className="flex-1 px-2 sm:px-3 py-1.5 sm:py-2 text-xs font-medium transition-colors duration-200 border border-text-body/20 hover:bg-text-body/5"
+                            className="flex-1 px-1.5 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium rounded border border-text-body/20 hover:bg-text-body/5 transition-colors"
                             style={{
                               backgroundColor: 'transparent',
                               color: '#15202B'
                             }}
                           >
-                            {project.id === 'dungeon-escape' ? 'View Code' : 'GitHub'}
+                            {project.id === 'dungeon-escape' ? 'Code' : 'GitHub'}
                           </button>
                           
                           {/* Live demo button - only for Lacombe Gutters */}
                           {project.id === 'lacombe-gutters' && (
                             <button
                               onClick={() => window.open(project.links.live, '_blank')}
-                              className="flex-1 px-2 sm:px-3 py-1.5 sm:py-2 text-xs font-medium transition-colors duration-200"
+                              className="flex-1 px-1.5 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium rounded transition-colors"
                               style={{
                                 backgroundColor: '#D75F4E',
                                 color: '#F4F1EA'
                               }}
                             >
-                              Live Demo
+                              Live
                             </button>
                           )}
                           
                           {/* Learn More button */}
                           <button
                             onClick={() => router.push(`/projects/${project.id}`)}
-                            className="flex-1 px-2 sm:px-3 py-1.5 sm:py-2 text-xs font-medium transition-colors duration-200"
+                            className="flex-1 px-1.5 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-medium rounded transition-colors"
                             style={{
                               backgroundColor: '#A9B8C4',
                               color: '#F4F1EA'
                             }}
                           >
-                            Learn More
+                            Details
                           </button>
                         </div>
                       </div>
@@ -460,6 +338,4 @@ const ProjectsSection: React.FC = () => {
       </div>
     </section>
   );
-};
-
-export default ProjectsSection;
+}

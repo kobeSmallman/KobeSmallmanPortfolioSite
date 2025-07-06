@@ -16,7 +16,9 @@ const ProjectsSection: React.FC = () => {
   return (
     <>
       {/* Mobile Projects Section */}
-      <section className="block sm:hidden py-20 px-4 bg-surface-panel" style={{ background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)' }}>
+      <section className="sm:hidden block py-20 px-4 bg-surface-panel" style={{ background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)' }}>
+        {/* Test div to confirm mobile section works */}
+        <div className="text-center py-4 bg-red-500 text-white font-bold sm:hidden">MOBILE SECTION ACTIVE</div>
         <div className="max-w-lg mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-display italic text-text-body leading-tight">

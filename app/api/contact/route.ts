@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
         
         // Send confirmation SMS to user
         await twilioClient.messages.create({
-          body: `Hi ${name}, thank you for your message! I'll get back to you soon via SMS. - Kobe`,
+          body: `Hi ${name}, thank you for your message! I'll get back to you soon via SMS. This is an automated confirmation - please do not reply to this number. - Kobe`,
           from: twilioPhone,
           to: formattedPhone
         });

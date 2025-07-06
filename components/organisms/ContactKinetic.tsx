@@ -94,7 +94,7 @@ const ContactKinetic: React.FC = () => {
       setSubmitMessage(
         formState.contactMethod === 'email' 
           ? 'Thank you! Your message has been sent successfully. I\'ll get back to you via email soon. Please check your spam folder just in case.'
-          : 'Thank you! Your message has been sent successfully. I\'ll get back to you via SMS soon.'
+          : 'Thank you! Your confirmation SMS has been sent successfully. I\'ll get back to you via SMS soon. (Do not reply to the confirmation message)'
       );
       
       // Reset form after success
@@ -388,7 +388,7 @@ const ContactKinetic: React.FC = () => {
                         animate={{ rotate: 360 }}
                         transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                       />
-                      Sending...
+                      {formState.contactMethod === 'email' ? 'Sending Email...' : 'Sending SMS...'}
                     </motion.div>
                   ) : (
                     'Send Message'

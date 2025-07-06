@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
         // Send notification SMS to admin
         if (adminPhone) {
           await twilioClient.messages.create({
-            body: `New SMS contact from ${name} (${phone}): ${message}`,
+            body: `Hi Kobe, you received a message from your portfolio website from: ${name} (${phone}). Message: "${message}"`,
             from: twilioPhone,
             to: adminPhone
           });

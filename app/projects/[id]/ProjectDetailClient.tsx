@@ -1135,7 +1135,7 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
             <div>
               <h3 className="text-2xl font-bold mb-6" style={{ color: '#F4F1EA' }}>Technology Stack</h3>
               <div className="flex flex-wrap gap-3">
-                {(detailedData?.techStack || project.stack).map((tech: string, index: number) => (
+                {project.stack.map((tech: string, index: number) => (
                   <motion.span
                     key={tech}
                     initial={{ opacity: 0, scale: 0 }}

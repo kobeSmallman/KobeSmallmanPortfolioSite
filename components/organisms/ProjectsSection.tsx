@@ -57,8 +57,110 @@ const ProjectsSection: React.FC = () => {
             </p>
           </motion.div>
 
-          {/* True isometric project stack */}
-          <div className="relative perspective-1500 h-96 sm:h-96">
+          {/* Mobile: Simple card stack, Desktop: Isometric stack */}
+          <div className="relative">
+            {/* Mobile Layout */}
+            <div className="block sm:hidden space-y-6">
+              {projects.map((project, index) => (
+                <motion.div
+                  key={project.id}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  {/* Mobile Card Content */}
+                  <div className="p-4">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-3">
+                      <div
+                        className="px-2 py-1 text-xs font-medium uppercase tracking-wide rounded"
+                        style={{
+                          backgroundColor: '#D75F4E',
+                          color: '#F4F1EA'
+                        }}
+                      >
+                        {project.category}
+                      </div>
+                      <span className="text-text-body/60 text-sm font-mono">
+                        {project.year}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-text-body mb-2 leading-tight">
+                      {project.name}
+                    </h3>
+                    
+                    <p className="text-text-body/70 text-sm leading-relaxed mb-3">
+                      {project.overview}
+                    </p>
+                    
+                    {/* Tech stack */}
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {project.stack.slice(0, 3).map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="px-2 py-1 text-xs font-mono rounded"
+                          style={{
+                            backgroundColor: '#A9B8C4',
+                            color: '#F4F1EA'
+                          }}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    
+                    {/* Action buttons */}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => {
+                          if (project.id === 'dungeon-escape') {
+                            window.open('/projects/dungeon-escape/code', '_blank');
+                          } else if (project.links.github) {
+                            window.open(project.links.github, '_blank');
+                          }
+                        }}
+                        className="flex-1 px-3 py-2 text-sm font-medium rounded border border-text-body/20 hover:bg-text-body/5 transition-colors"
+                        style={{
+                          backgroundColor: 'transparent',
+                          color: '#15202B'
+                        }}
+                      >
+                        {project.id === 'dungeon-escape' ? 'View Code' : 'GitHub'}
+                      </button>
+                      
+                      {project.id === 'lacombe-gutters' && (
+                        <button
+                          onClick={() => window.open(project.links.live, '_blank')}
+                          className="flex-1 px-3 py-2 text-sm font-medium rounded transition-colors"
+                          style={{
+                            backgroundColor: '#D75F4E',
+                            color: '#F4F1EA'
+                          }}
+                        >
+                          Live Demo
+                        </button>
+                      )}
+                      
+                      <button
+                        onClick={() => router.push(`/projects/${project.id}`)}
+                        className="flex-1 px-3 py-2 text-sm font-medium rounded transition-colors"
+                        style={{
+                          backgroundColor: '#A9B8C4',
+                          color: '#F4F1EA'
+                        }}
+                      >
+                        Learn More
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            {/* Desktop Layout - Isometric */}
+            <div className="hidden sm:block relative perspective-1500 h-96">
             {projects.map((project, index) => {
               const stackOffset = index * 15;
               const depth = index * -20;
@@ -218,6 +320,7 @@ const ProjectsSection: React.FC = () => {
                 </motion.div>
               );
             })}
+            </div>
           </div>
 
           {/* Scroll progress indicator */}

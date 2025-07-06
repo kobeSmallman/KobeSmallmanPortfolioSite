@@ -19,11 +19,22 @@ try {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('📧 Contact form submission received');
+    console.log('🔑 Environment check:', {
+      hasTwilioSid: !!accountSid,
+      hasTwilioToken: !!authToken,
+      hasTwilioPhone: !!twilioPhone,
+      hasAdminPhone: !!adminPhone
+    });
+    
     const body = await request.json();
     const { name, email, phone, message, contactMethod } = body;
+    
+    console.log('📝 Form data:', { name, email, phone: phone ? 'PROVIDED' : 'MISSING', contactMethod });
 
     // Validate required fields
     if (!name || !message || !contactMethod) {
+      console.log('❌ Validation failed: Missing required fields');
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }

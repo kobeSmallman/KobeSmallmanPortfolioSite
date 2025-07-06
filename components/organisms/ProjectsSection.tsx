@@ -5,145 +5,146 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { projects } from '../../data/projects';
 
-export default function ProjectsSection() {
+// Simple Mobile Projects Component - NO SCROLL EFFECTS
+function MobileProjectsSection() {
+  const router = useRouter();
+  
+  return (
+    <section className="lg:hidden bg-surface-panel py-16 px-4" style={{
+      background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)'
+    }}>
+      <div className="max-w-sm mx-auto">
+        {/* Mobile Header */}
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-display italic text-text-body leading-tight">
+            Featured{' '}
+            <span className="relative">
+              <span style={{ color: '#D75F4E' }}>Work</span>
+              <div className="absolute -bottom-2 left-0 h-1 w-full bg-accent" style={{ backgroundColor: '#D75F4E' }} />
+            </span>
+          </h2>
+          <p className="text-text-body/70 mt-3 text-base leading-relaxed">
+            Six projects spanning web, mobile, enterprise, and blockchain development
+          </p>
+        </div>
+        
+        {/* Mobile Cards - Simple Stacked Layout */}
+        <div className="space-y-8">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 mx-auto"
+            >
+              <div className="p-5">
+                {/* Header */}
+                <div className="flex items-start justify-between mb-4">
+                  <div
+                    className="px-2 py-1 text-xs font-medium uppercase tracking-wide rounded"
+                    style={{
+                      backgroundColor: '#D75F4E',
+                      color: '#F4F1EA'
+                    }}
+                  >
+                    {project.category}
+                  </div>
+                  <span className="text-text-body/60 text-sm font-mono">
+                    {project.year}
+                  </span>
+                </div>
+                
+                <h3 className="text-lg font-bold text-text-body mb-3 leading-tight">
+                  {project.name}
+                </h3>
+                
+                <p className="text-text-body/70 text-sm leading-relaxed mb-4">
+                  {project.overview}
+                </p>
+                
+                {/* Tech stack */}
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {project.stack.slice(0, 3).map((tech, techIndex) => (
+                    <span
+                      key={techIndex}
+                      className="px-2 py-1 text-xs font-mono rounded"
+                      style={{
+                        backgroundColor: '#A9B8C4',
+                        color: '#F4F1EA'
+                      }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                
+                {/* Action buttons - Stack vertically on mobile */}
+                <div className="space-y-2">
+                  <button
+                    onClick={() => {
+                      if (project.id === 'dungeon-escape') {
+                        window.open('/projects/dungeon-escape/code', '_blank');
+                      } else if (project.links.github) {
+                        window.open(project.links.github, '_blank');
+                      }
+                    }}
+                    className="w-full px-4 py-2.5 text-sm font-medium rounded-lg border border-text-body/20 hover:bg-text-body/5 transition-colors"
+                    style={{
+                      backgroundColor: 'transparent',
+                      color: '#15202B'
+                    }}
+                  >
+                    {project.id === 'dungeon-escape' ? 'View Code' : 'GitHub'}
+                  </button>
+                  
+                  {project.id === 'lacombe-gutters' && (
+                    <button
+                      onClick={() => window.open(project.links.live, '_blank')}
+                      className="w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors"
+                      style={{
+                        backgroundColor: '#D75F4E',
+                        color: '#F4F1EA'
+                      }}
+                    >
+                      Live Demo
+                    </button>
+                  )}
+                  
+                  <button
+                    onClick={() => router.push(`/projects/${project.id}`)}
+                    className="w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors"
+                    style={{
+                      backgroundColor: '#A9B8C4',
+                      color: '#F4F1EA'
+                    }}
+                  >
+                    Learn More
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Desktop Projects Component - WITH SCROLL EFFECTS
+function DesktopProjectsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start']
   });
   const router = useRouter();
-
+  
   return (
-    <>
-      {/* Mobile Version - Completely Independent */}
-      <section className="lg:hidden bg-surface-panel py-16 px-4" style={{
+    <section 
+      ref={containerRef} 
+      className="hidden lg:block relative min-h-[300vh] bg-surface-panel"
+      style={{
         background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)'
-      }}>
-        <div className="max-w-sm mx-auto">
-          {/* Mobile Header */}
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-display italic text-text-body leading-tight">
-              Featured{' '}
-              <span className="relative">
-                <span style={{ color: '#D75F4E' }}>Work</span>
-                <div className="absolute -bottom-2 left-0 h-1 w-full bg-accent" style={{ backgroundColor: '#D75F4E' }} />
-              </span>
-            </h2>
-            <p className="text-text-body/70 mt-3 text-base leading-relaxed">
-              Six projects spanning web, mobile, enterprise, and blockchain development
-            </p>
-          </div>
-          
-          {/* Mobile Cards */}
-          <div className="space-y-8">
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 mx-auto"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <div className="p-5">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div
-                      className="px-2 py-1 text-xs font-medium uppercase tracking-wide rounded"
-                      style={{
-                        backgroundColor: '#D75F4E',
-                        color: '#F4F1EA'
-                      }}
-                    >
-                      {project.category}
-                    </div>
-                    <span className="text-text-body/60 text-sm font-mono">
-                      {project.year}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-lg font-bold text-text-body mb-3 leading-tight">
-                    {project.name}
-                  </h3>
-                  
-                  <p className="text-text-body/70 text-sm leading-relaxed mb-4">
-                    {project.overview}
-                  </p>
-                  
-                  {/* Tech stack */}
-                  <div className="flex flex-wrap gap-1.5 mb-5">
-                    {project.stack.slice(0, 3).map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 py-1 text-xs font-mono rounded"
-                        style={{
-                          backgroundColor: '#A9B8C4',
-                          color: '#F4F1EA'
-                        }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  {/* Action buttons - Stack vertically on mobile */}
-                  <div className="space-y-2">
-                    <button
-                      onClick={() => {
-                        if (project.id === 'dungeon-escape') {
-                          window.open('/projects/dungeon-escape/code', '_blank');
-                        } else if (project.links.github) {
-                          window.open(project.links.github, '_blank');
-                        }
-                      }}
-                      className="w-full px-4 py-2.5 text-sm font-medium rounded-lg border border-text-body/20 hover:bg-text-body/5 transition-colors"
-                      style={{
-                        backgroundColor: 'transparent',
-                        color: '#15202B'
-                      }}
-                    >
-                      {project.id === 'dungeon-escape' ? 'View Code' : 'GitHub'}
-                    </button>
-                    
-                    {project.id === 'lacombe-gutters' && (
-                      <button
-                        onClick={() => window.open(project.links.live, '_blank')}
-                        className="w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors"
-                        style={{
-                          backgroundColor: '#D75F4E',
-                          color: '#F4F1EA'
-                        }}
-                      >
-                        Live Demo
-                      </button>
-                    )}
-                    
-                    <button
-                      onClick={() => router.push(`/projects/${project.id}`)}
-                      className="w-full px-4 py-2.5 text-sm font-medium rounded-lg transition-colors"
-                      style={{
-                        backgroundColor: '#A9B8C4',
-                        color: '#F4F1EA'
-                      }}
-                    >
-                      Learn More
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Desktop Version - 3D Scroll Animation */}
-      <section 
-        ref={containerRef} 
-        className="hidden lg:block relative min-h-[300vh] bg-surface-panel"
-        style={{
-          background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)'
-        }}
-      >
+      }}
+    >
         {/* Subtle blue-grey texture overlay at 20% opacity */}
         <div className="absolute inset-0 opacity-20">
           <div className="w-full h-full" style={{ backgroundColor: '#A9B8C4' }} />
@@ -360,6 +361,15 @@ export default function ProjectsSection() {
           </motion.div>
         </div>
     </section>
+  );
+}
+
+// Main export component that renders both mobile and desktop versions
+export default function ProjectsSection() {
+  return (
+    <>
+      <MobileProjectsSection />
+      <DesktopProjectsSection />
     </>
   );
 }

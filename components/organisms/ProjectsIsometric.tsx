@@ -1,11 +1,147 @@
 'use client';
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { projects } from '../../data/projects';
 import { useRouter } from 'next/navigation';
 
-const ProjectsIsometric: React.FC = () => {
+// Simple Mobile Projects Component - NO SCROLL EFFECTS
+const MobileProjects: React.FC = () => {
+  const router = useRouter();
+  
+  return (
+    <section 
+      id="projects"
+      className="lg:hidden py-16 px-4"
+      style={{
+        background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)',
+      }}
+    >
+      <div className="max-w-sm mx-auto">
+        {/* Mobile Header */}
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-display italic text-text-body leading-tight">
+            Featured{' '}
+            <span className="relative">
+              <span style={{ color: '#D75F4E' }}>Projects</span>
+              <div className="absolute -bottom-2 left-0 h-1 w-full bg-accent" style={{ backgroundColor: '#D75F4E' }} />
+            </span>
+          </h2>
+          <p className="text-text-body/70 mt-3 text-base leading-relaxed">
+            Six projects spanning web, mobile, enterprise, and blockchain development
+          </p>
+        </div>
+        
+        {/* Mobile Cards - Simple Stacked Layout */}
+        <div className="space-y-6">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200"
+            >
+              {/* Project Image */}
+              {project.images && project.images.length > 0 && (
+                <div className="aspect-video bg-gray-100 relative overflow-hidden">
+                  <img
+                    src={project.images[0]}
+                    alt={project.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+              
+              <div className="p-4">
+                {/* Header */}
+                <div className="mb-3">
+                  <div
+                    className="px-2 py-1 text-xs font-medium uppercase tracking-wide rounded inline-block"
+                    style={{
+                      backgroundColor: '#D75F4E',
+                      color: '#F4F1EA'
+                    }}
+                  >
+                    {project.category}
+                  </div>
+                </div>
+                
+                <h3 className="text-lg font-bold text-text-body mb-2 leading-tight">
+                  {project.name}
+                </h3>
+                
+                <p className="text-text-body/70 text-sm leading-relaxed mb-3">
+                  {project.overview}
+                </p>
+                
+                {/* Tech stack */}
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {project.stack.slice(0, 3).map((tech, techIndex) => (
+                    <span
+                      key={techIndex}
+                      className="px-2 py-1 text-xs font-mono rounded"
+                      style={{
+                        backgroundColor: '#A9B8C4',
+                        color: '#F4F1EA'
+                      }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                
+                {/* Action buttons - Stack vertically */}
+                <div className="space-y-2">
+                  <button
+                    onClick={() => {
+                      if (project.id === 'dungeon-escape') {
+                        window.open('/projects/dungeon-escape/code', '_blank');
+                      } else if (project.links.github) {
+                        window.open(project.links.github, '_blank');
+                      }
+                    }}
+                    className="w-full px-3 py-2 text-sm font-medium rounded-lg border border-text-body/20 hover:bg-text-body/5 transition-colors"
+                    style={{
+                      backgroundColor: 'transparent',
+                      color: '#15202B'
+                    }}
+                  >
+                    {project.id === 'dungeon-escape' ? 'View Code' : 'GitHub'}
+                  </button>
+                  
+                  {project.id === 'lacombe-gutters' && (
+                    <button
+                      onClick={() => window.open(project.links.live, '_blank')}
+                      className="w-full px-3 py-2 text-sm font-medium rounded-lg transition-colors"
+                      style={{
+                        backgroundColor: '#D75F4E',
+                        color: '#F4F1EA'
+                      }}
+                    >
+                      Live Demo
+                    </button>
+                  )}
+                  
+                  <button
+                    onClick={() => router.push(`/projects/${project.id}`)}
+                    className="w-full px-3 py-2 text-sm font-medium rounded-lg transition-colors"
+                    style={{
+                      backgroundColor: '#A9B8C4',
+                      color: '#F4F1EA'
+                    }}
+                  >
+                    Learn More
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Desktop Projects Component - WITH SCROLL EFFECTS
+const DesktopProjects: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const { scrollYProgress } = useScroll({
@@ -23,7 +159,7 @@ const ProjectsIsometric: React.FC = () => {
     <section 
       ref={containerRef}
       id="projects"
-      className="min-h-screen py-32 overflow-hidden"
+      className="hidden lg:block min-h-screen py-32 overflow-hidden"
       style={{
         background: 'linear-gradient(180deg, #F4F1EA 0%, #e8e3d6 50%, #F4F1EA 100%)',
         perspective: '2000px',
@@ -76,6 +212,16 @@ const ProjectsIsometric: React.FC = () => {
         </motion.div>
       </div>
     </section>
+  );
+};
+
+// Main component that renders both mobile and desktop versions
+const ProjectsIsometric: React.FC = () => {
+  return (
+    <>
+      <MobileProjects />
+      <DesktopProjects />
+    </>
   );
 };
 

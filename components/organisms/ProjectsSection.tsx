@@ -29,17 +29,17 @@ const ProjectsSection: React.FC = () => {
 
       {/* Sticky viewport for isometric stack */}
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-        <div className="max-w-5xl mx-auto px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-8">
           
           {/* Section header with proper typography */}
           <motion.div 
-            className="text-center mb-20"
+            className="text-center mb-12 sm:mb-20"
             style={{ 
               y: useTransform(scrollYProgress, [0, 0.3], [100, 0]),
               opacity: useTransform(scrollYProgress, [0, 0.2], [0, 1])
             }}
           >
-            <h2 className="text-7xl font-display italic text-text-body leading-tight">
+            <h2 className="text-4xl sm:text-7xl font-display italic text-text-body leading-tight">
               Featured{' '}
               <span className="relative">
                 <span style={{ color: '#D75F4E' }}>Work</span>
@@ -58,7 +58,7 @@ const ProjectsSection: React.FC = () => {
           </motion.div>
 
           {/* True isometric project stack */}
-          <div className="relative perspective-1500 h-96">
+          <div className="relative perspective-1500 h-96 sm:h-96">
             {projects.map((project, index) => {
               const stackOffset = index * 15;
               const depth = index * -20;
@@ -99,7 +99,7 @@ const ProjectsSection: React.FC = () => {
                 >
                   {/* Flat card design - no shadows */}
                   <div 
-                    className="relative w-full h-[400px] transition-all duration-300"
+                    className="relative w-full h-[400px] sm:h-[400px] transition-all duration-300"
                     style={{
                       backgroundColor: '#F4F1EA',
                       border: '1px solid #E5E5E5',
@@ -107,7 +107,7 @@ const ProjectsSection: React.FC = () => {
                     }}
                   >
                     {/* Content */}
-                    <div className="p-6 h-full flex flex-col justify-between">
+                    <div className="p-4 sm:p-6 h-full flex flex-col justify-between">
                       {/* Header */}
                       <div>
                         <div className="flex items-start justify-between mb-4">
@@ -125,22 +125,22 @@ const ProjectsSection: React.FC = () => {
                           </span>
                         </div>
                         
-                        <h3 className="text-2xl font-bold text-text-body mb-3 leading-tight">
+                        <h3 className="text-lg sm:text-2xl font-bold text-text-body mb-2 sm:mb-3 leading-tight">
                           {project.name}
                         </h3>
                         
-                        <p className="text-text-body/70 text-sm leading-relaxed line-clamp-2">
+                        <p className="text-text-body/70 text-xs sm:text-sm leading-relaxed line-clamp-2">
                           {project.overview}
                         </p>
                       </div>
 
                       {/* Tech stack */}
-                      <div className="space-y-3">
+                      <div className="space-y-2 sm:space-y-3">
                         <div className="flex flex-wrap gap-1">
                           {project.stack.slice(0, 3).map((tech, techIndex) => (
                             <span
                               key={techIndex}
-                              className="px-2 py-1 text-xs font-mono"
+                              className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-mono"
                               style={{
                                 backgroundColor: '#A9B8C4',
                                 color: '#F4F1EA'
@@ -152,7 +152,7 @@ const ProjectsSection: React.FC = () => {
                         </div>
                         
                         {/* Action buttons */}
-                        <div className="flex gap-2 pt-3">
+                        <div className="flex gap-1 sm:gap-2 pt-2 sm:pt-3">
                           {/* GitHub/Code button */}
                           <button
                             onClick={() => {
@@ -162,7 +162,7 @@ const ProjectsSection: React.FC = () => {
                                 window.open(project.links.github, '_blank');
                               }
                             }}
-                            className="flex-1 px-3 py-2 text-xs font-medium transition-colors duration-200 border border-text-body/20 hover:bg-text-body/5"
+                            className="flex-1 px-2 sm:px-3 py-1.5 sm:py-2 text-xs font-medium transition-colors duration-200 border border-text-body/20 hover:bg-text-body/5"
                             style={{
                               backgroundColor: 'transparent',
                               color: '#15202B'
@@ -175,7 +175,7 @@ const ProjectsSection: React.FC = () => {
                           {project.id === 'lacombe-gutters' && (
                             <button
                               onClick={() => window.open(project.links.live, '_blank')}
-                              className="flex-1 px-3 py-2 text-xs font-medium transition-colors duration-200"
+                              className="flex-1 px-2 sm:px-3 py-1.5 sm:py-2 text-xs font-medium transition-colors duration-200"
                               style={{
                                 backgroundColor: '#D75F4E',
                                 color: '#F4F1EA'
@@ -188,7 +188,7 @@ const ProjectsSection: React.FC = () => {
                           {/* Learn More button */}
                           <button
                             onClick={() => router.push(`/projects/${project.id}`)}
-                            className="flex-1 px-3 py-2 text-xs font-medium transition-colors duration-200"
+                            className="flex-1 px-2 sm:px-3 py-1.5 sm:py-2 text-xs font-medium transition-colors duration-200"
                             style={{
                               backgroundColor: '#A9B8C4',
                               color: '#F4F1EA'

@@ -3,8 +3,10 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
+import ClientOnly from '../../components/ui/ClientOnly';
 
-const AboutPage: React.FC = () => {
+
+const AnimatedAboutContent: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -173,6 +175,26 @@ const AboutPage: React.FC = () => {
         </motion.div>
       </section>
     </main>
+  );
+};
+
+const AboutPage: React.FC = () => {
+  return (
+    <ClientOnly fallback={
+      <main className="min-h-screen bg-bg-primary">
+        <div className="max-w-6xl mx-auto px-4 py-16">
+          <div className="animate-pulse">
+            <div className="h-12 bg-divider rounded mb-8 w-1/2"></div>
+            <div className="h-4 bg-divider rounded mb-4 w-full"></div>
+            <div className="h-4 bg-divider rounded mb-4 w-3/4"></div>
+            <div className="h-4 bg-divider rounded mb-8 w-1/2"></div>
+            <div className="h-64 bg-divider rounded"></div>
+          </div>
+        </div>
+      </main>
+    }>
+      <AnimatedAboutContent />
+    </ClientOnly>
   );
 };
 

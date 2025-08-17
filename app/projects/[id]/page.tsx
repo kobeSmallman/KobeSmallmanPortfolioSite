@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { notFound } from 'next/navigation';
-import dynamic from 'next/dynamic';
 import { projects, type Project } from '../../../data/projects';
+import ProjectDetailClientDynamic from './ProjectDetailClientDynamic';
+import { ProjectSkeleton } from '../../../components/ui/Skeleton';
 
-// Dynamic import to prevent SSR issues with Framer Motion
-const ProjectDetailClient = dynamic(() => import('./ProjectDetailClient'), {
-  ssr: false,
-  loading: () => <div className="min-h-screen flex items-center justify-center">Loading...</div>
-});
 
 export function generateStaticParams() {
   return projects.map((project: Project) => ({
@@ -21,6 +17,7 @@ interface ProjectDetailPageProps {
   };
 }
 
+
 export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
   const project = projects.find(p => p.id === params.id);
 
@@ -28,5 +25,5 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
     notFound();
   }
 
-  return <ProjectDetailClient project={project} projectId={params.id} />;
+  return <ProjectDetailClientDynamic project={project} projectId={params.id} />;
 }

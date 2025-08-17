@@ -11,7 +11,6 @@ const MobileProjects: React.FC = () => {
   
   return (
     <section 
-      id="projects"
       className="lg:hidden py-16 px-4"
       style={{
         background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)',

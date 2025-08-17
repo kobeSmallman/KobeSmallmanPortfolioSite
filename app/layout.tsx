@@ -3,6 +3,8 @@ import "./globals.css";
 import Header from "../components/organisms/Header";
 import Footer from "../components/organisms/Footer";
 import BackToTopButton from "../components/molecules/BackToTopButton";
+import ErrorBoundary from "../components/ui/ErrorBoundary";
+import ClientOnly from "../components/ui/ClientOnly";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
@@ -55,14 +57,35 @@ export default function RootLayout({
         <meta name="theme-color" content="#A9B8C4" />
       </head>
       <body className="font-sans text-text-body bg-bg-primary">
-        <Suspense fallback={null}>
-          <Header />
-        </Suspense>
-        <main id="main">
-          {children}
-        </main>
-        <Footer />
-        <BackToTopButton />
+        <ErrorBoundary>
+          <ClientOnly fallback={
+            <header className="fixed top-0 left-0 right-0 z-50 bg-bg-primary/95 backdrop-blur-sm shadow-lg">
+              <div className="max-w-content mx-auto px-4 h-16 flex items-center justify-between">
+                <div className="font-display font-medium text-lg" style={{ color: '#D75F4E' }}>
+                  Kobe Smallman
+                </div>
+                <nav className="hidden md:flex items-center space-x-8">
+                  <span className="text-text-body/70">About</span>
+                  <span className="text-text-body/70">Projects</span>
+                  <span className="text-text-body/70">Contact</span>
+                </nav>
+              </div>
+            </header>
+          }>
+            <Suspense fallback={null}>
+              <Header />
+            </Suspense>
+          </ClientOnly>
+          <main id="main">
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
+          </main>
+          <Footer />
+          <ClientOnly>
+            <BackToTopButton />
+          </ClientOnly>
+        </ErrorBoundary>
       </body>
     </html>
   );

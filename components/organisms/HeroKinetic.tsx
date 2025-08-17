@@ -170,6 +170,9 @@ const HeroKinetic: React.FC = () => {
           src="/images/kobeprofilepic.jpg" 
           alt="Kobe Smallman - Full Stack Developer"
           className="w-full h-full object-cover"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
         />
         <motion.div
           className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-accent/20"

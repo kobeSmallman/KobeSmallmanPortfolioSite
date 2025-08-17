@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { type Project } from '../../../data/projects';
+import ClientOnly from '../../../components/ui/ClientOnly';
 
 interface ProjectDetailClientProps {
   project: Project;
@@ -396,20 +397,33 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
 
       <main className="container mx-auto px-6 py-12 max-w-6xl">
         {/* Project Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-12"
-        >
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#F4F1EA' }}>
-              {projectData.name || project.name}
-            </h1>
-            <p className="text-xl max-w-2xl mx-auto" style={{ color: '#A9B8C4' }}>
-              {projectData.overview || project.overview}
-            </p>
+        <ClientOnly fallback={
+          <div className="mb-12">
+            <div className="text-center mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#F4F1EA' }}>
+                {projectData.name || project.name}
+              </h1>
+              <p className="text-xl max-w-2xl mx-auto" style={{ color: '#A9B8C4' }}>
+                {projectData.overview || project.overview}
+              </p>
+            </div>
           </div>
-        </motion.div>
+        }>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-12"
+          >
+            <div className="text-center mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: '#F4F1EA' }}>
+                {projectData.name || project.name}
+              </h1>
+              <p className="text-xl max-w-2xl mx-auto" style={{ color: '#A9B8C4' }}>
+                {projectData.overview || project.overview}
+              </p>
+            </div>
+          </motion.div>
+        </ClientOnly>
 
         {/* Tab Navigation */}
         <div className="mb-8">
@@ -439,16 +453,40 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
             
             {/* Mobile Dropdown Menu */}
             {mobileNavOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="grid grid-cols-2 gap-2 p-3 rounded-xl border mb-4"
-                style={{
+              <ClientOnly fallback={
+                <div className="grid grid-cols-2 gap-2 p-3 rounded-xl border mb-4" style={{
                   backgroundColor: 'rgba(244, 241, 234, 0.1)',
                   borderColor: 'rgba(169, 184, 196, 0.2)'
-                }}
-              >
+                }}>
+                  {tabs.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        setActiveSection(tab.id);
+                        setMobileNavOpen(false);
+                      }}
+                      className="px-3 py-2 text-sm font-medium transition-all duration-300 rounded-lg"
+                      style={{
+                        backgroundColor: activeSection === tab.id ? '#D75F4E' : 'transparent',
+                        color: activeSection === tab.id ? '#F4F1EA' : '#A9B8C4',
+                        boxShadow: activeSection === tab.id ? '0 2px 8px rgba(215, 95, 78, 0.3)' : 'none'
+                      }}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+              }>
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="grid grid-cols-2 gap-2 p-3 rounded-xl border mb-4"
+                  style={{
+                    backgroundColor: 'rgba(244, 241, 234, 0.1)',
+                    borderColor: 'rgba(169, 184, 196, 0.2)'
+                  }}
+                >
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
@@ -466,7 +504,8 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
                     {tab.label}
                   </button>
                 ))}
-              </motion.div>
+                </motion.div>
+              </ClientOnly>
             )}
           </div>
           
@@ -495,13 +534,18 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
         </div>
 
         {/* Tab Content */}
-        <motion.div
-          key={activeSection}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.3 }}
-          className="min-h-[400px]"
-        >
+        <ClientOnly fallback={
+          <div className="min-h-[400px]">
+            {/* Static content will be rendered here without animations */}
+          </div>
+        }>
+          <motion.div
+            key={activeSection}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3 }}
+            className="min-h-[400px]"
+          >
           {/* Overview Section */}
           {activeSection === 'overview' && (
             <div className="prose prose-lg max-w-none">
@@ -1191,7 +1235,8 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
               )}
             </div>
           </motion.div>
-        </motion.div>
+          </motion.div>
+        </ClientOnly>
       </main>
     </div>
   );

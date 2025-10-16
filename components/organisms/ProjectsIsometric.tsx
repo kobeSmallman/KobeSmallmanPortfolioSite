@@ -11,7 +11,6 @@ const MobileProjects: React.FC = () => {
   
   return (
     <section 
-      id="projects"
       className="lg:hidden py-16 px-4"
       style={{
         background: 'linear-gradient(180deg, #F4F1EA 0%, #F4F1EA 100%)',
@@ -158,7 +157,6 @@ const DesktopProjects: React.FC = () => {
   return (
     <section 
       ref={containerRef}
-      id="projects"
       className="hidden lg:block min-h-screen py-32 overflow-hidden"
       style={{
         background: 'linear-gradient(180deg, #F4F1EA 0%, #e8e3d6 50%, #F4F1EA 100%)',
@@ -218,10 +216,10 @@ const DesktopProjects: React.FC = () => {
 // Main component that renders both mobile and desktop versions
 const ProjectsIsometric: React.FC = () => {
   return (
-    <>
+    <div id="projects">
       <MobileProjects />
       <DesktopProjects />
-    </>
+    </div>
   );
 };
 

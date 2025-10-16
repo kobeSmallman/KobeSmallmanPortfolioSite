@@ -149,7 +149,7 @@ const HeroKinetic: React.FC = () => {
 
       {/* User Profile Image */}
       <motion.div 
-        className="absolute right-4 top-20 w-32 h-32 sm:right-8 sm:top-24 sm:w-40 sm:h-40 lg:right-20 lg:top-1/3 lg:w-48 lg:h-48 rounded-full overflow-hidden border-4"
+        className="absolute right-4 top-24 w-28 h-28 sm:right-8 sm:top-28 sm:w-36 sm:h-36 lg:right-20 lg:top-1/3 lg:w-48 lg:h-48 rounded-full overflow-hidden border-4 z-10"
         style={{
           borderColor: '#D75F4E',
           transform: 'rotateX(-15deg) rotateY(10deg)',

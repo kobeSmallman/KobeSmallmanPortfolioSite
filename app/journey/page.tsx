@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import ClientOnly from '../../components/ui/ClientOnly';
 
 interface Milestone {
-  year: string;
   title: string;
   subtitle: string;
   description: string;
@@ -18,7 +17,6 @@ interface Milestone {
 
 const milestones: Milestone[] = [
   {
-    year: '2019',
     title: 'The Spark',
     subtitle: 'Curiosity before code',
     description:
@@ -29,7 +27,6 @@ const milestones: Milestone[] = [
     lesson: 'The best reason to learn something is because you genuinely want to know how it works.',
   },
   {
-    year: '2020',
     title: 'First Commit',
     subtitle: 'Learning Git and the basics',
     description:
@@ -40,7 +37,6 @@ const milestones: Milestone[] = [
     lesson: 'Every expert was once a beginner who decided to push through the awkward phase.',
   },
   {
-    year: '2022',
     title: 'Learning to Think in Code',
     subtitle: 'C++ fundamentals and computer science',
     description:
@@ -51,7 +47,6 @@ const milestones: Milestone[] = [
     lesson: 'You don\'t need to understand everything to start. You just need to start.',
   },
   {
-    year: '2023',
     title: 'Dungeon Escape',
     subtitle: 'First real project — C++17 text-based RPG',
     description:
@@ -62,7 +57,6 @@ const milestones: Milestone[] = [
     lesson: 'Writing code that works is one thing. Writing code that\'s organized and maintainable is the real skill.',
   },
   {
-    year: '2023',
     title: 'Portfolio v1',
     subtitle: 'First website — Jekyll + Tailwind',
     description:
@@ -73,7 +67,6 @@ const milestones: Milestone[] = [
     lesson: 'Shipping something real, even if it\'s simple, teaches more than any tutorial.',
   },
   {
-    year: '2024',
     title: 'WIDA CRM',
     subtitle: 'Capstone team lead — Laravel + MySQL',
     description:
@@ -84,7 +77,6 @@ const milestones: Milestone[] = [
     lesson: 'Leading a team isn\'t about writing all the code yourself. It\'s about unblocking everyone else.',
   },
   {
-    year: '2024',
     title: 'Entering Mobile',
     subtitle: 'MadLibs, MineSweeper, Memory Match, Soundboard',
     description:
@@ -95,7 +87,6 @@ const milestones: Milestone[] = [
     lesson: 'You don\'t need a big project to learn something new. Four small ones can cover more ground.',
   },
   {
-    year: '2024',
     title: '4 Pics 1 Word',
     subtitle: 'Polished mobile game — offline, store-ready',
     description:
@@ -106,7 +97,6 @@ const milestones: Milestone[] = [
     lesson: 'Mobile has its own set of problems. Battery, bundle size, offline state. You can\'t just think like a web developer.',
   },
   {
-    year: '2024',
     title: 'Lacombe Gutters',
     subtitle: 'First paid client — Next.js production site',
     description:
@@ -117,7 +107,6 @@ const milestones: Milestone[] = [
     lesson: 'Building for a real person with a real business changes how you think about every line of code.',
   },
   {
-    year: '2024',
     title: 'BlockchainTickets',
     subtitle: 'Full-stack Web3 — Solidity + ASP.NET + React',
     description:
@@ -128,7 +117,6 @@ const milestones: Milestone[] = [
     lesson: 'Working across multiple languages and paradigms at once forces you to think in patterns, not syntax.',
   },
   {
-    year: '2024',
     title: 'Portfolio v2',
     subtitle: 'CRA to Next.js 14 — React Server Components',
     description:
@@ -139,7 +127,6 @@ const milestones: Milestone[] = [
     lesson: 'Migrating isn\'t just changing syntax. It\'s rethinking how the whole app renders.',
   },
   {
-    year: '2025',
     title: 'Algorithm Deep Dive',
     subtitle: 'LPS solver — Naive vs DP vs Manacher\'s',
     description:
@@ -150,7 +137,6 @@ const milestones: Milestone[] = [
     lesson: 'Understanding algorithms isn\'t about memorizing solutions. It\'s about recognizing which patterns fit which problems.',
   },
   {
-    year: '2025',
     title: 'CryptoLab',
     subtitle: 'Manual cryptography — RSA, DES, Diffie-Hellman',
     description:
@@ -161,7 +147,6 @@ const milestones: Milestone[] = [
     lesson: 'When you can\'t use a library, you have to understand what the library does. That\'s where the real learning happens.',
   },
   {
-    year: '2026',
     title: 'Valley City Sales',
     subtitle: 'Full-stack dealership platform — monorepo',
     description:
@@ -341,15 +326,6 @@ function JourneyContent() {
                         <MilestoneIcon icon={milestone.icon} color={milestone.color} />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-3 mb-1 flex-wrap">
-                            <span
-                              className="text-xs font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full"
-                              style={{
-                                backgroundColor: `${milestone.color}20`,
-                                color: milestone.color,
-                              }}
-                            >
-                              {milestone.year}
-                            </span>
                             <h3 className="text-lg sm:text-xl font-bold" style={{ color: '#F4F1EA' }}>
                               {milestone.title}
                             </h3>

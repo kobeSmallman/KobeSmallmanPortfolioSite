@@ -49,15 +49,13 @@ const Header: React.FC = () => {
   ];
 
   const scrollToSection = (sectionId: string) => {
-    if (sectionId === 'about') {
-      router.push('/about');
-      setIsMobileMenuOpen(false);
-    } else if (sectionId === 'journey') {
-      router.push('/journey');
+    const item = navItems.find(n => n.id === sectionId);
+    if (item?.isPage) {
+      router.push(`/${sectionId}`);
       setIsMobileMenuOpen(false);
     } else {
       const element = document.getElementById(sectionId);
-      
+
       if (element) {
         // Close menu first, then scroll after a short delay
         setIsMobileMenuOpen(false);

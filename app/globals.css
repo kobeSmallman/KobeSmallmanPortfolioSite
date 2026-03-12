@@ -172,6 +172,28 @@
   }
 }
 
+/* Dark Page Utilities */
+@layer components {
+  .dark-page-bg {
+    background: linear-gradient(135deg, #15202B 0%, #1a2332 50%, #15202B 100%);
+  }
+
+  .dark-page-header {
+    background-color: rgba(21, 32, 43, 0.95);
+    border-bottom: 1px solid rgba(169, 184, 196, 0.2);
+  }
+
+  .dark-card {
+    background-color: rgba(244, 241, 234, 0.9);
+    border-color: rgba(169, 184, 196, 0.3);
+  }
+
+  .dark-card-alt {
+    background-color: rgba(244, 241, 234, 0.08);
+    border-color: rgba(169, 184, 196, 0.12);
+  }
+}
+
 /* Utility Classes */
 @layer utilities {
   .text-balance {

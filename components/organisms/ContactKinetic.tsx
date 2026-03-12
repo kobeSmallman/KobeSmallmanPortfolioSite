@@ -19,7 +19,7 @@ const ContactKinetic: React.FC = () => {
   const [blobCount, setBlobCount] = useState(8);
 
   React.useEffect(() => {
-    if (window.innerWidth >= 1024) setBlobCount(20);
+    if (window.innerWidth >= 1024) setBlobCount(12);
   }, []);
   
   const { scrollYProgress } = useScroll({

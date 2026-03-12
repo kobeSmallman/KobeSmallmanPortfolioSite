@@ -16,7 +16,7 @@ const HeroKinetic: React.FC = () => {
   const [particleCount, setParticleCount] = useState(15);
 
   useEffect(() => {
-    if (window.innerWidth >= 1024) setParticleCount(50);
+    if (window.innerWidth >= 1024) setParticleCount(30);
   }, []);
   
   // Rotating professional messages
@@ -45,16 +45,21 @@ const HeroKinetic: React.FC = () => {
   const mouseYSpring = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    let rafId: number | null = null;
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = containerRef.current?.getBoundingClientRect();
-      if (rect) {
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        mouseX.set((e.clientX - centerX) / 20);
-        mouseY.set((e.clientY - centerY) / 20);
-      }
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        const rect = containerRef.current?.getBoundingClientRect();
+        if (rect) {
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          mouseX.set((e.clientX - centerX) / 20);
+          mouseY.set((e.clientY - centerY) / 20);
+        }
+        rafId = null;
+      });
     };
-    
+
     const handleWheel = (e: WheelEvent) => {
       if (!hasScrolled && Math.abs(e.deltaY) > 40) {
         setHasScrolled(true);
@@ -64,17 +69,18 @@ const HeroKinetic: React.FC = () => {
         }
       }
     };
-    
+
     document.addEventListener('mousemove', handleMouseMove);
     if (containerRef.current) {
       containerRef.current.addEventListener('wheel', handleWheel, { passive: false });
     }
-    
+
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       if (containerRef.current) {
         containerRef.current.removeEventListener('wheel', handleWheel);
       }
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [mouseX, mouseY, hasScrolled]);
 

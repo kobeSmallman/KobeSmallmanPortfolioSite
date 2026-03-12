@@ -12,43 +12,98 @@ interface Milestone {
   description: string;
   skills: string[];
   color: string;
-  icon: 'spark' | 'code' | 'team' | 'mobile' | 'chain' | 'rocket' | 'globe';
+  icon: 'spark' | 'code' | 'team' | 'mobile' | 'chain' | 'rocket' | 'globe' | 'book' | 'lock';
   lesson: string;
 }
 
 const milestones: Milestone[] = [
   {
-    year: '2022',
-    title: 'The Starting Line',
-    subtitle: 'First lines of code',
+    year: '2019',
+    title: 'The Spark',
+    subtitle: 'Curiosity before code',
     description:
-      'I enrolled in computer science with zero programming experience. The first language was C++, and honestly, getting "Hello World" to compile felt like a win. I didn\'t know what a pointer was, but I knew I wanted to figure it out.',
-    skills: ['C++', 'Problem Solving', 'Algorithms'],
+      'Before I ever wrote a line of code, I was the kid taking apart computers and wondering how software actually worked. I didn\'t know what programming was yet, but I knew I wanted to understand what was happening behind the screen. That curiosity is what eventually pushed me into computer science.',
+    skills: ['Curiosity', 'Problem Solving', 'Logic'],
     color: '#64748b',
     icon: 'spark',
+    lesson: 'The best reason to learn something is because you genuinely want to know how it works.',
+  },
+  {
+    year: '2020',
+    title: 'First Commit',
+    subtitle: 'Learning Git and the basics',
+    description:
+      'My first GitHub commit was a repo called "KobeWebsite" with nothing but a README that said "Testing git." It sounds small, but learning version control early turned out to be one of the most useful things I did. At this point I was learning HTML, CSS, and just starting to understand how the web actually worked.',
+    skills: ['Git', 'HTML', 'CSS', 'Version Control'],
+    color: '#64748b',
+    icon: 'code',
+    lesson: 'Every expert was once a beginner who decided to push through the awkward phase.',
+  },
+  {
+    year: '2022',
+    title: 'Learning to Think in Code',
+    subtitle: 'C++ fundamentals and computer science',
+    description:
+      'College hit me with C++ as the first real language. Pointers, memory allocation, compiling errors that made no sense. But somewhere between debugging segfaults and writing my first sorting algorithm, something clicked. I stopped seeing code as instructions and started seeing it as problem-solving.',
+    skills: ['C++', 'Algorithms', 'Data Structures', 'Debugging'],
+    color: '#64748b',
+    icon: 'code',
     lesson: 'You don\'t need to understand everything to start. You just need to start.',
   },
   {
     year: '2023',
     title: 'Dungeon Escape',
-    subtitle: 'C++17 text-based RPG',
+    subtitle: 'First real project — C++17 text-based RPG',
     description:
-      'My first real project beyond coursework. A text-based dungeon crawler with rooms, puzzles, items, NPCs, and a cursed status system. I learned about smart pointers, RAII, cross-platform preprocessor directives, and how to organize code that\'s bigger than a single file. It compiled warning-free on GCC, Clang, and MSVC.',
+      'My first project beyond coursework. A text-based dungeon crawler with rooms, puzzles, items, NPCs, and a cursed status system. This was where I learned that writing code and organizing code are completely different skills. Smart pointers, RAII, cross-platform preprocessor directives — it all clicked when I had a reason to use it. Compiled warning-free on GCC, Clang, and MSVC.',
     skills: ['C++17', 'OOP', 'STL', 'RAII', 'Cross-Platform'],
     color: '#64748b',
     icon: 'code',
     lesson: 'Writing code that works is one thing. Writing code that\'s organized and maintainable is the real skill.',
   },
   {
+    year: '2023',
+    title: 'Portfolio v1',
+    subtitle: 'First website — Jekyll + Tailwind',
+    description:
+      'I needed a portfolio to show what I\'d built, so I learned Jekyll and Tailwind CSS and put together my first real website. It was simple — a static site with project pages and a resume section — but it was the first time I deployed something to the internet that other people could actually see. That felt different from running code in a terminal.',
+    skills: ['Jekyll', 'Tailwind CSS', 'HTML', 'CSS', 'Deployment'],
+    color: '#3b82f6',
+    icon: 'globe',
+    lesson: 'Shipping something real, even if it\'s simple, teaches more than any tutorial.',
+  },
+  {
     year: '2024',
     title: 'WIDA CRM',
     subtitle: 'Capstone team lead — Laravel + MySQL',
     description:
-      'Led a six-person capstone team building a CRM for a Lethbridge distributor. This was the first time I was responsible for other people\'s code, not just my own. I ran stand-ups, managed scope creep, gave stakeholder demos, and still wrote most of the backend. The N+1 query fix that dropped page load from 900ms to 220ms was the moment I understood why profiling matters.',
+      'Led a six-person capstone team building a CRM for a Lethbridge distributor. First time I was responsible for other people\'s code, not just my own. I ran stand-ups, managed scope creep, gave stakeholder demos, and still wrote most of the backend. The N+1 query fix that dropped page load from 900ms to 220ms was the moment I understood why profiling matters.',
     skills: ['Laravel 10', 'MySQL 8', 'PHPUnit', 'Chart.js', 'Team Leadership', 'Agile'],
     color: '#8b5cf6',
     icon: 'team',
     lesson: 'Leading a team isn\'t about writing all the code yourself. It\'s about unblocking everyone else.',
+  },
+  {
+    year: '2024',
+    title: 'Entering Mobile',
+    subtitle: 'MadLibs, MineSweeper, Memory Match, Soundboard',
+    description:
+      'I dove into React Native by building four apps back to back. MadLibs taught me Expo basics. MineSweeper taught me game state in React. Memory Match pushed me into device camera access, flip animations, and sound effects. The Soundboard app introduced me to SQLite for local storage and expo-document-picker for file imports. Each one was small, but each one added a new tool I didn\'t have before.',
+    skills: ['React Native', 'Expo', 'SQLite', 'Camera API', 'Animations', 'expo-av'],
+    color: '#f59e0b',
+    icon: 'mobile',
+    lesson: 'You don\'t need a big project to learn something new. Four small ones can cover more ground.',
+  },
+  {
+    year: '2024',
+    title: '4 Pics 1 Word',
+    subtitle: 'Polished mobile game — offline, store-ready',
+    description:
+      'After the four smaller apps, I wanted to build something complete enough to ship. A word puzzle game with difficulty tiers, a coin economy, hint system, and background music. Ran into Unsplash rate limits, so I wrote a build-time script to pre-download all images. Fixed audio lag by preloading sounds with expo-av\'s createAsync. Got a store-ready APK out of EAS Build. It plays 100% offline.',
+    skills: ['Expo SDK49', 'AsyncStorage', 'EAS Build', 'TypeScript', 'Offline-First'],
+    color: '#f59e0b',
+    icon: 'mobile',
+    lesson: 'Mobile has its own set of problems. Battery, bundle size, offline state. You can\'t just think like a web developer.',
   },
   {
     year: '2024',
@@ -60,17 +115,6 @@ const milestones: Milestone[] = [
     color: '#10b981',
     icon: 'globe',
     lesson: 'Building for a real person with a real business changes how you think about every line of code.',
-  },
-  {
-    year: '2024',
-    title: '4 Pics 1 Word',
-    subtitle: 'React Native mobile game',
-    description:
-      'I wanted to learn mobile development, so I built a word puzzle game with Expo SDK49. Ran into Unsplash rate limits, so I wrote a build-time script to pre-download all images. Fixed audio lag by preloading sounds with expo-av\'s createAsync. Got a store-ready APK out of EAS Build. It plays 100% offline.',
-    skills: ['React Native', 'Expo', 'AsyncStorage', 'EAS Build', 'TypeScript'],
-    color: '#f59e0b',
-    icon: 'mobile',
-    lesson: 'Mobile has its own set of problems. Battery, bundle size, offline state. You can\'t just think like a web developer.',
   },
   {
     year: '2024',
@@ -86,13 +130,35 @@ const milestones: Milestone[] = [
   {
     year: '2024',
     title: 'Portfolio v2',
-    subtitle: 'CRA to Next.js 14 migration',
+    subtitle: 'CRA to Next.js 14 — React Server Components',
     description:
       'Rebuilt my portfolio from a Create React App into Next.js 14 with React Server Components, Framer Motion, and Tailwind. The hardest part was figuring out where to draw the "use client" boundary — too high and you lose SSR benefits, too low and Framer Motion causes hydration mismatches. Ended up building a ClientOnly wrapper that solved it cleanly.',
     skills: ['Next.js 14', 'RSC', 'TypeScript 5', 'Framer Motion', 'Tailwind CSS 3'],
     color: '#3b82f6',
     icon: 'code',
     lesson: 'Migrating isn\'t just changing syntax. It\'s rethinking how the whole app renders.',
+  },
+  {
+    year: '2025',
+    title: 'Algorithm Deep Dive',
+    subtitle: 'LPS solver — Naive vs DP vs Manacher\'s',
+    description:
+      'Built a Node.js + Express web app that compares three approaches to finding the longest palindromic substring: brute force O(n\u00B3), dynamic programming O(n\u00B2), and an optimized Manacher\'s algorithm that runs in O(n). The app measures execution time, memory usage, and iteration counts side by side. I optimized Manacher\'s to skip the traditional string-doubling transformation, making it more efficient for large inputs. Deployed on Vercel.',
+    skills: ['Node.js', 'Express', 'Algorithms', 'Dynamic Programming', 'Big-O Analysis'],
+    color: '#6366f1',
+    icon: 'book',
+    lesson: 'Understanding algorithms isn\'t about memorizing solutions. It\'s about recognizing which patterns fit which problems.',
+  },
+  {
+    year: '2025',
+    title: 'CryptoLab',
+    subtitle: 'Manual cryptography — RSA, DES, Diffie-Hellman',
+    description:
+      'A university cryptography course required implementing everything from scratch — no crypto libraries allowed. I built RSA key generation, Diffie-Hellman key exchange, DES encryption in CBC mode, and digital signatures, all in Python. The constraint forced me to actually understand the math: modular exponentiation, prime testing, S-boxes, permutation tables. Exports step-by-step HTML reports showing every intermediate calculation.',
+    skills: ['Python', 'RSA', 'DES', 'Diffie-Hellman', 'Digital Signatures', 'Number Theory'],
+    color: '#a855f7',
+    icon: 'lock',
+    lesson: 'When you can\'t use a library, you have to understand what the library does. That\'s where the real learning happens.',
   },
   {
     year: '2026',
@@ -136,6 +202,14 @@ const iconPaths: Record<string, JSX.Element> = {
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
       d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
   ),
+  book: (
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+      d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+  ),
+  lock: (
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+      d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+  ),
 };
 
 function MilestoneIcon({ icon, color }: { icon: string; color: string }) {
@@ -155,20 +229,9 @@ function JourneyContent() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   return (
-    <div
-      className="min-h-screen"
-      style={{
-        background: 'linear-gradient(135deg, #15202B 0%, #1a2332 50%, #15202B 100%)',
-      }}
-    >
+    <div className="min-h-screen dark-page-bg">
       {/* Header */}
-      <header
-        className="sticky top-0 z-50 backdrop-blur-sm"
-        style={{
-          backgroundColor: 'rgba(21, 32, 43, 0.95)',
-          borderBottom: '1px solid rgba(169, 184, 196, 0.2)',
-        }}
-      >
+      <header className="sticky top-0 z-50 backdrop-blur-sm dark-page-header">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center">
             <Link
@@ -197,7 +260,7 @@ function JourneyContent() {
           </h1>
           <p className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed" style={{ color: '#A9B8C4' }}>
             Every project taught me something I couldn&apos;t have learned from a textbook.
-            Here&apos;s the path from first line of code to shipping production software.
+            Here&apos;s the path from curiosity to shipping production software.
           </p>
         </motion.div>
 
@@ -263,14 +326,14 @@ function JourneyContent() {
                   <div className="sm:ml-16">
                     <button
                       onClick={() => setExpandedIndex(isExpanded ? null : index)}
-                      className="w-full text-left rounded-xl border transition-all duration-300 overflow-hidden group"
+                      className={`w-full text-left rounded-xl border transition-all duration-300 overflow-hidden group ${isExpanded ? 'dark-card-alt' : ''}`}
                       style={{
                         backgroundColor: isExpanded
-                          ? 'rgba(244, 241, 234, 0.08)'
+                          ? undefined
                           : 'rgba(244, 241, 234, 0.04)',
                         borderColor: isExpanded
                           ? `${milestone.color}40`
-                          : 'rgba(169, 184, 196, 0.12)',
+                          : undefined,
                       }}
                     >
                       {/* Card Header — always visible */}

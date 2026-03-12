@@ -63,7 +63,7 @@ const AnimatedAboutContent: React.FC = () => {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <div className="w-48 h-48 rounded-full overflow-hidden shadow-2xl border-4 border-white">
+            <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden shadow-2xl border-4 border-white">
               <img 
                 src="/images/kobeprofilepic.jpg" 
                 alt="Kobe Smallman Profile Picture" 

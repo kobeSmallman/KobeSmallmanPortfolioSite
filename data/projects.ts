@@ -88,6 +88,85 @@ export const projects: Project[] = [
     color: '#10b981'
   },
   {
+    id: 'valley-city-sales',
+    name: 'Valley City Sales',
+    overview: 'Full-stack dealership platform for a Central Alberta used vehicle and equipment dealer. pnpm monorepo with a public browsing site and a secured admin dashboard, backed by PocketBase on DigitalOcean.',
+    category: 'web',
+    status: 'completed',
+    featured: true,
+    year: '2026',
+    duration: '3 weeks',
+    role: 'Full-Stack Developer',
+    stack: ['Next.js 15', 'React 19', 'Tailwind CSS 4', 'TypeScript', 'PocketBase', 'iron-session', 'TOTP 2FA', 'SendGrid', 'Turnstile CAPTCHA', 'Vercel', 'DigitalOcean'],
+    useCases: [
+      'Let a rural dealer manage inventory, accessories, and promotions from a single admin dashboard',
+      'Provide a public browsing site with filtering, search, and contact forms for buyers',
+      'Secure the admin with TOTP two-factor authentication and role-based access'
+    ],
+    features: [
+      'Dual-app monorepo with shared type package',
+      'Full CRUD for 40+ field listings, accessories, promotions',
+      'VIN decode via NHTSA API with smart field normalization',
+      'PDF exports: inventory reports, branded vehicle flyers, multi-flyers',
+      'Batch status and tier updates with audit logging',
+      'ISR with 60-second revalidation across all data pages',
+      'Structured data (LocalBusiness, Product, BreadcrumbList) and sitemap',
+      'Contact form with Turnstile CAPTCHA, honeypot, and rate limiting'
+    ],
+    challenges: [
+      {
+        title: 'Monorepo with shared types',
+        description: 'Two Next.js 15 apps needed to share TypeScript types, constants, and utilities without duplication',
+        solution: 'pnpm workspace with a @valleycity/shared package exporting types, constants, and the PocketBase client factory'
+      },
+      {
+        title: 'Admin security for a non-technical user',
+        description: 'The dealer owner is not tech-savvy but the dashboard needed production-grade auth',
+        solution: 'TOTP 2FA with a simple QR scan flow, 30-day device remember cookies, and iron-session for stateless auth'
+      },
+      {
+        title: 'Image-heavy inventory performance',
+        description: 'Up to 10 images per listing across 33+ vehicles with full-page loads',
+        solution: 'ISR with 60s revalidation, Next.js Image optimization with PocketBase thumbnail parameters, and lazy loading'
+      },
+      {
+        title: 'PDF generation in the browser',
+        description: 'Generating brand-matched vehicle flyers with images, specs, and pricing entirely client-side',
+        solution: 'jsPDF with parallel image loading via Promise.all, auto aspect-ratio detection, and CORS image proxying'
+      }
+    ],
+    impact: {
+      metrics: [
+        '33 real listings seeded with verified pricing',
+        '40+ field listing form with VIN auto-populate',
+        'Both apps feature-complete and production-ready in 3 weeks'
+      ],
+      notes: ['Built from zero to feature-complete as a solo developer, ready for domain purchase and launch']
+    },
+    learningPoints: [
+      'Next.js 15 App Router', 'React 19 features', 'Tailwind CSS 4 migration', 'TypeScript strict mode',
+      'PocketBase as a lightweight backend', 'pnpm monorepo architecture', 'Shared package design',
+      'TOTP 2FA implementation', 'iron-session cookie management', 'Role-based access control',
+      'PDF generation with jsPDF', 'VIN decoding via NHTSA API', 'ISR revalidation patterns',
+      'Turnstile CAPTCHA integration', 'SendGrid email templating', 'Cloudflare security headers',
+      'Content Security Policy configuration', 'Structured data for SEO', 'Sitemap generation',
+      'Batch operations with audit logging', 'Image optimization strategies', 'Rate limiting patterns',
+      'Honeypot spam prevention', 'File upload handling', 'PocketBase query optimization',
+      'Server Actions in Next.js', 'Error boundaries', 'Loading skeletons', 'Responsive masonry layouts',
+      'Mobile-first design', 'Framer Motion animations', 'Dynamic category filtering',
+      'Search modal with keyboard shortcuts', 'Breadcrumb navigation', 'Sale pricing logic',
+      'Inventory management workflows', 'Quick-add draft listings', 'Duplicate listing feature',
+      'Gallery with masonry CSS columns', 'City-based SEO pages', 'OpenGraph meta tags',
+      'DigitalOcean droplet setup', 'systemd service management', 'UFW firewall configuration',
+      'SSH key-only authentication', 'fail2ban intrusion prevention'
+    ],
+    outcome: 'Feature-complete dealership platform with a public browsing site and admin dashboard, ready for domain purchase and production launch. Demonstrates rapid full-stack delivery with modern tooling.',
+    images: ['/images/ValleyCitySalesPublicSite.png', '/images/ValleyCitySalesAdminSite.png'],
+    links: { github: 'https://github.com/kobeSmallman/ValleyCitySales' },
+    tags: ['Next.js', 'Full-Stack', 'Monorepo', '2FA', 'PocketBase'],
+    color: '#06b6d4'
+  },
+  {
     id: 'wida-crm',
     name: 'WIDA CRM System',
     overview: 'Browser-based CRM for WIDA (Lethbridge distributor) built by a six-student capstone team. Runs on Laravel 10 + MySQL 8 with Bootstrap 5 Blade templates.',

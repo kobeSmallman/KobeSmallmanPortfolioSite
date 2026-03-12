@@ -13,6 +13,11 @@ const HeroKinetic: React.FC = () => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
+  const [particleCount, setParticleCount] = useState(15);
+
+  useEffect(() => {
+    if (window.innerWidth >= 1024) setParticleCount(50);
+  }, []);
   
   // Rotating professional messages
   const professionalMessages = [
@@ -118,7 +123,7 @@ const HeroKinetic: React.FC = () => {
     >
       {/* Advanced Particle System */}
       <div className="absolute inset-0">
-        {Array.from({length: 50}).map((_, i) => (
+        {Array.from({length: particleCount}).map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full"

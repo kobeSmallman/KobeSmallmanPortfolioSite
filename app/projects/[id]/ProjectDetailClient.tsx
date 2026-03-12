@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { type Project } from '../../../data/projects';
 import ClientOnly from '../../../components/ui/ClientOnly';
+import CodeSnippet from '../../../components/ui/CodeSnippet';
 
 interface ProjectDetailClientProps {
   project: Project;
@@ -78,55 +79,6 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
         'Gained experience with client communication and requirement gathering.',
         'Developed skills in performance monitoring and optimization.',
         'Learned advanced Git workflows and code review processes.'
-      ]
-    },
-    'portfolio-site': {
-      name: 'Personal Portfolio v2',
-      overview: 'Complete migration and modernization project rebuilding legacy Create React App portfolio to Next.js 14. Demonstrates ability to modernize existing applications while maintaining functionality, improving performance, and implementing contemporary development patterns.',
-      purpose: [
-        'Migrate legacy Create React App to modern Next.js 14 architecture.',
-        'Demonstrate proficiency with cutting-edge React patterns and TypeScript.',
-        'Create professional recruitment platform showcasing technical capabilities.',
-        'Serve as testing ground for exploring new web technologies and optimization techniques.',
-        'Establish modern development workflow and deployment pipeline.'
-      ],
-      techStack: ['Next.js 14', 'TypeScript 5', 'Tailwind CSS 3', 'React Server Components', 'Framer Motion', 'Vercel'],
-      challenges: [
-        {
-          challenge: 'Hydration mismatches: Client/server rendering conflicts with React Server Components.',
-          solution: 'Implemented proper "use client" boundaries and conditional rendering patterns.'
-        },
-        {
-          challenge: 'Hero image CLS: Cumulative Layout Shift issues affecting Core Web Vitals.',
-          solution: 'Fixed with aspect-ratio containers and next/image priority loading optimization.'
-        },
-        {
-          challenge: 'Legacy migration complexity: Modernizing from CRA while maintaining functionality.',
-          solution: 'Systematic refactoring with incremental testing and feature parity validation.'
-        },
-        {
-          challenge: 'Performance optimization: Achieving production-grade performance metrics.',
-          solution: 'Implemented code splitting, image optimization, and efficient bundle analysis strategies.'
-        }
-      ],
-      impact: [
-        'Successfully migrated from legacy Create React App to modern Next.js 14 architecture.',
-        'Achieved consistent 95+ Lighthouse performance scores across all metrics.',
-        'Enhanced professional presence with recruiters citing technical sophistication.',
-        'Demonstrated expertise in React Server Components and modern development patterns.',
-        'Established foundation for future portfolio enhancements and feature additions.'
-      ],
-      learningPoints: [
-        'Mastered Next.js 14 App Router architecture and React Server Components.',
-        'Developed expertise in TypeScript 5 advanced patterns and type safety.',
-        'Gained proficiency with Tailwind CSS 3 design tokens and utility-first styling.',
-        'Learned Framer Motion animation patterns for professional user experiences.',
-        'Developed skills in Core Web Vitals optimization and performance monitoring.',
-        'Gained experience with legacy application modernization and migration strategies.',
-        'Improved understanding of client/server rendering patterns and hydration.',
-        'Learned systematic approach to refactoring and maintaining feature parity.',
-        'Developed expertise in production deployment and CI/CD optimization.',
-        'Gained experience with accessibility standards and responsive design principles.'
       ]
     },
     'portfolio-v2': {
@@ -356,6 +308,65 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
         'Learned blockchain security best practices and smart contract auditing.',
         'Developed understanding of token economics and resale mechanisms.'
       ]
+    },
+    'valley-city-sales': {
+      name: 'Valley City Sales',
+      overview: 'Full-stack used vehicle and equipment dealership platform built as a pnpm monorepo with a public storefront and admin dashboard. Features TOTP two-factor authentication, VIN decoding via NHTSA API, batch inventory operations, PDF exports, ISR caching, and a multi-layered security stack including honeypot spam detection, Turnstile CAPTCHA, and rate limiting.',
+      purpose: [
+        'Build a production-ready dealership platform for a real business in Clive, Alberta.',
+        'Provide the dealer with an intuitive admin dashboard for managing 40+ field listings.',
+        'Deliver a fast, SEO-optimized public site with structured data and city-level landing pages.',
+        'Implement enterprise-grade security including TOTP 2FA and multi-layer form protection.',
+        'Demonstrate full-stack ownership from database design through deployment and monitoring.'
+      ],
+      systemDesign: [
+        'pnpm monorepo: apps/web (public storefront), apps/admin (dashboard), packages/shared.',
+        'PocketBase v0.25 on DigitalOcean for data, auth, and file storage.',
+        'iron-session for server-side session management with encrypted cookies.',
+        'TOTP 2FA with 30-day device remember tokens using crypto-grade randomness.',
+        'ISR with 60-second revalidation on all data pages for near-real-time content.',
+        'SendGrid transactional email with verified sender domain.',
+        'Cloudflare Turnstile + honeypot + rate limiting for contact form security.',
+        'Role-based access: Owner (full control) and Admin (listing CRUD only).'
+      ],
+      challenges: [
+        {
+          challenge: 'VIN decoding: NHTSA API returns inconsistent field names and empty strings for missing data.',
+          solution: 'Built a normalization layer that maps raw NHTSA responses to clean enums (body type, fuel, drivetrain) with graceful fallbacks.'
+        },
+        {
+          challenge: '2FA implementation: Needed secure but user-friendly authentication without frustrating the non-technical dealer.',
+          solution: 'Implemented TOTP with QR setup flow and 30-day device remember tokens so the dealer only enters codes on new devices.'
+        },
+        {
+          challenge: 'Image-less listings appearing as blank cards on the public site.',
+          solution: 'Added server-side filtering to exclude listings without images from all public queries, keeping the storefront clean.'
+        },
+        {
+          challenge: 'Batch operations at scale: updating status or tier for up to 100 listings with per-item audit logging.',
+          solution: 'Built transactional batch updates with smart sold_date handling and contextual audit entries.'
+        }
+      ],
+      impact: [
+        'Both apps feature-complete and deployed on Vercel with PocketBase on DigitalOcean.',
+        '33 real listings seeded from the existing dealership website with verified prices.',
+        'Admin dashboard handles 40+ fields per listing with VIN auto-fill, tier preview, and sale pricing.',
+        'Public site scores 95+ Lighthouse across performance, accessibility, and SEO.',
+        'Contact form delivers inquiries via SendGrid with 3-layer bot protection.',
+        'PDF exports generate brand-matched vehicle flyers and inventory reports.'
+      ],
+      learningPoints: [
+        'First production monorepo — learned pnpm workspace configuration and shared package patterns.',
+        'Implemented TOTP 2FA from scratch using OTPAuth library with QR code generation.',
+        'Built a complete VIN decoder integrating NHTSA vPIC API with field normalization.',
+        'Designed ISR caching strategy balancing freshness (60s) with build performance.',
+        'Implemented multi-layer form security: honeypot, Turnstile, rate limiting, and input sanitization.',
+        'Learned PocketBase administration, collection design, and autodate field configuration.',
+        'Built PDF generation with jsPDF including brand-matched layouts and image handling.',
+        'Gained experience with iron-session for encrypted server-side sessions in Next.js.',
+        'Developed batch operation patterns with transactional updates and audit logging.',
+        'Managed real client requirements and iterative feedback cycles throughout development.'
+      ]
     }
   };
 
@@ -371,7 +382,8 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
     { id: 'features', label: 'Features' },
     { id: 'challenges', label: 'Challenges' },
     { id: 'impact', label: 'Impact' },
-    { id: 'learning', label: 'Learning Points' }
+    { id: 'learning', label: 'Learning Points' },
+    { id: 'code', label: 'Code Highlights' }
   ];
 
   return (
@@ -857,6 +869,54 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
                       </div>
                     </div>
                   );
+                } else if (projectId === 'valley-city-sales') {
+                  return (
+                    <div className="space-y-6">
+                      <div className="p-6 rounded-lg border" style={{
+                        backgroundColor: 'rgba(244, 241, 234, 0.9)',
+                        borderColor: 'rgba(169, 184, 196, 0.3)'
+                      }}>
+                        <h4 className="text-xl font-bold mb-4" style={{ color: '#15202B' }}>Production Dealership Platform</h4>
+                        <p className="leading-relaxed mb-4" style={{ color: '#15202B' }}>
+                          Valley City Sales is a complete used vehicle and equipment dealership platform built for a real
+                          business in Clive, Alberta. The project is a pnpm monorepo with two Next.js 15 apps — a public
+                          storefront with ISR caching and SEO optimization, and an admin dashboard with TOTP two-factor
+                          authentication, VIN decoding, batch operations, and PDF exports.
+                        </p>
+                        <p className="leading-relaxed" style={{ color: '#15202B' }}>
+                          This is my most technically mature project to date, combining everything I have learned across
+                          frontend, backend, security, and infrastructure into one production system.
+                        </p>
+                      </div>
+                      <div className="p-6 rounded-lg border" style={{
+                        backgroundColor: 'rgba(244, 241, 234, 0.9)',
+                        borderColor: 'rgba(169, 184, 196, 0.3)'
+                      }}>
+                        <h4 className="text-xl font-bold mb-4" style={{ color: '#15202B' }}>Architecture & Infrastructure</h4>
+                        <p className="leading-relaxed mb-4" style={{ color: '#15202B' }}>
+                          The backend runs on PocketBase v0.25 hosted on a DigitalOcean droplet, handling data storage,
+                          file uploads, and authentication. Both frontend apps are deployed on Vercel with iron-session
+                          for encrypted server-side sessions and SendGrid for transactional email.
+                        </p>
+                        <p className="leading-relaxed" style={{ color: '#15202B' }}>
+                          Security layers include TOTP 2FA with 30-day device remember tokens, Cloudflare Turnstile CAPTCHA,
+                          honeypot spam detection, rate limiting, and comprehensive input sanitization across all user-facing forms.
+                        </p>
+                      </div>
+                      <div className="p-6 rounded-lg border" style={{
+                        backgroundColor: 'rgba(244, 241, 234, 0.9)',
+                        borderColor: 'rgba(169, 184, 196, 0.3)'
+                      }}>
+                        <h4 className="text-xl font-bold mb-4" style={{ color: '#15202B' }}>Real-World Deployment</h4>
+                        <p className="leading-relaxed" style={{ color: '#15202B' }}>
+                          Both apps are feature-complete with 33 real listings seeded from the existing dealership website.
+                          The admin dashboard handles 40+ fields per listing with VIN auto-fill, tier-based visibility,
+                          sale pricing with strikethrough display, and brand-matched PDF flyer generation. The public site
+                          features structured data for search engines, 8 city-level SEO landing pages, and a masonry gallery.
+                        </p>
+                      </div>
+                    </div>
+                  );
                 } else {
                   return (
                     <div className="p-6 rounded-lg border" style={{
@@ -1037,7 +1097,7 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
                       'MySQL database with optimized queries',
                       'Bootstrap responsive interface'
                     ];
-                  } else if (projectId === 'portfolio-site') {
+                  } else if (projectId === 'portfolio-site' || projectId === 'portfolio-v2') {
                     features = [
                       'Server-side rendering with Next.js 14',
                       'Interactive animations with Framer Motion',
@@ -1072,6 +1132,19 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
                       'Decentralized ticket transfer system',
                       'Web3 wallet connectivity',
                       'Event organizer dashboard and management'
+                    ];
+                  } else if (projectId === 'valley-city-sales') {
+                    features = [
+                      'TOTP 2FA with QR setup and 30-day device remember tokens',
+                      'VIN decoder auto-fills 8+ fields via NHTSA API',
+                      'Batch status and tier updates for up to 100 listings',
+                      'PDF exports: vehicle flyers, multi-flyer sheets, inventory reports',
+                      'ISR caching with 60-second revalidation across all data pages',
+                      'Ctrl+K search modal and visible inventory search bar',
+                      'Structured data (LocalBusiness, Product, BreadcrumbList) for SEO',
+                      'Contact form with honeypot, Turnstile CAPTCHA, and rate limiting',
+                      'Role-based admin access: Owner and Admin with different permissions',
+                      'Masonry gallery, FAQ with truck animation, 8 city SEO pages'
                     ];
                   } else {
                     features = project.features || ['Feature details available soon.'];
@@ -1195,6 +1268,666 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
                     {tech}
                   </motion.span>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* Code Highlights Section */}
+          {activeSection === 'code' && (
+            <div>
+              <h3 className="text-2xl font-bold mb-3" style={{ color: '#F4F1EA' }}>Code Highlights</h3>
+              <p className="mb-8" style={{ color: '#A9B8C4' }}>
+                Real code from this project with the story behind each decision.
+              </p>
+              <div className="space-y-10">
+                {(() => {
+                  const codeHighlights: Record<string, { title: string; language: string; narrative: string; code: string; description: string }[]> = {
+                    'wida-crm': [
+                      {
+                        title: 'N+1 Query Fix — Eager Loading',
+                        language: 'PHP',
+                        narrative: 'The client detail page was taking almost a second to load. I opened Laravel Debugbar and saw 47 separate queries firing — one for the client, then one for each note, then one for each note\'s employee. Classic N+1 problem.',
+                        code: `// Before: 47 queries, ~900ms
+$client = Client::findOrFail($id);
+// Each $client->notes triggered a query,
+// then each $note->employee triggered another
+
+// After: 3 queries, ~220ms
+$client = Client::with(['notes', 'notes.employee'])
+    ->findOrFail($id);`,
+                        description: 'Eager loading with Eloquent\'s with() method collapses dozens of lazy-loaded queries into a handful of JOINs. Response time dropped from 900ms to 220ms — a 75% improvement that the client noticed immediately.'
+                      },
+                      {
+                        title: 'Permission Middleware',
+                        language: 'PHP',
+                        narrative: 'WIDA needed three different roles — Admin, Sales, and Warehouse — each seeing different pages. Rather than scattering auth checks everywhere, I built a middleware that maps route names to page IDs in the permissions table.',
+                        code: `class RedirectUnauthorized {
+    public function handle(Request $request, Closure $next, $routeName) {
+        $user = Auth::user();
+        $pageIdMap = [
+            'dashboard'    => 1,
+            'clients'      => 2,
+            'orders'       => 3,
+            'vendors'      => 4,
+            'reports'      => 5,
+            'admin.users'  => 6,
+        ];
+
+        $requiredPageId = $pageIdMap[$routeName] ?? null;
+        $userPermissions = Permission::where('Employee_ID', $user->Employee_ID)
+            ->pluck('Page_ID');
+
+        if ($requiredPageId && !$userPermissions->contains($requiredPageId)) {
+            return redirect()->route('access.denied');
+        }
+
+        return $next($request);
+    }
+}`,
+                        description: 'A single middleware handles all role-based access control. Routes declare their required permission in the middleware parameter, and the lookup table keeps the mapping centralized and easy to update.'
+                      },
+                      {
+                        title: 'Transaction-Wrapped Order Creation',
+                        language: 'PHP',
+                        narrative: 'Orders can have multiple products, and each product updates inventory. If any product fails to save, we\'d end up with a partial order — the kind of bug that makes accounting people very unhappy. Database transactions were the obvious answer.',
+                        code: `DB::beginTransaction();
+try {
+    $order = new Order([
+        'Order_ID'    => $newOrderId,
+        'Client_ID'   => $request->Client_ID,
+        'Employee_ID' => Auth::user()->Employee_ID,
+        'Order_DATE'  => now(),
+    ]);
+    $order->save();
+
+    foreach ($request->products as $productData) {
+        $product = new OrderDetail([
+            'Order_ID'   => $order->Order_ID,
+            'Product_ID' => $productData['id'],
+            'Quantity'   => $productData['quantity'],
+            'Unit_Price' => $productData['price'],
+        ]);
+        $product->save();
+    }
+
+    DB::commit();
+    return redirect()->route('orders.show', $order->Order_ID);
+} catch (\\Exception $e) {
+    DB::rollback();
+    Log::error('Order creation failed: ' . $e->getMessage());
+    return back()->withErrors(['error' => 'Order could not be created.']);
+}`,
+                        description: 'Wrapping the order and its line items in a transaction guarantees atomicity — either everything saves or nothing does. The catch block rolls back and logs the error so we can diagnose without leaving orphaned records.'
+                      },
+                      {
+                        title: 'Custom Sequential ID Generation',
+                        language: 'PHP',
+                        narrative: 'WIDA wanted human-readable order IDs like O001, O002, O003 instead of auto-increment integers. Sounds simple, but you have to handle the case where no orders exist yet and avoid race conditions.',
+                        code: `$latestOrder = Order::orderBy('Order_ID', 'desc')->first();
+$latestNumber = $latestOrder
+    ? intval(substr($latestOrder->Order_ID, 1)) + 1
+    : 1;
+$newOrderId = 'O' . str_pad($latestNumber, 3, '0', STR_PAD_LEFT);
+// O001, O002, ... O999`,
+                        description: 'Strips the "O" prefix, parses the number, increments, and re-pads. Simple and readable. For a six-person team with moderate volume, this was more than sufficient — no need for sequences or UUIDs.'
+                      }
+                    ],
+                    'lacombe-gutters': [
+                      {
+                        title: 'CSS-Only Rain Animation',
+                        language: 'CSS',
+                        narrative: 'The gutter company wanted something that immediately communicated "rain and gutters" when you land on the page. I could have reached for a canvas library, but pure CSS keyframes gave me the effect with zero JavaScript overhead.',
+                        code: `@keyframes rain {
+  0% {
+    transform: translateY(0) scaleY(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) scaleY(1);
+    opacity: 0;
+  }
+}
+
+/* Each raindrop gets a random delay and duration */
+.raindrop {
+  animation: rain linear infinite;
+  animation-duration: var(--duration, 1.5s);
+  animation-delay: var(--delay, 0s);
+}`,
+                        description: 'Pure CSS animation with no JavaScript. Each raindrop div gets randomized CSS custom properties for duration and delay, creating a natural-looking rainfall effect that runs at 60fps without touching the main thread.'
+                      },
+                      {
+                        title: 'Turnstile CAPTCHA Integration',
+                        language: 'TypeScript',
+                        narrative: 'The contact form was getting hammered by bots within a week of launch. I went with Cloudflare Turnstile over reCAPTCHA because it\'s less intrusive for real users. The tricky part was server-side verification — you can\'t trust the client token alone.',
+                        code: `// Server-side verification (API route)
+const turnstileResponse = await fetch(
+  'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      secret: process.env.TURNSTILE_SECRET_KEY,
+      response: turnstileToken,
+      remoteip: getClientIP(request),
+    }),
+  }
+);
+
+const data = await turnstileResponse.json();
+if (!data.success) {
+  return NextResponse.json(
+    { error: 'Verification failed.' },
+    { status: 403 }
+  );
+}`,
+                        description: 'Server-side Turnstile verification with the client IP forwarded for additional validation. The secret key never leaves the server, and failed verifications return a clean 403 without revealing implementation details to attackers.'
+                      },
+                      {
+                        title: 'WCAG Touch Target Enforcement',
+                        language: 'CSS',
+                        narrative: 'Lighthouse flagged several buttons and links as too small for mobile touch. WCAG 2.1 requires 44x44px minimum touch targets. I added a global rule so every interactive element meets the standard automatically.',
+                        code: `/* Before: buttons were 32px tall on mobile */
+@media (max-width: 768px) {
+  button,
+  a.btn-construction,
+  .nav-link {
+    min-height: 44px;
+  }
+}
+
+/* Ensure centering within the larger targets */
+@media (max-width: 480px) {
+  button,
+  a.btn-construction,
+  .nav-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}`,
+                        description: 'A global CSS fix that enforces WCAG 2.1 minimum touch targets on all interactive elements. Applied via media queries so desktop layout isn\'t affected. This single change resolved 12 Lighthouse accessibility warnings.'
+                      }
+                    ],
+                    'blockchain-tickets': [
+                      {
+                        title: 'Firebase Auth + User Creation',
+                        language: 'C#',
+                        narrative: 'The platform needs both blockchain wallets and traditional accounts. Firebase handles the auth layer, but I needed to gracefully handle duplicate emails since users might try signing up through different providers.',
+                        code: `public async Task<FirebaseToken> VerifyTokenAsync(string idToken)
+{
+    try
+    {
+        FirebaseToken decodedToken = await FirebaseAuth
+            .DefaultInstance
+            .VerifyIdTokenAsync(idToken);
+        return decodedToken;
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Token verification failed");
+        throw;
+    }
+}
+
+public async Task<UserRecord> CreateUserAsync(string email, string password)
+{
+    try
+    {
+        return await FirebaseAuth.DefaultInstance.CreateUserAsync(
+            new UserRecordArgs
+            {
+                Email = email,
+                EmailVerified = false,
+                Password = password,
+                Disabled = false,
+            });
+    }
+    catch (FirebaseAuthException ex)
+        when (ex.AuthErrorCode == AuthErrorCode.EmailAlreadyExists)
+    {
+        throw new Exception("A user with this email already exists.");
+    }
+}`,
+                        description: 'Firebase token verification for API requests paired with user creation that catches the specific EmailAlreadyExists error code. The pattern-matched catch clause keeps the error handling precise without swallowing unexpected failures.'
+                      },
+                      {
+                        title: 'Session Timeout with Activity Tracking',
+                        language: 'JavaScript',
+                        narrative: 'For a ticketing platform handling money, sessions can\'t stay alive forever. I implemented a 60-minute idle timeout that resets on any user interaction — mouse, keyboard, touch, or scroll.',
+                        code: `const SESSION_TIMEOUT = 60 * 60 * 1000; // 60 minutes
+
+const updateActivity = () => {
+  setLastActivity(Date.now());
+  sessionStorage.setItem('lastActivity', Date.now().toString());
+};
+
+useEffect(() => {
+  const checkSessionTimeout = () => {
+    const stored = sessionStorage.getItem('lastActivity');
+    if (stored) {
+      const elapsed = Date.now() - parseInt(stored, 10);
+      if (elapsed > SESSION_TIMEOUT) {
+        console.log("Session timeout - logging out");
+        logout();
+      }
+    }
+  };
+
+  const intervalId = setInterval(checkSessionTimeout, 60 * 1000);
+
+  const events = ['mousedown', 'keydown', 'touchstart', 'scroll'];
+  events.forEach(e => window.addEventListener(e, updateActivity));
+
+  return () => {
+    clearInterval(intervalId);
+    events.forEach(e => window.removeEventListener(e, updateActivity));
+  };
+}, []);`,
+                        description: 'Activity-based session management using sessionStorage timestamps and event listeners. The 60-second polling interval balances responsiveness with performance — checking every frame would be wasteful, but checking every minute catches idle sessions promptly.'
+                      },
+                      {
+                        title: 'Interactive Seat Selection',
+                        language: 'JavaScript',
+                        narrative: 'The seat map needed to feel instant — no lag when clicking seats, immediate visual feedback, and a running total that updates as you select. I used local state with toggle logic to keep it snappy.',
+                        code: `const PRICE_CATEGORIES = {
+  VIP: 250, Premium: 180, Standard: 120, Budget: 80
+};
+
+const handleSeatClick = (seat) => {
+  if (!seat.available) return;
+
+  setSelectedSeats(prev => {
+    const alreadySelected = prev.some(s => s.id === seat.id);
+
+    if (alreadySelected) {
+      const updated = prev.filter(s => s.id !== seat.id);
+      onSeatSelect?.(updated);
+      return updated;
+    } else {
+      const updated = [...prev, seat];
+      onSeatSelect?.(updated);
+      return updated;
+    }
+  });
+};
+
+// Total updates reactively
+const total = selectedSeats.reduce(
+  (sum, s) => sum + PRICE_CATEGORIES[s.category], 0
+);`,
+                        description: 'Toggle-based seat selection with immutable state updates. The functional setState pattern avoids stale closure bugs, and the optional chaining on onSeatSelect keeps the component reusable whether or not a parent needs the callback.'
+                      }
+                    ],
+                    '4pics1word': [
+                      {
+                        title: 'Build-Time Image Pre-Download',
+                        language: 'TypeScript',
+                        narrative: 'The game pulls images from Unsplash, but their API has strict rate limits. During development, I kept hitting 429 errors mid-game. The fix was to download all images at build time so the app never makes runtime API calls.',
+                        code: `// prebuild-images.ts — runs before EAS build
+import axios from 'axios';
+import * as FileSystem from 'expo-file-system';
+
+const UNSPLASH_ACCESS_KEY = process.env.UNSPLASH_ACCESS_KEY;
+
+async function downloadImage(query: string, index: number) {
+  const response = await axios.get(
+    \`https://api.unsplash.com/photos/random\`,
+    {
+      params: { query, orientation: 'squarish' },
+      headers: { Authorization: \`Client-ID \${UNSPLASH_ACCESS_KEY}\` },
+    }
+  );
+
+  const imageUrl = response.data.urls.small;
+  const localPath = \`\${FileSystem.documentDirectory}images/\${query}_\${index}.jpg\`;
+
+  await FileSystem.downloadAsync(imageUrl, localPath);
+  return localPath;
+}
+
+// Pre-download all puzzle images during build
+export async function prebuildAllImages(puzzles: Puzzle[]) {
+  for (const puzzle of puzzles) {
+    const paths = await Promise.all(
+      puzzle.keywords.map((kw, i) => downloadImage(kw, i))
+    );
+    puzzle.localImages = paths;
+  }
+}`,
+                        description: 'Shifts Unsplash API calls from runtime to build time, eliminating rate limit issues entirely. The downloaded images are bundled with the APK, enabling 100% offline gameplay after installation.'
+                      },
+                      {
+                        title: 'Audio Preloading Fix',
+                        language: 'TypeScript',
+                        narrative: 'Players reported a noticeable delay on the first sound effect — tap a letter, wait 200ms, then hear the click. The issue was that expo-av loads audio lazily by default. I switched to createAsync to preload sounds during app startup.',
+                        code: `import { Audio } from 'expo-av';
+
+// Preload all game sounds at startup
+let correctSound: Audio.Sound | null = null;
+let wrongSound: Audio.Sound | null = null;
+let tapSound: Audio.Sound | null = null;
+
+export async function preloadGameAudio() {
+  const [correct, wrong, tap] = await Promise.all([
+    Audio.Sound.createAsync(
+      require('../assets/sounds/correct.mp3'),
+      { shouldPlay: false }
+    ),
+    Audio.Sound.createAsync(
+      require('../assets/sounds/wrong.mp3'),
+      { shouldPlay: false }
+    ),
+    Audio.Sound.createAsync(
+      require('../assets/sounds/tap.mp3'),
+      { shouldPlay: false }
+    ),
+  ]);
+
+  correctSound = correct.sound;
+  wrongSound = wrong.sound;
+  tapSound = tap.sound;
+}
+
+export async function playSound(type: 'correct' | 'wrong' | 'tap') {
+  const sound = { correct: correctSound, wrong: wrongSound, tap: tapSound }[type];
+  if (sound) {
+    await sound.replayAsync();
+  }
+}`,
+                        description: 'Audio.Sound.createAsync preloads the audio buffer into memory during app init. Subsequent plays use replayAsync which is nearly instant since the buffer is already decoded. The 200ms first-play delay disappeared completely.'
+                      }
+                    ],
+                    'dungeon-escape': [
+                      {
+                        title: 'Cross-Platform Terminal Handling',
+                        language: 'C++',
+                        narrative: 'The game needed to clear the terminal between screens, but the command differs between Windows (cls) and Unix (clear). Preprocessor directives handle this at compile time with zero runtime cost.',
+                        code: `#ifdef _WIN32
+    #include <cstdlib>
+    #define CLEAR_SCREEN() system("cls")
+#else
+    #include <cstdlib>
+    #define CLEAR_SCREEN() system("clear")
+#endif
+
+void GameEngine::render() {
+    CLEAR_SCREEN();
+
+    std::cout << "\\n=== DUNGEON ESCAPE ===" << std::endl;
+    std::cout << "Room: " << currentRoom->getName() << std::endl;
+    std::cout << currentRoom->getDescription() << std::endl;
+    std::cout << "\\nHP: " << player.getHealth()
+              << "/" << player.getMaxHealth() << std::endl;
+
+    if (player.isCursed()) {
+        std::cout << "[CURSED] Taking damage over time!" << std::endl;
+    }
+
+    std::cout << "\\nExits: ";
+    for (const auto& [direction, room] : currentRoom->getExits()) {
+        std::cout << direction << " ";
+    }
+    std::cout << std::endl;
+}`,
+                        description: 'Compile-time platform detection using preprocessor macros. The #ifdef _WIN32 check runs at compilation, not runtime, so there\'s no performance penalty. The game compiles warning-free on GCC, Clang, and MSVC.'
+                      },
+                      {
+                        title: 'RAII Resource Management',
+                        language: 'C++',
+                        narrative: 'With 10 rooms, dozens of items, and multiple enemies, manual memory management would be a nightmare. Smart pointers and RAII ensure everything gets cleaned up automatically when the game exits or a room is unloaded.',
+                        code: `class GameEngine {
+private:
+    std::vector<std::unique_ptr<Room>> rooms;
+    std::vector<std::unique_ptr<Enemy>> enemies;
+    std::vector<std::unique_ptr<Item>> items;
+    Player player;
+    Room* currentRoom; // non-owning pointer
+
+public:
+    GameEngine() : player(100, 10, 5), currentRoom(nullptr) {
+        initialize();
+    }
+
+    // Destructor is trivial — unique_ptr handles cleanup
+    ~GameEngine() = default;
+
+    // No copy (unique_ptr is move-only)
+    GameEngine(const GameEngine&) = delete;
+    GameEngine& operator=(const GameEngine&) = delete;
+
+    void initialize() {
+        // Factory creates rooms with ownership transfer
+        rooms.push_back(std::make_unique<Room>(
+            "Entrance Hall",
+            "A dimly lit hall with torches on the walls."
+        ));
+        // ... more rooms
+
+        currentRoom = rooms[0].get(); // borrow, don't own
+    }
+};`,
+                        description: 'unique_ptr owns all dynamically allocated resources. The destructor is defaulted because the smart pointers handle cleanup automatically. The deleted copy constructor prevents accidental ownership duplication. Raw pointers are used only for non-owning references.'
+                      }
+                    ],
+                    'portfolio-v2': [
+                      {
+                        title: 'React Server Component Boundaries',
+                        language: 'TypeScript',
+                        narrative: 'The trickiest part of migrating from CRA to Next.js 14 was figuring out where to put "use client" directives. Too high and you lose server-side rendering benefits. Too low and you get hydration mismatches with Framer Motion.',
+                        code: `// app/page.tsx — Server Component (no "use client")
+import HeroKinetic from '../components/organisms/HeroKinetic';
+import ProjectsIsometric from '../components/organisms/ProjectsIsometric';
+import ClientOnly from '../components/ui/ClientOnly';
+
+export default function HomePage() {
+  return (
+    <main className="min-h-screen">
+      {/* ClientOnly wrapper prevents hydration mismatch */}
+      <ClientOnly fallback={<HeroSkeleton />}>
+        <HeroKinetic />    {/* "use client" inside */}
+      </ClientOnly>
+      <ClientOnly fallback={<div className="min-h-screen bg-bg-primary" />}>
+        <ProjectsIsometric />  {/* "use client" inside */}
+      </ClientOnly>
+      <ContactKinetic />   {/* dynamically imported, ssr: false */}
+    </main>
+  );
+}`,
+                        description: 'The page itself stays as a Server Component for fast initial HTML delivery. Each interactive section declares "use client" internally and is wrapped in ClientOnly to prevent hydration mismatches. The contact section is dynamically imported with ssr: false since it\'s below the fold.'
+                      },
+                      {
+                        title: 'Dynamic Import for Below-Fold Content',
+                        language: 'TypeScript',
+                        narrative: 'The contact section with its animated blobs and form validation was adding 40KB to the initial bundle. Since it\'s below the fold, users don\'t need it until they scroll down. Dynamic import defers the load.',
+                        code: `import dynamic from 'next/dynamic';
+
+// Lazy-load the contact section — not needed on initial render
+const ContactKinetic = dynamic(
+  () => import('../components/organisms/ContactKinetic'),
+  {
+    ssr: false,  // Skip server rendering entirely
+    loading: () => (
+      <div className="min-h-96 bg-bg-primary" />  // Placeholder
+    ),
+  }
+);
+
+// In the component tree, it renders like any other component
+// but only loads when the browser is ready
+<ContactKinetic />`,
+                        description: 'next/dynamic with ssr: false eliminates the contact section from both the server-rendered HTML and the initial JavaScript bundle. The loading placeholder maintains layout stability (no CLS) while the real component loads asynchronously.'
+                      }
+                    ],
+                    'valley-city-sales': [
+                      {
+                        title: 'TOTP 2FA with Device Remember',
+                        language: 'TypeScript',
+                        narrative: 'The dealer isn\'t tech-savvy, so I needed 2FA that\'s secure but not annoying. TOTP codes with a 30-day device remember token means he only enters codes on new devices. The remember token uses crypto-grade randomness — no Math.random() shortcuts.',
+                        code: `export async function generateTOTPSetup(email: string) {
+  const totp = new OTPAuth.TOTP({
+    issuer: 'Valley City Sales Admin',
+    label: email,
+    algorithm: 'SHA1',
+    digits: 6,
+    period: 30,
+    secret: new OTPAuth.Secret({ size: 20 }),
+  });
+
+  const uri = totp.toString();
+  const qrDataUrl = await QRCode.toDataURL(uri, {
+    width: 256, margin: 2
+  });
+
+  return { secret: totp.secret.base32, qrDataUrl, uri };
+}
+
+export function verifyTOTP(secret: string, code: string): boolean {
+  const totp = new OTPAuth.TOTP({
+    issuer: 'Valley City Sales Admin',
+    algorithm: 'SHA1',
+    digits: 6,
+    period: 30,
+    secret: OTPAuth.Secret.fromBase32(secret),
+  });
+  // Allow 1 period of clock drift (±30s)
+  return totp.validate({ token: code, window: 1 }) !== null;
+}
+
+export function generateRememberToken(): string {
+  const arr = new Uint8Array(32);
+  crypto.getRandomValues(arr);
+  return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+}`,
+                        description: 'Full TOTP flow: generate a 20-byte secret, render a QR code for authenticator apps, and verify 6-digit codes with ±30s clock drift tolerance. The remember token uses Web Crypto API for 256 bits of entropy — far stronger than UUID v4.'
+                      },
+                      {
+                        title: 'VIN Decode with NHTSA Normalization',
+                        language: 'TypeScript',
+                        narrative: 'Auto-filling 8+ fields from a VIN saves the dealer minutes per listing. But NHTSA\'s API is messy — "Sport Utility Vehicle (SUV)" needs to become "suv", empty strings need to become undefined, and "Not Applicable" is their version of null.',
+                        code: `const VIN_REGEX = /^[A-HJ-NPR-Z0-9]{17}$/i;
+const NHTSA_API = 'https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues';
+
+export async function decodeVIN(vin: string): Promise<VINResult> {
+  const clean = vin.trim().toUpperCase();
+  if (!VIN_REGEX.test(clean)) {
+    return { error: 'Invalid VIN. Must be exactly 17 characters.' };
+  }
+
+  const res = await fetch(
+    \`\${NHTSA_API}/\${encodeURIComponent(clean)}?format=json\`,
+    { signal: AbortSignal.timeout(10_000) }
+  );
+  const data = await res.json();
+  const r = data.Results?.[0];
+
+  // NHTSA uses empty strings and "Not Applicable" for missing data
+  const val = (field: string) => {
+    const v = r[field];
+    return v && v !== 'Not Applicable' && v !== '' ? v : undefined;
+  };
+
+  const bodyMap: Record<string, string> = {
+    'Sedan': 'sedan', 'SUV': 'suv',
+    'Sport Utility Vehicle (SUV)': 'suv',
+    'Pickup': 'pickup', 'Truck': 'pickup',
+    'Van': 'van', 'Wagon': 'wagon',
+  };
+
+  return {
+    year: val('ModelYear') ? parseInt(val('ModelYear')!) : undefined,
+    make: val('Make'),
+    model: val('Model'),
+    body_type: bodyMap[val('BodyClass') || ''],
+    drivetrain: val('DriveType')?.includes('4') ? '4wd' : val('DriveType')?.toLowerCase(),
+  };
+}`,
+                        description: 'VIN validation rejects letters I, O, Q (not used in VINs), then queries NHTSA with a 10-second timeout. The val() helper normalizes NHTSA\'s inconsistent empty values, and lookup maps convert verbose descriptions to clean enum values the form expects.'
+                      },
+                      {
+                        title: 'ISR Revalidation Pattern',
+                        language: 'TypeScript',
+                        narrative: 'The public site needs to show new listings within a minute of the dealer adding them, but we can\'t do full SSR on every request — the PocketBase server is a $6 droplet. ISR with 60-second revalidation hits the sweet spot.',
+                        code: `// Every data page exports this — 60 second ISR
+export const revalidate = 60;
+
+async function getHomeData() {
+  const pb = createPocketBase();
+
+  const [allListings, allPromos] = await Promise.all([
+    pb.collection('listings').getFullList({
+      filter: "status = 'active'",
+      sort: '-tier,-created',
+    }),
+    (() => {
+      const now = new Date().toISOString();
+      return pb.collection('promotions').getFullList({
+        filter: \`active = true && start_date <= '\${now}' && end_date >= '\${now}'\`,
+        sort: 'display_order',
+      });
+    })(),
+  ]);
+
+  // Filter out listings without images (draft/incomplete)
+  const listings = allListings.filter(
+    l => l.images && l.images.length > 0
+  );
+
+  return { listings, promos };
+}`,
+                        description: 'Next.js ISR regenerates the page at most once every 60 seconds. Parallel Promise.all fetches listings and promotions simultaneously. The image filter prevents blank cards from appearing on the storefront — a bug I caught when 7 of 28 listings had empty image arrays.'
+                      }
+                    ]
+                  };
+
+                  const highlights = codeHighlights[projectId];
+                  if (!highlights || highlights.length === 0) {
+                    return (
+                      <div className="p-6 rounded-lg border text-center" style={{
+                        backgroundColor: 'rgba(244, 241, 234, 0.9)',
+                        borderColor: 'rgba(169, 184, 196, 0.3)'
+                      }}>
+                        <p style={{ color: '#15202B' }}>Code highlights coming soon for this project.</p>
+                      </div>
+                    );
+                  }
+
+                  return highlights.map((snippet, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.15 }}
+                    >
+                      {/* Narrative */}
+                      <div className="mb-4 p-5 rounded-xl border" style={{
+                        backgroundColor: 'rgba(244, 241, 234, 0.9)',
+                        borderColor: 'rgba(169, 184, 196, 0.3)'
+                      }}>
+                        <h4 className="text-lg font-bold mb-2" style={{ color: '#15202B' }}>
+                          {snippet.title}
+                        </h4>
+                        <p className="leading-relaxed" style={{ color: '#15202B' }}>
+                          {snippet.narrative}
+                        </p>
+                      </div>
+
+                      {/* Code */}
+                      <CodeSnippet
+                        title={snippet.title}
+                        language={snippet.language}
+                        code={snippet.code}
+                        description={snippet.description}
+                      />
+                    </motion.div>
+                  ));
+                })()}
               </div>
             </div>
           )}

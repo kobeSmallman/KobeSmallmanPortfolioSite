@@ -27,7 +27,7 @@ const MobileProjects: React.FC = () => {
             </span>
           </h2>
           <p className="text-text-body/70 mt-3 text-base leading-relaxed">
-            Six projects spanning web, mobile, enterprise, and blockchain development
+            Seven projects spanning web, mobile, enterprise, and blockchain development
           </p>
         </div>
         
@@ -176,7 +176,7 @@ const DesktopProjects: React.FC = () => {
             Featured <span style={{ color: '#D75F4E' }}>Projects</span>
           </h2>
           <p className="text-2xl text-text-body/70 max-w-3xl mx-auto">
-            Six comprehensive projects showcasing full-stack expertise across web, mobile, and enterprise systems.
+            Seven comprehensive projects showcasing full-stack expertise across web, mobile, and enterprise systems.
           </p>
         </motion.div>
 
@@ -198,7 +198,7 @@ const DesktopProjects: React.FC = () => {
             }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {projects.slice(0, 6).map((project, index) => (
+            {projects.map((project, index) => (
               <ProjectCard 
                 key={project.id} 
                 project={project} 
@@ -349,7 +349,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, scrollProgres
         </div>
 
         {/* Card Content */}
-        <div className="p-6 md:p-8 h-[350px] md:h-[420px] flex flex-col justify-between">
+        <div className="p-6 md:p-8 min-h-[350px] md:min-h-[420px] flex flex-col justify-between">
           <motion.h3 
             className="text-2xl font-bold text-text-body mb-4"
             style={{

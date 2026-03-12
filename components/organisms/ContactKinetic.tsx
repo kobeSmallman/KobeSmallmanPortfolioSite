@@ -16,6 +16,11 @@ const ContactKinetic: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [blobCount, setBlobCount] = useState(8);
+
+  React.useEffect(() => {
+    if (window.innerWidth >= 1024) setBlobCount(20);
+  }, []);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -127,7 +132,7 @@ const ContactKinetic: React.FC = () => {
     >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        {Array.from({length: 20}).map((_, i) => (
+        {Array.from({length: blobCount}).map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full opacity-10"
@@ -155,7 +160,7 @@ const ContactKinetic: React.FC = () => {
       </div>
 
       <motion.div 
-        className="max-w-7xl mx-auto px-8 relative z-10"
+        className="max-w-7xl mx-auto px-4 sm:px-8 relative z-10"
         style={{ y: parallaxY, scale }}
       >
         {/* Header */}
@@ -164,6 +169,7 @@ const ContactKinetic: React.FC = () => {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
+          viewport={{ once: true }}
         >
           <h2 className="text-7xl lg:text-8xl font-display italic text-text-body mb-8">
             Let's <span style={{ color: '#D75F4E' }}>Connect</span>

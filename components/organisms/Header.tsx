@@ -43,6 +43,7 @@ const Header: React.FC = () => {
 
   const navItems = [
     { id: 'about', label: 'About', isPage: true },
+    { id: 'journey', label: 'Journey', isPage: true },
     { id: 'projects', label: 'Projects' },
     { id: 'contact', label: 'Contact' },
   ];
@@ -50,6 +51,9 @@ const Header: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
     if (sectionId === 'about') {
       router.push('/about');
+      setIsMobileMenuOpen(false);
+    } else if (sectionId === 'journey') {
+      router.push('/journey');
       setIsMobileMenuOpen(false);
     } else {
       const element = document.getElementById(sectionId);

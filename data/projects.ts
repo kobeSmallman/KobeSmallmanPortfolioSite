@@ -70,16 +70,11 @@ export const projects: Project[] = [
       notes: ['Generates weekly phone call leads for the business owner']
     },
     learningPoints: [
-      'Next.js 13 features', 'Email/SMS integration', 'Performance optimization', 'Small business requirements', 
-      'Local SEO strategies', 'Contact form UX design', 'Image optimization techniques', 'Mobile-first development', 
-      'Client communication', 'Project timeline management', 'Tailwind CSS architecture', 'TypeScript integration',
-      'Vercel deployment', 'Form validation patterns', 'Responsive design principles', 'Web accessibility',
-      'Business requirement analysis', 'User experience design', 'Performance monitoring', 'SEO best practices',
-      'Cross-browser compatibility', 'Mobile optimization', 'Load time optimization', 'Code splitting strategies',
-      'CDN implementation', 'Analytics integration', 'Error handling', 'Testing strategies', 'Client feedback integration',
-      'Project scope management', 'Deadline management', 'Quality assurance', 'Production deployment', 
-      'Post-launch support', 'Performance monitoring', 'User feedback analysis', 'Continuous improvement',
-      'Business impact measurement', 'ROI tracking', 'Lead generation optimization', 'Conversion rate optimization'
+      'Next.js 13 App Router', 'Tailwind CSS architecture', 'TypeScript integration',
+      'Local SEO with schema markup', 'Mobile-first responsive design', 'Image optimization with next/image',
+      'Contact form with Turnstile CAPTCHA', 'Core Web Vitals optimization', 'Vercel deployment',
+      'Client communication and requirements gathering', 'CSS keyframe animations',
+      'WCAG accessibility compliance', 'Small business project management'
     ],
     outcome: 'Live proof of client delivery, Core Web Vitals optimisation and SEO effectiveness',
     images: ['/images/LacombeGuttersSite.png'],
@@ -144,21 +139,15 @@ export const projects: Project[] = [
       notes: ['Built from zero to feature-complete as a solo developer, ready for domain purchase and launch']
     },
     learningPoints: [
-      'Next.js 15 App Router', 'React 19 features', 'Tailwind CSS 4 migration', 'TypeScript strict mode',
-      'PocketBase as a lightweight backend', 'pnpm monorepo architecture', 'Shared package design',
-      'TOTP 2FA implementation', 'iron-session cookie management', 'Role-based access control',
-      'PDF generation with jsPDF', 'VIN decoding via NHTSA API', 'ISR revalidation patterns',
-      'Turnstile CAPTCHA integration', 'SendGrid email templating', 'Cloudflare security headers',
-      'Content Security Policy configuration', 'Structured data for SEO', 'Sitemap generation',
-      'Batch operations with audit logging', 'Image optimization strategies', 'Rate limiting patterns',
-      'Honeypot spam prevention', 'File upload handling', 'PocketBase query optimization',
-      'Server Actions in Next.js', 'Error boundaries', 'Loading skeletons', 'Responsive masonry layouts',
-      'Mobile-first design', 'Framer Motion animations', 'Dynamic category filtering',
-      'Search modal with keyboard shortcuts', 'Breadcrumb navigation', 'Sale pricing logic',
-      'Inventory management workflows', 'Quick-add draft listings', 'Duplicate listing feature',
-      'Gallery with masonry CSS columns', 'City-based SEO pages', 'OpenGraph meta tags',
-      'DigitalOcean droplet setup', 'systemd service management', 'UFW firewall configuration',
-      'SSH key-only authentication', 'fail2ban intrusion prevention'
+      'Next.js 15 App Router', 'React 19', 'Tailwind CSS 4', 'TypeScript strict mode',
+      'PocketBase backend and collection design', 'pnpm monorepo with shared package',
+      'TOTP 2FA with OTPAuth library', 'iron-session encrypted cookies',
+      'Role-based access control', 'PDF generation with jsPDF',
+      'VIN decoding via NHTSA API', 'ISR with 60s revalidation',
+      'Turnstile CAPTCHA and honeypot spam prevention', 'SendGrid transactional email',
+      'Structured data and SEO', 'Batch operations with audit logging',
+      'Server Actions', 'DigitalOcean droplet and systemd setup',
+      'Real client requirements and iterative feedback'
     ],
     outcome: 'Feature-complete dealership platform with a public browsing site and admin dashboard, ready for domain purchase and production launch. Demonstrates rapid full-stack delivery with modern tooling.',
     images: ['/images/ValleyCitySalesPublicSite.png', '/images/ValleyCitySalesAdminSite.png'],
@@ -202,15 +191,12 @@ export const projects: Project[] = [
       notes: ['WIDA Inc. uses system daily for all vendor interactions', 'Deployed MVP in 10 sprints on schedule']
     },
     learningPoints: [
-      'Laravel 10 MVC architecture', 'Team leadership skills', 'Eloquent ORM optimization', 'Database query performance', 
-      'PHPUnit testing', 'Agile project management', 'Scope management', 'Client communication', 'Code review processes', 
-      'MySQL optimization', 'Bootstrap 5 components', 'Chart.js data visualization', 'Role-based authentication', 
-      'Audit trail implementation', 'Full-text search', 'Markdown integration', 'Vite build optimization', 'Team mentoring', 
-      'Sprint planning', 'Stakeholder management', 'Performance profiling', 'Database design', 'Security best practices',
-      'User access control', 'Data validation', 'Error handling', 'Logging systems', 'Backup strategies',
-      'Documentation practices', 'Code standards', 'Version control', 'Deployment strategies', 'Testing methodologies',
-      'Quality assurance', 'Bug tracking', 'Feature prioritization', 'Resource allocation', 'Timeline estimation',
-      'Risk management', 'Communication protocols', 'Meeting facilitation', 'Progress reporting', 'Client presentations'
+      'Laravel 10 MVC architecture', 'Eloquent ORM and eager loading', 'MySQL 8 query optimization',
+      'PHPUnit test coverage', 'Bootstrap 5 Blade templates', 'Chart.js analytics dashboards',
+      'Role-based middleware and policies', 'Agile sprints and scope management',
+      'Team leadership across 6 developers', 'Client communication and stakeholder demos',
+      'Git branching and code reviews', 'Database schema design', 'Audit logging',
+      'Full-text search implementation', 'Vite build tooling'
     ],
     outcome: 'Deployed MVP in 10 sprints; WIDA now uses the system daily. Demonstrates backend architecture skills, scope management, and client-facing communication.',
     images: ['/images/WIDA.png'],
@@ -249,17 +235,12 @@ export const projects: Project[] = [
       notes: ['Showcases end-to-end mobile development skills from concept to store deployment']
     },
     learningPoints: [
-      'React Native development', 'Expo SDK49 features', 'Mobile API integration', 'EAS build pipeline', 
-      'Cross-platform deployment', 'AsyncStorage data persistence', 'Mobile UX design', 'Offline-first architecture', 
-      'Image caching strategies', 'Mobile performance optimization', 'React Navigation patterns', 'Sound integration', 
-      'Mobile game mechanics', 'App store requirements', 'Build optimization', 'Mobile debugging', 'Device testing', 
-      'API rate limiting solutions', 'Asset management', 'Mobile security considerations', 'Touch interactions',
-      'Screen size adaptation', 'Platform-specific code', 'Memory management', 'Battery optimization',
-      'Network handling', 'State persistence', 'User experience design', 'Game balancing', 'Monetization strategies',
-      'Analytics integration', 'Error tracking', 'Performance monitoring', 'User feedback systems',
-      'A/B testing', 'Localization support', 'Accessibility features', 'Push notifications', 'Deep linking',
-      'Social features', 'Leaderboard systems', 'Achievement systems', 'Progress tracking', 'Data synchronization',
-      'Cloud storage', 'User authentication', 'In-app purchases', 'Ad integration', 'Store optimization'
+      'React Native and Expo SDK49', 'EAS Build pipeline and APK generation',
+      'AsyncStorage for local persistence', 'React Navigation patterns',
+      'expo-av audio preloading', 'Unsplash API and rate limit workarounds',
+      'Offline-first image caching', 'Mobile UX and touch interactions',
+      'Cross-platform iOS/Android development', 'Build size optimization',
+      'Mobile game state management', 'OTA update workflow'
     ],
     outcome: 'Demonstrates complete mobile pipeline from asset fetch through EAS release build and OTA updates',
     images: ['/images/fourpicsoneword.png'],
@@ -298,18 +279,11 @@ export const projects: Project[] = [
       notes: ['Demonstrates mastery of C++ fundamentals and modern best practices']
     },
     learningPoints: [
-      'C++17 modern features', 'STL containers mastery', 'Memory management techniques', 'Cross-platform development', 
-      'Object-oriented design patterns', 'RAII principles', 'Smart pointer usage', 'Template programming', 
-      'File I/O operations', 'Exception handling', 'Preprocessor directives', 'Compiler compatibility', 
-      'Debugging techniques', 'Code organization', 'Algorithm implementation', 'Data structure selection', 
-      'Performance optimization', 'Resource management', 'System-level programming', 'Build system configuration',
-      'Makefile creation', 'CMake usage', 'Version control', 'Documentation practices', 'Testing strategies',
-      'Code review', 'Refactoring techniques', 'Design patterns', 'SOLID principles', 'Clean code practices',
-      'Profiling tools', 'Static analysis', 'Dynamic analysis', 'Unit testing', 'Integration testing',
-      'Continuous integration', 'Code coverage', 'Performance benchmarking', 'Memory profiling',
-      'Thread safety', 'Concurrency', 'Parallel processing', 'Optimization techniques', 'Assembly understanding',
-      'Hardware interaction', 'System calls', 'Operating system concepts', 'Computer architecture',
-      'Low-level programming', 'Embedded systems', 'Real-time systems', 'Network programming'
+      'C++17 modern features', 'STL containers (vector, map, string)',
+      'RAII and smart pointer ownership', 'Preprocessor directives for cross-platform',
+      'Object-oriented design with inheritance', 'Exception handling',
+      'Cross-platform compilation (GCC/Clang/MSVC)', 'Console I/O and command parsing',
+      'Modular code organization', 'Memory leak prevention'
     ],
     outcome: 'Compiles warning-free on GCC/Clang/MSVC; proves mastery of STL and OOP',
     images: ['/images/AdventureTerminalGame.png'],
@@ -344,23 +318,18 @@ export const projects: Project[] = [
       solution: 'Stored RPC keys in GitHub Actions secrets'
     }],
     impact: {
-      metrics: ['Alpha version demonstrates mint-verify-resell workflow', 'Cross-chain API and PWA integration functional', 'Polyglot architecture completed'],
+      metrics: ['Alpha version demonstrates mint-verify-resell workflow', 'Cross-chain API and React frontend integration functional', 'Polyglot architecture completed'],
       notes: ['Proves full-stack Web3 development capabilities across multiple technologies']
     },
     learningPoints: [
-      'Web3 development fundamentals', 'Solidity smart contracts', 'Multi-chain deployment strategies', 'DeFi integration patterns', 
-      'MetaMask wallet integration', 'ethers.js library usage', 'Hardhat development environment', 'Smart contract testing', 
-      'Gas optimization techniques', 'Layer 2 scaling solutions', 'NFT standards (ERC-721)', 'Web3 UX design', 
-      'Blockchain security practices', 'Cryptocurrency economics', 'Decentralized storage', 'React Web3 integration', 
-      'ASP.NET Core Web3 APIs', 'PostgreSQL blockchain data', 'Event-driven architecture', 'Web3 authentication',
-      'IPFS integration', 'Decentralized identity', 'Token economics', 'DAO governance', 'Cross-chain bridges',
-      'Oracle integration', 'Flash loan protection', 'Reentrancy guards', 'Access control patterns',
-      'Upgradeable contracts', 'Proxy patterns', 'Diamond standard', 'EIP standards', 'Consensus mechanisms',
-      'Mining/validation', 'Network effects', 'Tokenomics design', 'Liquidity provision', 'Yield farming',
-      'Staking mechanisms', 'Governance tokens', 'Voting systems', 'Proposal mechanisms', 'Treasury management',
-      'Risk assessment', 'Audit processes', 'Formal verification', 'Economic modeling', 'Game theory'
+      'Solidity smart contracts (ERC-721)', 'ethers.js blockchain integration',
+      'Hardhat development and testing', 'Gas optimization techniques',
+      'React 18 with Vite', 'ASP.NET Core 7 REST APIs',
+      'JWT authentication', 'PostgreSQL with Entity Framework',
+      'MetaMask wallet integration', 'Smart contract security patterns',
+      'CI/CD secret management', 'Polyglot architecture (TypeScript, C#, Solidity)'
     ],
-    outcome: 'Alpha version already demonstrates mint-verify-resell workflow across chain, API, and PWA layers',
+    outcome: 'Alpha version already demonstrates mint-verify-resell workflow across chain, API, and React frontend layers',
     images: ['/images/blockchaintickets.png'],
     links: { github: 'https://github.com/kobeSmallman/BlockchainTickets' },
     tags: ['Web3', 'Solidity', 'React', 'ASP.NET', 'Blockchain'],
@@ -397,18 +366,12 @@ export const projects: Project[] = [
       notes: ['Recruiters specifically cite technical sophistication and clean implementation']
     },
     learningPoints: [
-      'Next.js 14 App Router', 'React Server Components', 'Advanced TypeScript patterns', 'Performance optimization techniques', 
-      'Modern CSS architecture', 'Framer Motion advanced animations', 'SEO best practices', 'Web Vitals optimization', 
-      'Bundle analysis', 'Code splitting strategies', 'Image optimization', 'Font optimization', 'Accessibility implementation', 
-      'Mobile-first design', 'Progressive enhancement', 'Static site generation', 'Dynamic routing', 'Metadata API', 
-      'OpenGraph optimization', 'Analytics integration', 'Core Web Vitals', 'Lighthouse optimization', 'Performance budgets',
-      'Critical rendering path', 'Resource hints', 'Preloading strategies', 'Service workers', 'Caching strategies',
-      'CDN optimization', 'Edge computing', 'Serverless functions', 'API optimization', 'Database optimization',
-      'Real user monitoring', 'Synthetic monitoring', 'Performance testing', 'Load testing', 'Stress testing',
-      'A/B testing', 'Feature flags', 'Continuous deployment', 'Monitoring systems', 'Error tracking',
-      'User experience analytics', 'Conversion optimization', 'Heat mapping', 'User session recording',
-      'Feedback systems', 'Internationalization', 'Localization', 'Multi-language support', 'Cultural adaptation',
-      'Brand consistency', 'Design systems', 'Component libraries', 'Style guides', 'Documentation practices'
+      'Next.js 14 App Router', 'React Server Components', 'TypeScript 5 strict mode',
+      'Tailwind CSS 3 design tokens', 'Framer Motion animations',
+      'CRA to Next.js migration', 'Hydration mismatch debugging',
+      'Code splitting and dynamic imports', 'Core Web Vitals optimization',
+      'Vercel deployment and CI/CD', 'Responsive mobile-first design',
+      'Image optimization with next/image', 'OpenGraph and SEO metadata'
     ],
     outcome: 'Proof of continuous learning and production-grade DevOps skills',
     images: ['/images/PortfolioSite.png'],

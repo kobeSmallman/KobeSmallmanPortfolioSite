@@ -66,6 +66,7 @@ export default function RootLayout({
                 </div>
                 <nav className="hidden md:flex items-center space-x-8">
                   <span className="text-text-body/70">About</span>
+                  <span className="text-text-body/70">Journey</span>
                   <span className="text-text-body/70">Projects</span>
                   <span className="text-text-body/70">Contact</span>
                 </nav>

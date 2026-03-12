@@ -34,7 +34,7 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
         'Pair programming sessions for complex features.',
         'Code reviews via Git pull requests.',
         'Agile sprints with retrospectives every 2 weeks.',
-        'Slack integration for real-time team communication.'
+        'Git-based version control with feature branches.'
       ],
       systemDesign: [
         'Laravel MVC architecture with service layer pattern.',
@@ -42,8 +42,7 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
         'Bootstrap 5 responsive UI with custom CSS.',
         'Chart.js for analytics visualization.',
         'Role-based authentication with middleware guards.',
-        'RESTful API design for mobile-first architecture.',
-        'Caching layer with Redis for performance optimization.'
+        'Vite-bundled frontend assets.'
       ],
       challenges: [
         {
@@ -67,8 +66,7 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
         'Reduced vendor response tracking time by 60%.',
         'Improved manager visibility into team performance.',
         'Client adopted system for 50+ vendors and 12 staff members.',
-        'Achieved 99.5% uptime in production environment.',
-        'Positive client feedback led to ongoing maintenance contract.'
+        'Deployed MVP on schedule across 10 Agile sprints.'
       ],
       learningPoints: [
         'Learned to manage stakeholder expectations and scope changes.',
@@ -139,7 +137,7 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
         'Generate qualified leads through contact forms.',
         'Showcase previous work and customer testimonials.'
       ],
-      techStack: ['HTML5', 'CSS3', 'JavaScript', 'PHP', 'MySQL'],
+      techStack: ['Next.js 13', 'Tailwind CSS 3.4', 'TypeScript', 'PostCSS', 'Lucide React', 'Vercel'],
       challenges: [
         {
           challenge: 'Local SEO: Competing with established gutter companies.',
@@ -155,36 +153,33 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
         }
       ],
       impact: [
-        'Increased local search visibility by 300%.',
-        'Generated 50+ qualified leads in first 6 months.',
-        'Improved customer trust with professional presentation.',
-        'Reduced bounce rate by 45% with better user experience.'
+        'Lighthouse 98 Perf / 100 Acc / 100 BP / 97 SEO.',
+        'Top-3 Google map-pack ranking for "gutter installation Lacombe".',
+        'Generates weekly phone call leads for the business owner.'
       ],
       learningPoints: [
-        'Learned local SEO optimization strategies.',
-        'Gained experience with small business client management.',
-        'Developed skills in conversion rate optimization.',
-        'Improved understanding of local market dynamics.',
-        'Learned importance of mobile-first design for local businesses.',
-        'Gained experience with Google Analytics and Search Console.',
-        'Developed skills in lead generation and form optimization.'
+        'Learned local SEO strategies including schema markup.',
+        'Gained experience managing a small business client.',
+        'Learned mobile-first design for local service businesses.',
+        'Developed skills in Core Web Vitals optimization.',
+        'Gained experience with Turnstile CAPTCHA integration.',
+        'Improved understanding of accessible touch targets and WCAG compliance.'
       ]
     },
     'dungeon-escape': {
       name: 'Dungeon Escape',
-      overview: 'Text-based adventure game built in C++17 featuring dynamic combat, inventory management, and procedural dungeon generation. Implements object-oriented design patterns, modern C++ features, and cross-platform compatibility. Players navigate through rooms using console commands, interact with NPCs through talk/attack mechanics, solve puzzles that block exits, and manage items with special use effects. The game includes a cursed status system with damage over time, comprehensive room navigation, and intelligent enemy AI. Built with STL containers for efficient data management, RAII principles for automatic memory management, and modular architecture for maintainable code. Features cross-platform compatibility across Windows, Linux, and macOS with warning-free compilation on GCC, Clang, and MSVC compilers. The game demonstrates mastery of C++ fundamentals including smart pointers, exception handling, template programming, and modern C++17 features while providing an engaging gameplay experience with strategic combat mechanics and exploration elements.',
+      overview: 'Text-based dungeon crawler written in C++17. Players navigate rooms using console commands, interact with NPCs through talk/attack mechanics, solve puzzles that block exits, and manage items with special use effects. Includes a cursed status system with damage over time. Built with STL containers, RAII principles, and smart pointers for automatic memory management. Compiles warning-free on GCC, Clang, and MSVC.',
       purpose: [
         'Demonstrate C++ programming skills and OOP principles.',
-        'Create engaging gameplay with strategic combat system.',
-        'Implement save/load functionality for game persistence.',
-        'Showcase clean code architecture and design patterns.'
+        'Create engaging text-based gameplay with puzzles and combat.',
+        'Practice low-level memory safety and cross-platform debugging.',
+        'Provide an interview-friendly C++ OOP demo.'
       ],
       systemDesign: [
         'Object-oriented architecture with inheritance hierarchies.',
-        'Factory pattern for item and monster creation.',
-        'State machine for game flow management.',
-        'File I/O system for save/load functionality.',
-        'Random number generation for procedural content.'
+        'STL containers for rooms, items, and enemies.',
+        'RAII and smart pointers for automatic resource cleanup.',
+        'Preprocessor directives for cross-platform terminal commands.'
       ],
       techStack: ['C++17', 'STL', 'File I/O', 'Object-Oriented Design'],
       challenges: [
@@ -249,27 +244,25 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
         'Showcases end-to-end mobile development skills including EAS build pipeline and OTA updates.'
       ],
       learningPoints: [
-        'Mastered React Native framework and mobile development.',
-        'Learned mobile app store optimization and deployment.',
-        'Developed skills in mobile UI/UX design principles.',
-        'Gained experience with app monetization strategies.',
-        'Improved understanding of cross-platform development.',
-        'Learned mobile performance optimization techniques.',
-        'Developed skills in user analytics and behavior tracking.',
-        'Gained experience with mobile app testing and debugging.'
+        'Learned React Native and Expo SDK49 for cross-platform mobile development.',
+        'Built a complete EAS Build pipeline from development to store-ready APK.',
+        'Solved Unsplash rate limits by pre-downloading images at build time.',
+        'Fixed audio lag using expo-av createAsync for preloading.',
+        'Managed game state with AsyncStorage for offline persistence.',
+        'Optimized APK bundle size with image compression and tree-shaking.'
       ]
     },
     'blockchain-tickets': {
       name: 'BlockchainTickets Platform',
-      overview: 'Early-stage decentralized event ticketing platform built on Ethereum blockchain that mints ERC-721 event tickets with resale price-cap smart contracts. Features comprehensive ticket minting UI, automated resale cap enforcement, and JWT-secured dashboards across multiple user roles. The platform demonstrates a complete mint-verify-resell workflow spanning blockchain smart contracts, RESTful APIs, and progressive web application layers. Built with React 18 and Vite for the frontend, ASP.NET Core 7 for the backend API, and Solidity 0.8 smart contracts deployed on Ethereum. Includes JWT authentication, ethers.js for blockchain integration, and Hardhat for smart contract development and testing. The alpha version successfully demonstrates blockchain provenance for event tickets while addressing high gas costs and providing user-friendly interfaces for non-crypto users.',
+      overview: 'Early-stage decentralized event ticketing platform built on Ethereum blockchain that mints ERC-721 event tickets with resale price-cap smart contracts. Features comprehensive ticket minting UI, automated resale cap enforcement, and JWT-secured dashboards across multiple user roles. The platform demonstrates a complete mint-verify-resell workflow spanning blockchain smart contracts, RESTful APIs, and a React frontend. Built with React 18 and Vite for the frontend, ASP.NET Core 7 for the backend API, and Solidity 0.8 smart contracts deployed on Ethereum. Includes JWT authentication, ethers.js for blockchain integration, and Hardhat for smart contract development and testing. The alpha version successfully demonstrates blockchain provenance for event tickets while addressing high gas costs and providing user-friendly interfaces for non-crypto users.',
       purpose: [
         'Eliminate ticket fraud through blockchain verification and provenance.',
         'Create transparent and secure ticket trading platform with enforced resale caps.',
         'Demonstrate blockchain development capabilities across full stack.',
         'Explore Web3 technologies and decentralized application architecture.',
-        'Showcase polyglot development skills across blockchain, API, and PWA layers.'
+        'Showcase polyglot development skills across blockchain, API, and frontend layers.'
       ],
-      techStack: ['Solidity 0.8', 'ethers.js', 'Hardhat', 'ERC-721', 'React 18', 'Vite', 'ASP.NET Core 7', 'JWT Auth', 'TypeScript', 'Ethereum', 'Web3', 'Smart Contracts', 'Progressive Web App', 'RESTful APIs'],
+      techStack: ['Solidity 0.8', 'ethers.js', 'Hardhat', 'ERC-721', 'React 18', 'Vite', 'ASP.NET Core 7', 'JWT Auth', 'TypeScript', 'Ethereum', 'Web3', 'Smart Contracts', 'RESTful APIs'],
       challenges: [
         {
           challenge: 'High gas costs: Ethereum transaction fees making ticket purchases expensive.',
@@ -286,7 +279,7 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
       ],
       impact: [
         'Alpha version demonstrates complete mint-verify-resell workflow.',
-        'Showcases workflow across blockchain, API, and PWA layers.',
+        'Showcases workflow across blockchain, API, and frontend layers.',
         'Demonstrates blockchain provenance for event ticket authenticity.',
         'Provides foundation for production-ready ticketing platform.',
         'Illustrates polyglot development skills and full-stack blockchain architecture.'
@@ -299,7 +292,7 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
         'Learned Web3 integration patterns and blockchain interactions.',
         'Developed skills in gas optimization and cost management.',
         'Gained experience with JWT authentication in blockchain applications.',
-        'Learned Progressive Web App development for Web3 applications.',
+        'Learned React SPA patterns for Web3 applications.',
         'Developed understanding of decentralized application architecture.',
         'Gained experience with ASP.NET Core 7 API development.',
         'Learned React 18 and Vite build optimization.',
@@ -590,14 +583,10 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
                         }}
                       >
                         <h4 className="text-2xl font-bold text-slate-800 mb-6">Technical Implementation</h4>
-                        <p className="text-slate-600 leading-relaxed mb-4">
-                          Built with Next.js 13 and Tailwind CSS 3.4, the site prioritizes performance and accessibility. 
-                          I implemented advanced local SEO strategies including schema markup, local business listings, and 
-                          location-specific content optimization.
-                        </p>
                         <p className="text-slate-600 leading-relaxed">
-                          The service area checker uses geolocation APIs to instantly tell visitors if they're within the coverage area, 
-                          reducing bounce rates and qualifying leads before they even submit a contact form.
+                          Built with Next.js 13 and Tailwind CSS 3.4, the site prioritizes performance and accessibility.
+                          I implemented local SEO strategies including schema markup and location-specific content.
+                          A sticky mobile "Call Now" CTA and streamlined contact form keep the conversion path short.
                         </p>
                       </div>
                       <div 
@@ -1080,13 +1069,13 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
                   
                   if (projectId === 'lacombe-gutters') {
                     features = [
-                      'Interactive service area checker - input address to verify coverage',
-                      'Professional service catalog with detailed pricing',
-                      'Mobile-optimized contact forms for lead generation', 
-                      'Local SEO optimization for "gutters near me" searches',
-                      'Fast loading times with Next.js optimization',
-                      'Responsive design for all device types',
-                      'Call-to-action buttons for immediate customer contact'
+                      'Leaf-fall CSS hero animation (pure keyframes, no JS)',
+                      'Responsive service grid with pricing',
+                      'Sticky mobile "Call Now" CTA',
+                      'Contact form with Turnstile CAPTCHA verification',
+                      'Local SEO with schema markup for "gutters near me" searches',
+                      'Fast loading with Next.js image optimization',
+                      'Dark-mode variant'
                     ];
                   } else if (projectId === 'wida-crm') {
                     features = [
@@ -1108,21 +1097,21 @@ export default function ProjectDetailClient({ project, projectId }: ProjectDetai
                     ];
                   } else if (projectId === 'dungeon-escape') {
                     features = [
-                      'Turn-based combat system with strategic elements',
-                      'Inventory management with item collection',
-                      'Save/load game functionality',
-                      'Procedural dungeon generation',
-                      'Character progression and stats',
-                      'Interactive storyline with choices'
+                      'Room navigation via console commands',
+                      'Puzzles blocking exits',
+                      'Items with use effects',
+                      'NPC talk/attack interactions',
+                      'Cursed status with damage over time',
+                      'Cross-platform: compiles on GCC, Clang, and MSVC'
                     ];
                   } else if (projectId === '4pics1word') {
                     features = [
-                      'Hundreds of puzzle levels with progressive difficulty',
-                      'Hint system to help players when stuck',
-                      'Local storage for game progress persistence',
-                      'Social sharing capabilities',
-                      'Cross-platform compatibility (iOS/Android)',
-                      'In-app advertisement integration'
+                      'Difficulty tiers: easy, medium, and hard',
+                      'Coin economy with three hint types',
+                      'Offline image caching (pre-downloaded at build time)',
+                      'Background music with auto-pause',
+                      'Local leaderboard with AsyncStorage',
+                      'Cross-platform iOS/Android via Expo'
                     ];
                   } else if (projectId === 'blockchain-tickets') {
                     features = [
@@ -1295,7 +1284,7 @@ $client = Client::findOrFail($id);
 // After: 3 queries, ~220ms
 $client = Client::with(['notes', 'notes.employee'])
     ->findOrFail($id);`,
-                        description: 'Eager loading with Eloquent\'s with() method collapses dozens of lazy-loaded queries into a handful of JOINs. Response time dropped from 900ms to 220ms — a 75% improvement that the client noticed immediately.'
+                        description: 'The with() call tells Eloquent to fetch the related notes and each note\'s employee in just 2 extra queries using WHERE IN clauses instead of firing a separate query every time you access a relationship. That took us from 47 queries down to 3, and load time went from 900ms to 220ms.'
                       },
                       {
                         title: 'Permission Middleware',
@@ -1324,7 +1313,7 @@ $client = Client::with(['notes', 'notes.employee'])
         return $next($request);
     }
 }`,
-                        description: 'A single middleware handles all role-based access control. Routes declare their required permission in the middleware parameter, and the lookup table keeps the mapping centralized and easy to update.'
+                        description: 'The middleware grabs the current user, looks up which page ID the route requires from $pageIdMap, then checks the permissions table to see if that user has access. If not, they get redirected to an access denied page. Every protected route just declares this middleware with its route name, so adding a new page is one line in the map.'
                       },
                       {
                         title: 'Transaction-Wrapped Order Creation',
@@ -1357,7 +1346,7 @@ try {
     Log::error('Order creation failed: ' . $e->getMessage());
     return back()->withErrors(['error' => 'Order could not be created.']);
 }`,
-                        description: 'Wrapping the order and its line items in a transaction guarantees atomicity — either everything saves or nothing does. The catch block rolls back and logs the error so we can diagnose without leaving orphaned records.'
+                        description: 'DB::beginTransaction() starts the transaction. The order header gets saved first, then we loop through each product and save an OrderDetail row. If anything throws, the catch block calls DB::rollback() so nothing is half-saved, and Log::error records what went wrong. If everything succeeds, DB::commit() makes it permanent and we redirect to the order page.'
                       },
                       {
                         title: 'Custom Sequential ID Generation',
@@ -1369,38 +1358,38 @@ $latestNumber = $latestOrder
     : 1;
 $newOrderId = 'O' . str_pad($latestNumber, 3, '0', STR_PAD_LEFT);
 // O001, O002, ... O999`,
-                        description: 'Strips the "O" prefix, parses the number, increments, and re-pads. Simple and readable. For a six-person team with moderate volume, this was more than sufficient — no need for sequences or UUIDs.'
+                        description: 'It grabs the latest order, strips the "O" prefix with substr, parses what\'s left into an integer, adds 1, then pads it back to 3 digits with str_pad. If no orders exist yet, it starts at 1. Simple, but does the job for a small team without needing database sequences or UUIDs.'
                       }
                     ],
                     'lacombe-gutters': [
                       {
-                        title: 'CSS-Only Rain Animation',
+                        title: 'CSS-Only Leaf-Fall Animation',
                         language: 'CSS',
-                        narrative: 'The gutter company wanted something that immediately communicated "rain and gutters" when you land on the page. I could have reached for a canvas library, but pure CSS keyframes gave me the effect with zero JavaScript overhead.',
-                        code: `@keyframes rain {
+                        narrative: 'The gutter company wanted something that immediately communicated "gutters and falling leaves" when you land on the page. I could have reached for a canvas library, but pure CSS keyframes gave me the effect with zero JavaScript overhead.',
+                        code: `@keyframes leafFall {
   0% {
-    transform: translateY(0) scaleY(1);
+    transform: translateY(-10vh) rotate(0deg);
     opacity: 0;
   }
   10% {
     opacity: 0.8;
   }
   90% {
-    opacity: 0.8;
+    opacity: 0.6;
   }
   100% {
-    transform: translateY(100vh) scaleY(1);
+    transform: translateY(100vh) rotate(360deg);
     opacity: 0;
   }
 }
 
-/* Each raindrop gets a random delay and duration */
-.raindrop {
-  animation: rain linear infinite;
-  animation-duration: var(--duration, 1.5s);
+/* Each leaf gets a random delay and duration */
+.leaf {
+  animation: leafFall linear infinite;
+  animation-duration: var(--duration, 4s);
   animation-delay: var(--delay, 0s);
 }`,
-                        description: 'Pure CSS animation with no JavaScript. Each raindrop div gets randomized CSS custom properties for duration and delay, creating a natural-looking rainfall effect that runs at 60fps without touching the main thread.'
+                        description: 'The @keyframes block moves each leaf from above the viewport to below it while rotating 360 degrees. Opacity fades in at 10% and out at 90% so leaves don\'t pop in or out abruptly. Each leaf div gets different --duration and --delay custom properties so they fall at different speeds and stagger naturally. No JavaScript involved, so it runs on the GPU at 60fps.'
                       },
                       {
                         title: 'Turnstile CAPTCHA Integration',
@@ -1427,7 +1416,7 @@ if (!data.success) {
     { status: 403 }
   );
 }`,
-                        description: 'Server-side Turnstile verification with the client IP forwarded for additional validation. The secret key never leaves the server, and failed verifications return a clean 403 without revealing implementation details to attackers.'
+                        description: 'The API route sends the client\'s Turnstile token along with the secret key and their IP to Cloudflare\'s siteverify endpoint. Cloudflare checks if the token is valid and returns a success boolean. If it fails, we return a 403 with a generic error so bots don\'t learn anything useful. The secret key stays server-side and never touches the browser.'
                       },
                       {
                         title: 'WCAG Touch Target Enforcement',
@@ -1452,7 +1441,7 @@ if (!data.success) {
     justify-content: center !important;
   }
 }`,
-                        description: 'A global CSS fix that enforces WCAG 2.1 minimum touch targets on all interactive elements. Applied via media queries so desktop layout isn\'t affected. This single change resolved 12 Lighthouse accessibility warnings.'
+                        description: 'The first media query sets min-height: 44px on all buttons and links so they meet the WCAG 2.1 touch target minimum. The second one at 480px adds flexbox centering so the text stays vertically centered inside the taller hit area. Only applies on mobile so desktop layout stays the same.'
                       }
                     ],
                     'blockchain-tickets': [
@@ -1495,7 +1484,7 @@ public async Task<UserRecord> CreateUserAsync(string email, string password)
         throw new Exception("A user with this email already exists.");
     }
 }`,
-                        description: 'Firebase token verification for API requests paired with user creation that catches the specific EmailAlreadyExists error code. The pattern-matched catch clause keeps the error handling precise without swallowing unexpected failures.'
+                        description: 'VerifyTokenAsync takes a Firebase ID token from the client, calls VerifyIdTokenAsync to decode and validate it, and returns the decoded token with the user\'s info. CreateUserAsync registers a new user, but uses a catch-when clause that only catches the specific EmailAlreadyExists error. Any other Firebase error gets thrown normally so it\'s not silently swallowed.'
                       },
                       {
                         title: 'Session Timeout with Activity Tracking',
@@ -1530,7 +1519,7 @@ useEffect(() => {
     events.forEach(e => window.removeEventListener(e, updateActivity));
   };
 }, []);`,
-                        description: 'Activity-based session management using sessionStorage timestamps and event listeners. The 60-second polling interval balances responsiveness with performance — checking every frame would be wasteful, but checking every minute catches idle sessions promptly.'
+                        description: 'updateActivity writes the current timestamp to sessionStorage whenever the user moves the mouse, types, taps, or scrolls. A setInterval runs every 60 seconds comparing the stored timestamp to now. If more than 60 minutes have passed without activity, it calls logout(). The cleanup function in the useEffect return removes all the event listeners and clears the interval when the component unmounts.'
                       },
                       {
                         title: 'Interactive Seat Selection',
@@ -1562,7 +1551,7 @@ const handleSeatClick = (seat) => {
 const total = selectedSeats.reduce(
   (sum, s) => sum + PRICE_CATEGORIES[s.category], 0
 );`,
-                        description: 'Toggle-based seat selection with immutable state updates. The functional setState pattern avoids stale closure bugs, and the optional chaining on onSeatSelect keeps the component reusable whether or not a parent needs the callback.'
+                        description: 'handleSeatClick first checks if the seat is available. Then it uses setSelectedSeats with a function to get the previous state (avoids stale closure issues). If the seat is already selected, it filters it out. If not, it spreads the old array and adds it. Either way, it calls the optional onSeatSelect callback so the parent component can react. The total recalculates automatically by reducing over the selected seats and looking up each seat\'s price category.'
                       }
                     ],
                     '4pics1word': [
@@ -1601,7 +1590,7 @@ export async function prebuildAllImages(puzzles: Puzzle[]) {
     puzzle.localImages = paths;
   }
 }`,
-                        description: 'Shifts Unsplash API calls from runtime to build time, eliminating rate limit issues entirely. The downloaded images are bundled with the APK, enabling 100% offline gameplay after installation.'
+                        description: 'downloadImage hits the Unsplash API with a search keyword and downloads the image to a local path using Expo\'s FileSystem. prebuildAllImages loops through every puzzle, downloads all 4 images per puzzle in parallel with Promise.all, and stores the local paths back on the puzzle object. Since this runs during build, the APK ships with all images baked in and never needs to call Unsplash at runtime.'
                       },
                       {
                         title: 'Audio Preloading Fix',
@@ -1641,7 +1630,7 @@ export async function playSound(type: 'correct' | 'wrong' | 'tap') {
     await sound.replayAsync();
   }
 }`,
-                        description: 'Audio.Sound.createAsync preloads the audio buffer into memory during app init. Subsequent plays use replayAsync which is nearly instant since the buffer is already decoded. The 200ms first-play delay disappeared completely.'
+                        description: 'preloadGameAudio runs at app startup and calls Audio.Sound.createAsync for each sound file in parallel. createAsync loads and decodes the audio buffer into memory with shouldPlay: false so nothing plays yet. When the game needs a sound, playSound looks up the right Sound object and calls replayAsync, which replays the already-loaded buffer instantly. That killed the 200ms first-play delay.'
                       }
                     ],
                     'dungeon-escape': [
@@ -1676,7 +1665,7 @@ void GameEngine::render() {
     }
     std::cout << std::endl;
 }`,
-                        description: 'Compile-time platform detection using preprocessor macros. The #ifdef _WIN32 check runs at compilation, not runtime, so there\'s no performance penalty. The game compiles warning-free on GCC, Clang, and MSVC.'
+                        description: '#ifdef _WIN32 checks at compile time whether we\'re on Windows, and defines CLEAR_SCREEN() to call either system("cls") or system("clear") accordingly. The render() function calls CLEAR_SCREEN() then prints the current room name, description, player HP, curse status, and available exits. The structured binding in the for loop (auto& [direction, room]) iterates over the room\'s exit map.'
                       },
                       {
                         title: 'RAII Resource Management',
@@ -1713,7 +1702,7 @@ public:
         currentRoom = rooms[0].get(); // borrow, don't own
     }
 };`,
-                        description: 'unique_ptr owns all dynamically allocated resources. The destructor is defaulted because the smart pointers handle cleanup automatically. The deleted copy constructor prevents accidental ownership duplication. Raw pointers are used only for non-owning references.'
+                        description: 'The vectors of unique_ptr own all rooms, enemies, and items. When GameEngine is destroyed, the vectors are destroyed, which destroys each unique_ptr, which frees the memory automatically. The destructor is = default because there\'s nothing manual to do. Copy is deleted since unique_ptr can\'t be copied (who would own the memory?). currentRoom is a raw pointer that just points at whichever room the player is in without owning it.'
                       }
                     ],
                     'portfolio-v2': [
@@ -1740,7 +1729,7 @@ export default function HomePage() {
     </main>
   );
 }`,
-                        description: 'The page itself stays as a Server Component for fast initial HTML delivery. Each interactive section declares "use client" internally and is wrapped in ClientOnly to prevent hydration mismatches. The contact section is dynamically imported with ssr: false since it\'s below the fold.'
+                        description: 'The page file has no "use client" directive, so it runs as a Server Component and sends plain HTML on first load. HeroKinetic and ProjectsIsometric each have "use client" inside their own files. They\'re wrapped in ClientOnly which renders a fallback on the server and only mounts the real component on the client, avoiding hydration mismatches from Framer Motion. ContactKinetic is dynamically imported elsewhere with ssr: false so it\'s completely skipped during server rendering.'
                       },
                       {
                         title: 'Dynamic Import for Below-Fold Content',
@@ -1762,7 +1751,7 @@ const ContactKinetic = dynamic(
 // In the component tree, it renders like any other component
 // but only loads when the browser is ready
 <ContactKinetic />`,
-                        description: 'next/dynamic with ssr: false eliminates the contact section from both the server-rendered HTML and the initial JavaScript bundle. The loading placeholder maintains layout stability (no CLS) while the real component loads asynchronously.'
+                        description: 'next/dynamic wraps the import in a lazy loader. Setting ssr: false means the server doesn\'t render it at all, so it\'s not in the initial HTML or the first JS bundle. The loading function returns a placeholder div that holds the space so the page doesn\'t jump when the real component loads in. The browser downloads and mounts ContactKinetic after the rest of the page is ready.'
                       }
                     ],
                     'valley-city-sales': [
@@ -1805,7 +1794,7 @@ export function generateRememberToken(): string {
   crypto.getRandomValues(arr);
   return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
 }`,
-                        description: 'Full TOTP flow: generate a 20-byte secret, render a QR code for authenticator apps, and verify 6-digit codes with ±30s clock drift tolerance. The remember token uses Web Crypto API for 256 bits of entropy — far stronger than UUID v4.'
+                        description: 'generateTOTPSetup creates a new TOTP instance with a random 20-byte secret, converts it to an otpauth:// URI, and renders that URI as a QR code the user scans with their authenticator app. verifyTOTP rebuilds the TOTP from the stored secret and calls validate with window: 1, which accepts codes from the current 30-second period plus one period before and after (handles clock drift). generateRememberToken fills a 32-byte array with crypto.getRandomValues and converts it to a hex string for the 30-day cookie.'
                       },
                       {
                         title: 'VIN Decode with NHTSA Normalization',
@@ -1848,7 +1837,7 @@ export async function decodeVIN(vin: string): Promise<VINResult> {
     drivetrain: val('DriveType')?.includes('4') ? '4wd' : val('DriveType')?.toLowerCase(),
   };
 }`,
-                        description: 'VIN validation rejects letters I, O, Q (not used in VINs), then queries NHTSA with a 10-second timeout. The val() helper normalizes NHTSA\'s inconsistent empty values, and lookup maps convert verbose descriptions to clean enum values the form expects.'
+                        description: 'The regex validates the VIN is exactly 17 characters and excludes I, O, Q (not used in real VINs). It queries NHTSA\'s DecodeVinValues endpoint with a 10-second timeout via AbortSignal. The val() helper filters out empty strings and "Not Applicable" that NHTSA returns for missing fields. bodyMap converts their verbose descriptions like "Sport Utility Vehicle (SUV)" into the short enum values ("suv") that the listing form dropdown expects.'
                       },
                       {
                         title: 'ISR Revalidation Pattern',
@@ -1881,7 +1870,7 @@ async function getHomeData() {
 
   return { listings, promos };
 }`,
-                        description: 'Next.js ISR regenerates the page at most once every 60 seconds. Parallel Promise.all fetches listings and promotions simultaneously. The image filter prevents blank cards from appearing on the storefront — a bug I caught when 7 of 28 listings had empty image arrays.'
+                        description: 'export const revalidate = 60 tells Next.js to cache the page and regenerate it at most once per minute. Promise.all runs the listings and promotions queries at the same time instead of waiting for one to finish before starting the other. The promotions query filters by active status and current date range. After both resolve, we filter out any listings that have no images so blank cards never show up on the homepage.'
                       }
                     ]
                   };
